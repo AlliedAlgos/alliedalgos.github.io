@@ -4,7 +4,7 @@ const members = [
         name: "Sid Agrawal",
         role: "Build and Website Lead",
         bio: "I am an 8th grader with 6 years of experience in FLL. I love to play with things that move. Outside of robotics I also play the trumpet and practice Taekwondo.",
-        image: "../images/aboutus/sid.png"
+        image: "../images/members/IMG_3721.JPEG"
     },
     {
         id: 2,
