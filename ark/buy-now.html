@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy ARK Kit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Truck animation using keyframes */
+    #loadingTruck {
+      position: fixed;
+      bottom: 40px; /* Move above tire line */
+      left: -220px;
+      width: 180px;
+      z-index: 9999;
+    }
+
+    @keyframes driveIn {
+      0% { left: -220px; }
+      100% { left: 20px; }
+    }
+
+    @keyframes driveOff {
+      0% { left: 20px; }
+      100% { left: 120%; }
+    }
+
+    .drive-in {
+      animation: driveIn 2s forwards;
+    }
+
+    .drive-off {
+      animation: driveOff 2s forwards;
+    }
+
+    /* Tire marks */
+    #tireMarks {
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      height: 20px;
+      width: 0;
+      background: repeating-linear-gradient(
+        to right,
+        #444 0 10px,
+        #222 10px 20px
+      );
+      transition: width 2s linear;
+      opacity: 0.4;
+      z-index: 9998;
+    }
+
+    /* Payment processed message */
+    #paymentMessage {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #10b981;
+      color: white;
+      padding: 1.5rem 2rem;
+      font-size: 1.5rem;
+      border-radius: 1rem;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      z-index: 10000;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans h-screen flex flex-col items-center justify-center">
+  <!-- Tire Marks -->
+  <div id="tireMarks"></div>
+
+  <!-- Truck Animation -->
+  <img id="loadingTruck" src="https://www.pngkey.com/png/full/171-1718475_delivery-truck-image-white-delivery-truck-clipart.png" alt="Truck Loading" />
+
+  <!-- Payment Processed Message -->
+  <div id="paymentMessage">Your purchase has been processed!</div>
+
+  <script>
+    const truck = document.getElementById('loadingTruck');
+    const message = document.getElementById('paymentMessage');
+
+    // Drive truck in on page load using keyframes
+    window.onload = () => {
+      truck.classList.add('drive-in');
+    };
+
+    function simulatePayment() {
+      // Expand tire marks as truck drives off
+      document.getElementById('tireMarks').style.width = '120%';
+      truck.classList.remove('drive-in');
+      truck.classList.add('drive-off');
+
+      setTimeout(() => {
+        // Show payment message
+        message.style.opacity = 1;
+      }, 2000);
+    }
+  </script>
+
+  <div class="bg-white shadow-xl rounded-2xl p-10 flex gap-10 items-center max-w-4xl mt-20">
+
+    <!-- Left Side Button -->
+    <div class="flex flex-col justify-center">
+      <h1 class="text-3xl font-bold mb-6">Purchase ARK Kit</h1>
+      <button onclick="simulatePayment()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 text-lg">Buy Now</button>
+    </div>
+
+    <!-- Right Side Image -->
+    <img src="./img/arduino.png" alt="Product Image" class="w-80 rounded-xl shadow" />
+  </div>
+</body>
+</html>
