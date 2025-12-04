@@ -43,7 +43,7 @@
 		This is a demo landing page built with SvelteKit and PocketBase. Login or signup to get started!
 	</p>
 	<div class="space-x-4">
-		<a href="/signup" class="px-6 py-3 bg-white text-blue-600 rounded shadow hover:bg-gray-100 transition">
+		<a href="/sign-up" class="px-6 py-3 bg-white text-blue-600 rounded shadow hover:bg-gray-100 transition">
 			Signup
 		</a>
 		<a href="/login" class="px-6 py-3 border border-white rounded hover:bg-white hover:text-blue-600 transition">
