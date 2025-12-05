@@ -58,15 +58,24 @@ const carsRef = ref(db, 'cars');
 onValue(carsRef, snapshot => {
   const cars = snapshot.val() || {};
   carsContainer.innerHTML = '';
+
   Object.values(cars).forEach(car => {
     const card = document.createElement('div');
     card.className = 'glass-card flex flex-col items-center text-center';
+
+    // Create bullet list from car.image
+    const imageList = car.image ? car.image.split(',').map(url => url.trim()).filter(url => url !== '') : [];
+    const bulletList = imageList.length > 0
+      ? `<ul class="list-disc list-inside mt-2 text-black">${imageList.map(url => `<li>${url}</li>`).join('')}</ul>`
+      : '';
+
     card.innerHTML = `
-      <img src="${car.image || 'https://via.placeholder.com/150'}" alt="${car.name}" class="w-full h-48 object-cover rounded mb-2"/>
       <h3 class="text-lg font-semibold">${car.name}</h3>
+      ${bulletList}
     `;
+
     carsContainer.appendChild(card);
-  });
+  }); 
 });
 </script>
 

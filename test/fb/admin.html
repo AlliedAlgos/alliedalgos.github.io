@@ -119,21 +119,25 @@ function loadCars() {
     Object.keys(cars).forEach(key => {
       const car = cars[key];
       const card = document.createElement('div');
-      card.className = 'glass-card flex flex-col items-center text-center';
+      card.className = 'glass-card flex flex-col items-start text-left';
+      
+      // Just a textarea for image URLs, no bullet list
       card.innerHTML = `
-        <img src="${car.image || 'https://via.placeholder.com/150'}" alt="${car.name}" class="w-full h-48 object-cover rounded mb-2"/>
         <input type="text" value="${car.name}" placeholder="Car Name" class="w-full mb-2 p-1 rounded text-black"/>
-        <input type="text" value="${car.image}" placeholder="Image URL" class="w-full mb-2 p-1 rounded text-black"/>
+        <textarea placeholder="Car Image URLs (one per line)" class="w-full mb-2 p-1 rounded text-black" rows="4">${(car.image || '').split(',').join('\n')}</textarea>
         <button class="mt-2 bg-purple-600 hover:bg-purple-500 px-2 py-1 rounded w-full">Save</button>
       `;
+
       // Save button
       card.querySelector('button').addEventListener('click', () => {
-        const inputs = card.querySelectorAll('input');
+        const inputs = card.querySelectorAll('input, textarea');
+        const imageUrls = inputs[1].value.split('\n').map(url => url.trim()).filter(url => url !== '');
         update(ref(db, 'cars/' + key), {
           name: inputs[0].value,
-          image: inputs[1].value
+          image: imageUrls.join(',')
         });
       });
+
       carsContainer.appendChild(card);
     });
   });
