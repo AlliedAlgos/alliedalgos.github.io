@@ -1,75 +1,99 @@
-<script lang="ts">
-	import { pb } from '$lib/pb';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
+ <div id="navbar" class="w-full"></div>
 
-	let email: string = '';
-	let password: string = '';
-	let errorMessage: string = '';
+  <!-- Main Content -->
+  <main class="max-w-2xl mt-10">
+    <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6 mt-40">
+      Download Allied AutoCorrection
+    </h1>
 
-	// Type-safe error helper
-	function getErrorMessage(err: unknown): string {
-		if (err instanceof Error) return err.message;
-		return 'An unknown error occurred';
-	}
+    <p class="text-slate-300 text-lg leading-relaxed mb-8">
+      Allied AutoCorrection is a powerful and precise function for all FLL teams...
+    </p>
 
-	async function handleLogin(event: Event) {
-		event.preventDefault();
-		errorMessage = '';
+    <!-- Form -->
+    <div class="flex flex-col gap-4 mb-6">
+      <input type="text" id="teamNumber" placeholder="Team #"
+             class="p-3 rounded-lg border border-slate-500 bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
 
-		try {
-			// Login with PocketBase
-			await pb.collection('users').authWithPassword(email, password);
-			console.log('Login successful');
+      <input type="email" id="email" placeholder="Email"
+             class="p-3 rounded-lg border border-slate-500 bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
 
-			// Redirect after login
-			goto('/dashboard');
-		} catch (err: unknown) {
-			console.error('Login failed:', err);
-			errorMessage = getErrorMessage(err);
-		}
-	}
-</script>
+    <!-- Download Button -->
+    <button id="downloadBtn"
+            class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg px-6 py-3 rounded-lg shadow-md transition-all duration-200">
+      ⬇️ Download AutoCorrection.llsp3
+    </button>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-	<div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
-		<h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
+    <p id="status" class="text-slate-400 mt-2 text-sm"></p>
+  </main>
 
-		{#if errorMessage}
-			<p class="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm">
-				{errorMessage}
-			</p>
-		{/if}
+  <!-- Footer -->
+  <div id="footer"></div>
 
-		<form on:submit={handleLogin} class="space-y-4">
-			<div>
-				<label class="block mb-1 text-sm font-medium">Email</label>
-				<input
-					type="email"
-					bind:value={email}
-					class="w-full px-3 py-2 border rounded focus:outline-none"
-					placeholder="Email"
-					required
-				/>
-			</div>
+  <!-- Discord Webhook Script -->
+  <script>
+    const DISCORD_WEBHOOK_URL =
+      "https://discord.com/api/webhooks/1377087321203150941/iK28JWFiXjPouGOpEVnvhExkIqPdp8H7P7HT5oSJHdpPFOgMsOde9s8fD-xSnyl_MNbQ";
 
-			<div>
-				<label class="block mb-1 text-sm font-medium">Password</label>
-				<input
-					type="password"
-					bind:value={password}
-					class="w-full px-3 py-2 border rounded focus:outline-none"
-					placeholder="Password"
-					required
-				/>
-			</div>
+    const downloadBtn = document.getElementById("downloadBtn");
+    const status = document.getElementById("status");
 
-			<button
-				type="submit"
-				class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-			>
-				Login
-			</button>
-		</form>
-	</div>
-</div>
+    downloadBtn.addEventListener("click", async () => {
+      const teamNumber = document.getElementById("teamNumber").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      if (!teamNumber || !email) {
+        status.textContent = "Please fill in both Team # and Email to download.";
+        status.className = "text-red-400 mt-2 text-sm";
+        return;
+      }
+
+      status.textContent = "Sending request...";
+      status.className = "text-yellow-400 mt-2 text-sm";
+
+      const payload = {
+        embeds: [
+          {
+            title: "📥 AutoCorrection Download",
+            color: 5814783,
+            fields: [
+              { name: "Team #", value: teamNumber, inline: true },
+              { name: "Email", value: email, inline: true }
+            ],
+            timestamp: new Date().toISOString()
+          }
+        ]
+      };
+
+      try {
+        await fetch(DISCORD_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      } catch (error) {
+        console.error("Webhook Error:", error);
+      }
+
+      // Analytics event
+      if (typeof gtag === "function") {
+        gtag("event", "download_click", {
+          event_category: "Downloads",
+          event_label: "AutoCorrection.llsp3",
+          value: 1
+        });
+      }
+
+      // Start File Download
+      const link = document.createElement("a");
+      link.href = "AutoCorrection.llsp3";
+      link.download = "AutoCorrection.llsp3";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      status.textContent = "Download started!";
+      status.className = "text-green-400 mt-2 text-sm";
+    });
+  </script>
