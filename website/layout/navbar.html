@@ -1,126 +1,207 @@
-<nav class="navbar fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl 
-            h-16 px-6 rounded-2xl flex items-center justify-between z-[1000]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allied Navbar</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Hamburger / splash styles for mobile */
+  .nav__toggle {
+    display:inline-block;
+    position:absolute;
+    z-index:10;
+    right:15px;
+    top:15px;
+    cursor:pointer;
+    border-radius:50%;
+    background:transparent;
+  }
+  .nav__menu {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    height:100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background-color:rgba(0,0,0,0.9);
+    backdrop-blur:8px;
+    visibility:hidden;
+    opacity:0;
+    transition: all 0.5s ease;
+    z-index:50;
+  }
+  .nav--open .nav__menu {
+    visibility:visible;
+    opacity:1;
+  }
+  .nav__item {
+    opacity:0;
+    transition: all 0.3s cubic-bezier(0.000, 0.995, 0.990, 1.000);
+  }
+  .nav--open .nav__item {
+    opacity:1;
+    transform: translateY(0);
+  }
+  .nav__link {
+    color:white;
+    text-align:center;
+    text-transform:uppercase;
+    font-size:1.5rem;
+    letter-spacing:5px;
+    padding:1rem;
+    display:block;
+  }
+  .splash::after {
+    content:"";
+    display:block;
+    position:absolute;
+    border-radius:50%;
+    background-color:#368887;
+    width:284vmax;
+    height:284vmax;
+    top:-142vmax;
+    left:-142vmax;
+    transform: scale(0);
+    transform-origin:50% 50%;
+    transition: transform 0.5s cubic-bezier(0.755, 0.050, 0.855, 0.060);
+  }
+  .nav--open .splash::after {
+    transform: scale(1);
+  }
+
+  /* Hide mobile menu toggle on desktop */
+  @media(min-width:768px) {
+    .nav__toggle, .nav__menu { display:none !important; }
+  }
+</style>
+</head>
+<body class="bg-gray-900 text-white">
+
+<!-- Desktop Navbar (Tailwind) -->
+<nav class="hidden md:flex fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl 
+            h-16 px-6 rounded-2xl items-center justify-between z-[1000]
             bg-white/10 backdrop-blur-xl border border-cyan-400/20
             shadow-[0_0_25px_rgba(0,255,255,0.25)]
             transition-all duration-500">
-
   <!-- Logo -->
   <div class="flex items-center gap-3 text-cyan-300 font-extrabold text-xl tracking-wide drop-shadow-[0_0_6px_#00ffff]">
-    <img src="../images/Allied-Algorithms_logo.svg"
-         class="w-10 h-10 rounded-md hover:scale-110 transition duration-300 drop-shadow-[0_0_10px_#00ffff]">
+    <img src="../images/Allied-Algorithms_logo.svg" class="w-10 h-10 rounded-md">
     Allied
   </div>
-
-  <!-- Center Links (Desktop) -->
-  <div class="hidden md:flex flex-1 justify-center gap-10 text-cyan-200 text-[15px] font-medium">
-    <a href="../home/" class="hover:text-cyan-400 hover:drop-shadow-[0_0_6px_#00ffff] transition">Home</a>
-    <a href="../about-us/" class="hover:text-cyan-400 hover:drop-shadow-[0_0_6px_#00ffff] transition">Members</a>
-    <a href="../seasons/" class="hover:text-cyan-400 hover:drop-shadow-[0_0_6px_#00ffff] transition">Seasons</a>
-
-    <!-- Dropdown -->
+  <!-- Links -->
+  <div class="flex-1 flex justify-center gap-10 text-cyan-200 text-[15px] font-medium">
+    <a href="../home/" class="hover:text-cyan-400">Home</a>
+    <a href="../about-us/" class="hover:text-cyan-400">Members</a>
+    <a href="../seasons/" class="hover:text-cyan-400">Seasons</a>
     <div class="relative group">
-      <button class="hover:text-cyan-400 transition font-semibold">Projects ▾</button>
-      <div class="absolute left-1/2 -translate-x-1/2 mt-3 w-44 p-2 bg-[#0d1117]/90 backdrop-blur-xl 
-                  border border-cyan-400/20 rounded-xl opacity-0 invisible 
-                  group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-xl">
-        <a href="../robot/" class="block px-3 py-2 rounded-md hover:bg-cyan-400/20 transition">Robot Design</a>
-        <a href="../aac/" class="block px-3 py-2 rounded-md hover:bg-cyan-400/20 transition">AAC</a>
-        <a href="../work/" class="block px-3 py-2 rounded-md hover:bg-cyan-400/20 transition">AlliedWork</a>
-        <a href="../../portfolio/v2index.html" class="block px-3 py-2 rounded-md hover:bg-cyan-400/20 transition">Docs</a>
+      <button class="hover:text-cyan-400 font-semibold">Projects ▾</button>
+      <div class="absolute left-1/2 -translate-x-1/2 mt-3 w-44 p-2 bg-[#0d1117]/90 backdrop-blur-xl
+                  border border-cyan-400/20 rounded-xl opacity-0 invisible
+                  group-hover:opacity-100 group-hover:visible transition-all duration-300">
+        <a href="../robot/" class="block px-3 py-2 hover:bg-cyan-400/20">Robot Design</a>
+        <a href="../aac/" class="block px-3 py-2 hover:bg-cyan-400/20">AAC</a>
+        <a href="../work/" class="block px-3 py-2 hover:bg-cyan-400/20">AlliedWork</a>
+        <a href="../../portfolio/v2index.html" class="block px-3 py-2 hover:bg-cyan-400/20">Docs</a>
       </div>
     </div>
   </div>
-
-  <!-- Contact (Desktop) -->
-  <div class="hidden md:flex">
-    <a href="../contact-us/" class="text-cyan-200 hover:text-white font-semibold 
-       px-5 py-2 border border-cyan-400/30 rounded-lg shadow-[0_0_10px_rgba(0,255,255,0.3)] 
-       hover:shadow-[0_0_20px_rgba(0,255,255,0.6)] transition">
-       Contact Us
-    </a>
+  <div>
+    <a href="../contact-us/" class="text-cyan-200 hover:text-white px-5 py-2 border border-cyan-400/30 rounded-lg">Contact Us</a>
   </div>
-
-  <!-- Hamburger (Mobile) -->
-  <button id="menu-btn" class="md:hidden z-50">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-300 hover:text-cyan-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
-    </svg>
-  </button>
-
-  <!-- Overlay -->
-  <!-- Overlay -->
-<div id="overlay" 
-     class="fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none 
-            transition-all duration-300 z-40 md:hidden"></div>
-
-<!-- Mobile Menu -->
-<div id="mobileMenu" 
-     class="fixed top-0 right-0 w-3/4 max-w-xs h-full bg-black/90 backdrop-blur-xl flex flex-col 
-            pt-32 gap-8 text-xl text-cyan-300 font-semibold 
-            transform translate-x-full opacity-0 transition-transform transition-opacity duration-500 md:hidden shadow-2xl z-50">
-
-    <a href="../home/" class="hover:text-cyan-400 transition">Home</a>
-    <a href="../about-us/" class="hover:text-cyan-400 transition">Members</a>
-    <a href="../seasons/" class="hover:text-cyan-400 transition">Seasons</a>
-
-    <!-- Mobile Dropdown -->
-    <div class="w-full text-center">
-      <button id="mobileProjectsBtn" class="text-cyan-300 text-2xl font-semibold flex justify-center items-center gap-2">
-        Projects ▾
-      </button>
-      <div id="mobileProjectsMenu" class="max-h-0 overflow-hidden flex flex-col gap-4 transition-all duration-300">
-        <a href="../robot/" class="hover:text-cyan-400 transition">Robot Design</a>
-        <a href="../aac/" class="hover:text-cyan-400 transition">AAC</a>
-        <a href="../work/" class="hover:text-cyan-400 transition">AlliedWork</a>
-        <a href="../../portfolio/v2index.html" class="hover:text-cyan-400 transition">Docs</a>
-      </div>
-    </div>
-
-    <a href="../contact/" class="hover:text-cyan-400 transition mt-4">Contact Us</a>
-</div>
-
-
 </nav>
 
+<!-- Mobile Navbar -->
+<div class="viewport md:hidden">
+  <header class="header" role="banner">
+    <nav id="nav" class="nav relative z-20" role="navigation">
+      
+      <!-- Flex container: logo + text + hamburger -->
+      <div class="flex items-center justify-between px-4 py-4">
+        <!-- Logo + Text -->
+        <div class="flex items-center gap-3">
+          <img src="../images/Allied-Algorithms_logo.svg" class="w-10 h-10">
+          <div class="text-white font-bold text-2xl">Allied Algo</div>
+        </div>
+
+        <!-- Toggle Button -->
+        <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
+          <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+            <g>
+              <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              <circle class="menuicon__circle" r="23" cx="25" cy="25" stroke="white" stroke-width="3" fill="none"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Fullscreen Menu -->
+      <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
+        <li class="nav__item"><a href="../home/" class="nav__link">Home</a></li>
+        <li class="nav__item"><a href="../about-us/" class="nav__link">Members</a></li>
+        <li class="nav__item"><a href="../seasons/" class="nav__link">Seasons</a></li>
+        <li class="nav__item"><a href="../robot/" class="nav__link">Robot Design</a></li>
+        <li class="nav__item"><a href="../aac/" class="nav__link">AAC</a></li>
+        <li class="nav__item"><a href="../work/" class="nav__link">AlliedWork</a></li>
+        <li class="nav__item"><a href="../../portfolio/v2index.html" class="nav__link">Docs</a></li>
+        <li class="nav__item"><a href="../contact-us/" class="nav__link">Contact</a></li>
+      </ul>
+
+      <!-- Splash -->
+      <div class="splash absolute top-0 right-0 w-full h-full"></div>
+    </nav>
+  </header>
+</div>
+
+<div id="pageContent" class="mt-20">
+
 <script>
-  const menuBtn = document.getElementById("menu-btn");
-  const mobileMenu = document.getElementById("mobileMenu");
-  const overlay = document.getElementById("overlay");
-  const mobileProjectsBtn = document.getElementById("mobileProjectsBtn");
-  const mobileProjectsMenu = document.getElementById("mobileProjectsMenu");
+const nav = document.querySelector('#nav');
+const menu = document.querySelector('#menu');
+const menuToggle = document.querySelector('.nav__toggle');
+let isMenuOpen = false;
 
-  function openMenu() {
-    mobileMenu.classList.remove("translate-x-full", "opacity-0");
-    mobileMenu.classList.add("translate-x-0", "opacity-100");
-    overlay.classList.remove("opacity-0", "pointer-events-none");
-    overlay.classList.add("opacity-100");
-  }
+menuToggle.addEventListener('click', e => {
+  e.preventDefault();
+  isMenuOpen = !isMenuOpen;
+  menuToggle.setAttribute('aria-expanded', String(isMenuOpen));
+  menu.hidden = !isMenuOpen;
+  nav.classList.toggle('nav--open');
+  // Blur page content when menu is open
+  document.getElementById('pageContent').classList.toggle('blur-sm', isMenuOpen);
+});
 
-  function closeMenu() {
-    mobileMenu.classList.add("translate-x-full", "opacity-0");
-    mobileMenu.classList.remove("translate-x-0", "opacity-100");
-    overlay.classList.add("opacity-0", "pointer-events-none");
-    overlay.classList.remove("opacity-100");
-    // Close mobile dropdown
-    mobileProjectsMenu.style.maxHeight = "0px";
-  }
-
-  // Toggle mobile menu
-  menuBtn.addEventListener("click", () => {
-    const isOpen = mobileMenu.classList.contains("translate-x-0");
-    if(isOpen) closeMenu();
-    else openMenu();
-  });
-
-  // Toggle mobile dropdown slide
-  mobileProjectsBtn.addEventListener("click", () => {
-    if (mobileProjectsMenu.style.maxHeight && mobileProjectsMenu.style.maxHeight !== "0px") {
-      mobileProjectsMenu.style.maxHeight = "0px";
-    } else {
-      mobileProjectsMenu.style.maxHeight = mobileProjectsMenu.scrollHeight + "px";
+// Trap tab inside nav when open
+nav.addEventListener('keydown', e => {
+  if (!isMenuOpen || e.ctrlKey || e.metaKey || e.altKey) return;
+  const menuLinks = menu.querySelectorAll('.nav__link');
+  if (e.keyCode === 9) {
+    if (e.shiftKey) {
+      if (document.activeElement === menuLinks[0]) {
+        menuToggle.focus();
+        e.preventDefault();
+      }
+    } else if (document.activeElement === menuToggle) {
+      menuLinks[0].focus();
+      e.preventDefault();
     }
-  });
+  }
+});
 
-  // Close menu when clicking overlay
-  overlay.addEventListener("click", closeMenu);
+// Close menu when clicking outside
+document.addEventListener('click', e => {
+  if (!nav.contains(e.target) && isMenuOpen) {
+    isMenuOpen = false;
+    menu.hidden = true;
+    nav.classList.remove('nav--open');
+    document.getElementById('pageContent').classList.remove('blur-sm');
+  }
+});
 </script>
+</body>
+</html>
