@@ -8,7 +8,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
   
   <style>
-    /* Custom CSS animations */
+    /* Your CSS unchanged */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -25,16 +25,13 @@
       from { transform: translateX(-20px); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
-    .animate-slideInLeft { animation: slideInLeft 0.4s ease forwards; }
 
-    /* CRITICAL FIX CLASS: This class overrides the initial hidden state for the menu */
+    .mobile-header-slide { animation: slideInDown 0.5s ease forwards; }
     .mobile-menu-active {
         opacity: 1 !important;
         pointer-events: auto !important;
         overflow: hidden; 
     }
-
-    /* NEW CLASS: Used by JS to show the menu after the hover delay */
     .dropdown-js-active {
         opacity: 1 !important;
         transform: translateY(0) !important;
@@ -42,20 +39,6 @@
     }
     .arrow-rotate {
         transform: rotate(180deg) !important;
-    }
-
-    /* Important: Override Tailwind's default group-hover on the menu itself 
-       so JavaScript can manage all state transitions reliably. */
-    #projectsDropdownContainer:hover #projectsDropdownMenu {
-        /* These styles will now be managed by the .dropdown-js-active class */
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(20px);
-    }
-    
-    /* Ensure the arrow rotation is only handled by JS/CSS classes, not the default group-hover */
-    #projectsDropdownContainer:hover #projectsDropdownArrow {
-        transform: none; /* Reset this to let JS control it */
     }
   </style>
 </head>
@@ -65,7 +48,7 @@
     <div class="flex justify-center items-center h-10 bg-black/70 backdrop-blur-xl border-b border-white/10 text-xs font-medium tracking-wide text-white/90 transition-all duration-300 animate-slideInDown">
       <span>
         AlliedAlgos Heading to Worlds →
-        <a href="#" class="underline underline-offset-2 transition hover:opacity-70">Learn more</a>
+        <a href="../worlds" class="underline underline-offset-2 transition hover:opacity-70">Learn more</a>
       </span>
     </div>
   </div>
@@ -74,12 +57,12 @@
     <div class="flex items-center justify-between px-6 py-4 rounded-full bg-black/70 backdrop-blur-xl border border-white/10 animate-slideInDown">
 
       <div class="flex items-center gap-3">
-        <img src="/logo.svg" alt="Logo" class="h-6 w-auto transition-transform duration-300 hover:scale-105" />
+        <img src="../images/Allied-Algorithms_logo.svg" alt="Logo" class="h-6 w-auto transition-transform duration-300 hover:scale-105" />
       </div>
 
       <ul class="hidden md:flex gap-8 text-sm font-medium tracking-wider">
         <li class="group relative transition-all duration-300 hover:scale-105">
-          <a href="#">Home</a>
+          <a href="../home/">Home</a>
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
         </li>
         <li class="group relative transition-all duration-300 hover:scale-105">
@@ -87,29 +70,29 @@
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
         </li>
         <li class="group relative transition-all duration-300 hover:scale-105">
-          <a href="#">Seasons</a>
+          <a href="../seasons/index.html">Seasons</a>
           <span class="absolute left-0 -bottom-1 h-px w-0 bg-white transition-all duration-300 group-hover:w-full"></span>
         </li>
 
         <li id="projectsDropdownContainer" class="relative group">
           <button id="projectsDropdownButton" aria-expanded="false" aria-controls="projectsDropdownMenu" class="flex items-center gap-1">
             Projects
-            <svg id="projectsDropdownArrow" class="w-3 h-3 mt-[1px] transition-transform duration-300" fill="none" stroke="white" stroke-width="1.5">
+            <svg id="projectsDropdownArrow" class="w-3 h-3 mt-px transition-transform duration-300" fill="none" stroke="white" stroke-width="1.5">
               <path d="M6 9l6 6 6-6"/>
             </svg>
           </button>
           <div id="projectsDropdownMenu" class="absolute left-0 top-full mt-3 w-44 rounded-xl bg-black/90 backdrop-blur-xl border border-white/10 opacity-0 translate-y-2 pointer-events-none transition-all duration-300">
-            <a href="#" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">Robot Designs</a>
-            <a href="#" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">AutoCorrection</a>
-            <a href="#" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">AlliedWork</a>
-            <a href="#" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">Documentation</a>
+            <a href="../robot/" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">Robot Designs</a>
+            <a href="../aac" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">AutoCorrection</a>
+            <a href="../work/" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">AlliedWork</a>
+            <a href="../docs/" class="desktop-link block px-4 py-2 text-sm hover:bg-white/5 transition-all duration-300">Documentation</a>
           </div>
         </li>
       </ul>
 
       <div class="flex items-center gap-4">
-        <a href="#" class="hidden md:inline-flex items-center justify-center px-5 py-2 rounded-full border border-white/40 text-xs font-medium tracking-wide transition hover:bg-white hover:text-black hover:scale-105">Contact-us</a>
-        <button id="openMenu" class="md:hidden relative z-[1000] transition hover:scale-110">
+        <a href="../contact-us/" class="hidden md:inline-flex items-center justify-center px-5 py-2 rounded-full border border-white/40 text-xs font-medium tracking-wide transition hover:bg-white hover:text-black hover:scale-105">Contact-us</a>
+        <button id="openMenu" class="md:hidden relative z-1000 transition hover:scale-110">
           <svg width="24" height="24" fill="none" stroke="white" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
@@ -117,39 +100,41 @@
     </div>
   </nav>
 
-  <div id="mobileMenu" class="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col">
+  <div id="mobileMenu" class="fixed inset-0 z-9999 bg-black/85 backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col shadow-2xl">
     
-    <div class="flex items-center justify-between px-6 py-5 animate-slideInLeft">
-      <img src="/logo.svg" alt="Logo" class="h-6 transition-transform duration-300 hover:scale-105" />
+    <div class="flex items-center justify-between px-6 py-5 border-b border-white/10 mobile-header-slide">
+      <img src="../images/Allied-Algorithms_logo.svg" alt="Logo" class="h-6 transition-transform duration-300 hover:scale-105" />
       <button id="closeMenu" class="transition hover:scale-110">
         <svg width="28" height="28" fill="none" stroke="white" stroke-width="1.5"><path d="M6 6l16 16M22 6L6 22"/></svg>
       </button>
     </div>
 
-    <div class="flex flex-col justify-start mt-6 px-6 gap-4 text-2xl font-medium tracking-widest animate-fadeIn">
-      <a href="#" class="mobile-link transition hover:scale-105">Home</a>
-      <a href="#" class="mobile-link transition hover:scale-105">About-us</a>
-      <a href="#" class="mobile-link transition hover:scale-105">Seasons</a>
+    <div class="flex flex-col justify-start mt-4 px-6 gap-0 text-2xl font-medium tracking-widest animate-fadeIn">
+      
+      <a href="../home/" class="group mobile-link py-4 border-b border-white/5 transition hover:bg-white/5 hover:text-white/90">Home</a>
+      <a href="../about-us/" class="group mobile-link py-4 border-b border-white/5 transition hover:bg-white/5 hover:text-white/90">About-us</a>
+      <a href="../seasons/index.html" class="group mobile-link py-4 border-b border-white/5 transition hover:bg-white/5 hover:text-white/90">Seasons</a>
 
-      <div class="flex flex-col gap-1">
-        <span class="opacity-70 text-lg">Projects</span>
-        <a href="#" class="mobile-link pl-4 text-xl transition hover:scale-105">Robot Designs</a>
-        <a href="#" class="mobile-link pl-4 text-xl transition hover:scale-105">AutoCorrection</a>
-        <a href="#" class="mobile-link pl-4 text-xl transition hover:scale-105">AlliedWork</a>
-        <a href="#" class="mobile-link pl-4 text-xl transition hover:scale-105">Documentation</a>
+      <div class="flex flex-col gap-1 mt-6 border-t border-white/5 pt-4">
+        <span class="opacity-70 text-lg mb-2 pl-1 font-semibold text-white/80">Projects</span>
+        <a href="../robot/" class="group mobile-link pl-4 py-2 text-xl transition hover:bg-white/5 hover:text-white/90">Robot Designs</a>
+        <a href="../aac/" class="group mobile-link pl-4 py-2 text-xl transition hover:bg-white/5 hover:text-white/90">AutoCorrection</a>
+        <a href="../work/" class="group mobile-link pl-4 py-2 text-xl transition hover:bg-white/5 hover:text-white/90">AlliedWork</a>
+        <a href="../docs/" class="group mobile-link pl-4 py-2 text-xl transition hover:bg-white/5 hover:text-white/90">Documentation</a>
       </div>
 
-      <a href="#" class="mobile-link mt-6 inline-flex justify-center items-center px-6 py-3 rounded-full border border-white text-sm tracking-wide transition hover:scale-105">GET ACCESS</a>
+      <a href="../contact-us/" class="mobile-link mt-8 inline-flex justify-center items-center px-8 py-4 rounded-full bg-white text-black text-lg tracking-wide font-bold transition hover:scale-[1.02] shadow-lg">GET ACCESS</a>
     </div>
   </div>
+  <div class="mt-50"></div>
 
   <script>
     $(document).ready(function() {
-      // --- MOBILE MENU FUNCTIONALITY (Confirmed Working) ---
+      // --- MOBILE MENU ---
       const $openMenu = $('#openMenu');
       const $closeMenu = $('#closeMenu');
       const $mobileMenu = $('#mobileMenu');
-      const $mobileLinks = $mobileMenu.find('a.mobile-link');
+      const $mobileLinks = $mobileMenu.find('.mobile-link');
       const $body = $('body');
 
       const closeMobileMenu = () => {
@@ -158,6 +143,7 @@
       };
 
       const openMobileMenu = () => {
+        setDropdownState(false); 
         $mobileMenu.addClass('mobile-menu-active');
         $body.css('overflow', 'hidden');
       };
@@ -166,38 +152,39 @@
       $closeMenu.on('click', closeMobileMenu);
       $mobileLinks.on('click', closeMobileMenu);
 
-      // --- DESKTOP DROPDOWN (INSTANT OPEN, 1 SECOND CLOSE DELAY) FUNCTIONALITY ---
+      // Close mobile menu on click outside
+      $(document).on('click', function(e) {
+        if (!$(e.target).closest('#mobileMenu, #openMenu').length) {
+          closeMobileMenu();
+        }
+      });
+
+      // --- DESKTOP DROPDOWN ---
       const $dropdownContainer = $('#projectsDropdownContainer');
       const $dropdownMenu = $('#projectsDropdownMenu');
       const $dropdownArrow = $('#projectsDropdownArrow');
       const $desktopLinks = $dropdownMenu.find('.desktop-link');
       
       let closeTimeout;
-      const CLOSE_DELAY_TIME = 1000; // 1 second delay for closing
+      const CLOSE_DELAY_TIME = 1000; // 1s
 
-      // Helper function to set the visual state
       const setDropdownState = (open) => {
           $dropdownMenu.toggleClass('dropdown-js-active', open);
           $dropdownArrow.toggleClass('arrow-rotate', open);
+          $('#projectsDropdownButton').attr('aria-expanded', open);
       }
 
-      // 1. Mouse Enter (INSTANT OPEN)
       $dropdownContainer.on('mouseenter', function() {
-          // Clear any pending close timer
           clearTimeout(closeTimeout);
-          // Open instantly
           setDropdownState(true);
       });
 
-      // 2. Mouse Leave (1 SECOND CLOSE DELAY)
       $dropdownContainer.on('mouseleave', function() {
-          // Start a timer to close the menu after 1 second
           closeTimeout = setTimeout(() => {
               setDropdownState(false);
           }, CLOSE_DELAY_TIME);
       });
       
-      // 3. Close when a link inside the dropdown is clicked (Instant Close)
       $desktopLinks.on('click', function() {
           setDropdownState(false);
       });
