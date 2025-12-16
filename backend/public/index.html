@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Admin Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 50px auto; }
+    label { display: block; margin: 10px 0 5px; }
+    input, textarea { width: 100%; padding: 8px; margin-bottom: 15px; }
+    button { padding: 10px 20px; margin-top: 10px; cursor: pointer; }
+    pre { background: #f4f4f4; padding: 10px; }
+  </style>
+</head>
+<body>
+
+<h1>Firebase Admin Dashboard</h1>
+
+<label>Team ID (e.g., allied-algos)</label>
+<input id="teamId" placeholder="Enter team ID">
+
+<label>Team Name</label>
+<input id="teamName" placeholder="Team name">
+
+<label>Rank</label>
+<input id="teamRank" type="number" placeholder="Rank">
+
+<label>Season</label>
+<input id="teamSeason" placeholder="Season">
+
+<label>Members (JSON format)</label>
+<textarea id="teamMembers" placeholder='{"member1": "Alice", "member2": "Bob"}'></textarea>
+
+<button id="createBtn">Create / Update Team</button>
+<button id="getBtn">Get Team Data</button>
+
+<pre id="output"></pre>
+
+<script>
+  const createBtn = document.getElementById("createBtn");
+  const getBtn = document.getElementById("getBtn");
+  const output = document.getElementById("output");
+
+  async function sendRequest(url, method, data) {
+    const res = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: data ? JSON.stringify(data) : undefined
+    });
+    try {
+      return await res.json();
+    } catch {
+      return await res.text();
+    }
+  }
+
+  // Create or update team
+  createBtn.addEventListener("click", async () => {
+    const teamId = document.getElementById("teamId").value.trim();
+    if (!teamId) return alert("Enter team ID");
+
+    const name = document.getElementById("teamName").value;
+    const rank = Number(document.getElementById("teamRank").value);
+    const season = document.getElementById("teamSeason").value;
+    let members = {};
+    try {
+      members = JSON.parse(document.getElementById("teamMembers").value || "{}");
+    } catch {
+      return alert("Members must be valid JSON");
+    }
+
+    const result = await sendRequest(`/team/${teamId}`, "POST", { name, rank, season, members });
+    output.textContent = JSON.stringify(result, null, 2);
+  });
+
+  // Get team data
+  getBtn.addEventListener("click", async () => {
+    const teamId = document.getElementById("teamId").value.trim();
+    if (!teamId) return alert("Enter team ID");
+
+    const result = await sendRequest(`/team/${teamId}`, "GET");
+    output.textContent = JSON.stringify(result, null, 2);
+  });
+</script>
+
+</body>
+</html>

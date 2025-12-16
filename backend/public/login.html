@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+<style>
+body { font-family: Arial; max-width: 400px; margin: 100px auto; }
+input { width: 100%; padding: 8px; margin: 10px 0; }
+button { padding: 10px 20px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1>Admin Login</h1>
+<form id="loginForm">
+  <input type="email" id="email" placeholder="Email" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button type="submit">Login</button>
+</form>
+<p id="error" style="color:red;"></p>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBESpx6a7YT1qoaNZ4P-9j7X0SjAhdkePg",
+  authDomain: "alliedalgo.firebaseapp.com",
+  databaseURL: "https://alliedalgo-default-rtdb.firebaseio.com",
+  projectId: "alliedalgo",
+  storageBucket: "alliedalgo.firebasestorage.app",
+  messagingSenderId: "333625041078",
+  appId: "1:333625041078:web:b4d7d3cfc5d3053b238617"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const errorEl = document.getElementById("error");
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const idToken = await userCredential.user.getIdToken();
+    localStorage.setItem("idToken", idToken);
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    console.error(err);
+    errorEl.textContent = "Login failed: " + err.message;
+  }
+});
+</script>
+
+</body>
+</html>

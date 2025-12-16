@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<style>
+body { font-family: Arial; max-width: 700px; margin: 50px auto; }
+input, textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
+button { padding: 10px 20px; margin: 5px 0; cursor: pointer; }
+pre { background: #f4f4f4; padding: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+<button id="logoutBtn">Logout</button>
+
+<label>Team ID:</label>
+<input id="teamId" placeholder="Enter team ID">
+<label>Team Name:</label>
+<input id="teamName">
+<label>Rank:</label>
+<input id="teamRank" type="number">
+<label>Season:</label>
+<input id="teamSeason">
+<label>Members (JSON format):</label>
+<textarea id="teamMembers" placeholder='{"member1":"Alice"}'></textarea>
+
+<button id="createBtn">Create/Update Team</button>
+<button id="getBtn">Get Team Data</button>
+
+<pre id="output"></pre>
+
+<script type="module">
+const idToken = localStorage.getItem("idToken");
+if (!idToken) window.location.href = "login.html";
+
+async function apiFetch(url, method="GET", body) {
+  const res = await fetch(url, {
+    method,
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + idToken
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  return res.json ? await res.json() : await res.text();
+}
+
+document.getElementById("createBtn").addEventListener("click", async () => {
+  const teamId = document.getElementById("teamId").value.trim();
+  if(!teamId) return alert("Enter team ID");
+  let members = {};
+  try { members = JSON.parse(document.getElementById("teamMembers").value || "{}"); } 
+  catch(e){ return alert("Members must be valid JSON"); }
+
+  const data = {
+    name: document.getElementById("teamName").value,
+    rank: Number(document.getElementById("teamRank").value),
+    season: document.getElementById("teamSeason").value,
+    members
+  };
+  const result = await apiFetch(`/team/${teamId}`, "POST", data);
+  document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+});
+
+document.getElementById("getBtn").addEventListener("click", async () => {
+  const teamId = document.getElementById("teamId").value.trim();
+  if(!teamId) return alert("Enter team ID");
+  const result = await apiFetch(`/team/${teamId}`);
+  document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("idToken");
+  window.location.href = "login.html";
+});
+</script>
+
+</body>
+</html>

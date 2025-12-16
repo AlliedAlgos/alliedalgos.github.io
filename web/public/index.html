@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allied Algos Teams</title>
+<style>
+body { font-family: Arial; max-width: 900px; margin: 50px auto; }
+h1 { text-align: center; }
+.team { border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+.team h2 { margin-top: 0; }
+.members { margin-left: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Allied Algos Teams</h1>
+<div id="teamsContainer">Loading teams...</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBESpx6a7YT1qoaNZ4P-9j7X0SjAhdkePg",
+  authDomain: "alliedalgo.firebaseapp.com",
+  databaseURL: "https://alliedalgo-default-rtdb.firebaseio.com",
+  projectId: "alliedalgo",
+  storageBucket: "alliedalgo.firebasestorage.app",
+  messagingSenderId: "333625041078",
+  appId: "1:333625041078:web:b4d7d3cfc5d3053b238617"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const teamsRef = ref(db, "team");
+
+const container = document.getElementById("teamsContainer");
+
+// Listen for real-time updates
+onValue(teamsRef, (snapshot) => {
+  const data = snapshot.val();
+  container.innerHTML = ""; // clear previous
+
+  if (!data) {
+    container.innerHTML = "<p>No teams found.</p>";
+    return;
+  }
+
+  Object.keys(data).forEach(teamId => {
+    const team = data[teamId];
+
+    const teamDiv = document.createElement("div");
+    teamDiv.className = "team";
+
+    const html = `
+      <h2>${team.name || teamId}</h2>
+      <p>Rank: ${team.rank ?? "N/A"}</p>
+      <p>Season: ${team.season || "N/A"}</p>
+      <h4>Members:</h4>
+      <ul class="members">
+        ${team.members ? Object.values(team.members).map(m => `<li>${m}</li>`).join("") : "<li>No members</li>"}
+      </ul>
+    `;
+
+    teamDiv.innerHTML = html;
+    container.appendChild(teamDiv);
+  });
+});
+</script>
+
+</body>
+</html>
