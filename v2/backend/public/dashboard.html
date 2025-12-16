@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Allied Algos Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://rsms.me/inter/inter.css" rel="stylesheet">
+<style>
+  body { font-family:'Inter',sans-serif; background-color:#212f3c; color:white; }
+  .sidebar { background-color:#2d3748; min-width:250px; transition:all 0.3s; }
+  .sidebar.collapsed { width:70px; }
+  .sidebar a { display:flex; align-items:center; padding:0.75rem; gap:0.5rem; color:white; font-weight:500; }
+  .sidebar a:hover { background-color:#374151; border-radius:0.5rem; }
+  .sidebar img { border-radius:50%; width:35px; height:35px; }
+  .card { background-color:#2d3748; border-radius:1rem; padding:1rem; margin-bottom:1rem; }
+  .carousel-image { display:none; width:100%; height:200px; object-fit:cover; border-radius:0.5rem; }
+  .carousel-image.active { display:block; }
+</style>
+</head>
+<body class="flex h-screen">
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar sticky top-0 h-screen flex flex-col justify-between">
+  <div>
+    <div class="p-4 flex items-center gap-2">
+      <img id="userPic" src="" alt="User" class="w-10 h-10"/>
+      <span id="userName" class="font-bold text-lg">User</span>
+    </div>
+    <nav class="flex flex-col gap-1 mt-4" id="navLinks">
+      <a href="#homeSection">Home</a>
+      <a href="#membersSection">Members</a>
+      <a href="#seasonsSection">Seasons</a>
+      <a href="#robotDesignsSection">Robot Designs</a>
+      <a href="#docsSection">Docs</a>
+    </nav>
+  </div>
+  <button id="logoutBtn" class="m-4 p-2 bg-blue-500 rounded hover:bg-blue-600">Logout</button>
+</div>
+
+<!-- Main Content -->
+<div class="flex-1 overflow-y-auto p-6">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-3xl font-bold">Dashboard</h1>
+    <button id="saveBtn" class="px-4 py-2 bg-green-500 rounded hover:bg-green-600">Save All</button>
+  </div>
+  
+  <div id="homeSection" class="mb-6"></div>
+  <div id="membersSection" class="mb-6 grid grid-cols-2 gap-4"></div>
+  <div id="seasonsSection" class="mb-6 grid grid-cols-2 gap-4"></div>
+  <div id="robotDesignsSection" class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  <div id="docsSection" class="mb-6"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBESpx6a7YT1qoaNZ4P-9j7X0SjAhdkePg",
+  authDomain: "alliedalgo.firebaseapp.com",
+  databaseURL: "https://alliedalgo-default-rtdb.firebaseio.com",
+  projectId: "alliedalgo",
+  storageBucket: "alliedalgo.firebasestorage.app",
+  messagingSenderId: "333625041078",
+  appId: "1:333625041078:web:b4d7d3cfc5d3053b238617"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+onAuthStateChanged(auth, user => {
+  if (!user) { window.location.href = "login.html"; return; }
+  document.getElementById("userPic").src = user.photoURL || "";
+  document.getElementById("userName").textContent = user.displayName || user.email;
+  loadData();
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
+
+function loadData() {
+  const dataRef = ref(db);
+  onValue(dataRef, snapshot => {
+    const data = snapshot.val() || {};
+    populateHome(data.home || {});
+    populateMembers(data.members || {});
+    populateSeasons(data.seasons || {});
+    populateRobots(data.robotDesigns || {});
+    populateDocs(data.docs || {});
+  });
+}
+
+// --- Helpers ---
+function createInput(label, value, sectionKey, field) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "mb-2 flex flex-col w-full";
+  const lbl = document.createElement("label");
+  lbl.textContent = label;
+  lbl.className = "font-bold mb-1";
+  const input = document.createElement("input");
+  input.value = value || "";
+  input.dataset.key = sectionKey;
+  input.dataset.field = field;
+  input.className = "p-1 rounded w-full text-black";
+  wrapper.appendChild(lbl);
+  wrapper.appendChild(input);
+  return wrapper;
+}
+
+// --- Populate Sections ---
+function populateHome(home) {
+  const container = document.getElementById("homeSection");
+  container.innerHTML = "<h2 class='text-xl font-bold mb-2'>Home</h2>";
+  Object.keys(home).forEach(key => {
+    const box = createInput("Text", home[key].text || "", key, "text");
+    container.appendChild(box);
+  });
+}
+
+function populateMembers(members) {
+  const container = document.getElementById("membersSection");
+  container.innerHTML = "<h2 class='col-span-2 text-xl font-bold mb-2'>Members</h2>";
+  Object.keys(members).forEach(key => {
+    const m = members[key];
+    const card = document.createElement("div");
+    card.className = "card flex flex-col items-center";
+
+    card.appendChild(createInput("Name", m.name, key, "name"));
+    card.appendChild(createInput("Role", m.role, key, "role"));
+    card.appendChild(createInput("Description", m.description, key, "description"));
+    card.appendChild(createInput("Picture URL", m.pic, key, "pic"));
+
+    container.appendChild(card);
+  });
+}
+
+function populateSeasons(seasons) {
+  const container = document.getElementById("seasonsSection");
+  container.innerHTML = "<h2 class='col-span-2 text-xl font-bold mb-2'>Seasons</h2>";
+  Object.keys(seasons).forEach(key => {
+    const s = seasons[key];
+    const card = document.createElement("div");
+    card.className = "card flex flex-col";
+    card.appendChild(createInput("Title", s.title || "", key, "title"));
+    card.appendChild(createInput("Description", s.description || "", key, "description"));
+    card.appendChild(createInput("Picture URL", s.pic || "", key, "pic"));
+    container.appendChild(card);
+  });
+}
+
+function populateRobots(robotDesigns) {
+  const container = document.getElementById("robotDesignsSection");
+  container.innerHTML = "<h2 class='col-span-2 text-xl font-bold mb-2'>Robot Designs</h2>";
+  Object.keys(robotDesigns).forEach(key => {
+    const r = robotDesigns[key];
+    const card = document.createElement("div");
+    card.className = "card flex flex-col items-center relative";
+
+    card.appendChild(createInput("Name", r.name, key, "name"));
+
+    // Carousel for pics
+    if (r.pics && Array.isArray(r.pics)) {
+      const carousel = document.createElement("div");
+      carousel.className = "relative w-full h-48 mb-2";
+      r.pics.forEach((pic,i)=>{
+        if(pic){
+          const img = document.createElement("img");
+          img.src = pic;
+          img.className = `carousel-image ${i===0?"active":""}`;
+          carousel.appendChild(img);
+        }
+      });
+      const prev = document.createElement("button");
+      prev.textContent = "<";
+      prev.className = "absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded";
+      prev.onclick = ()=>slideCarousel(carousel,-1);
+      const next = document.createElement("button");
+      next.textContent = ">";
+      next.className = "absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded";
+      next.onclick = ()=>slideCarousel(carousel,1);
+      carousel.appendChild(prev); carousel.appendChild(next);
+      card.appendChild(carousel);
+    }
+
+    card.appendChild(createInput("File to download", r.fileDownload || "", key, "fileDownload"));
+    card.appendChild(createInput("CAD Link", r.cadLink || "", key, "cadLink"));
+    container.appendChild(card);
+  });
+}
+
+function populateDocs(docs) {
+  const container = document.getElementById("docsSection");
+  container.innerHTML = "<h2 class='col-span-2 text-xl font-bold mb-2'>Docs</h2>";
+  Object.keys(docs).forEach(key => {
+    const d = docs[key];
+    const card = document.createElement("div");
+    card.className = "card flex flex-col items-start";
+    card.appendChild(createInput("Title", d["title:"] || "", key, "title:"));
+    card.appendChild(createInput("Text", d["text:"] || "", key, "text:"));
+    container.appendChild(card);
+  });
+}
+
+// Carousel logic
+function slideCarousel(carousel, dir){
+  const images = carousel.querySelectorAll(".carousel-image");
+  let current = Array.from(images).findIndex(img=>img.classList.contains("active"));
+  images[current].classList.remove("active");
+  current = (current+dir+images.length)%images.length;
+  images[current].classList.add("active");
+}
+
+// Save all changes
+document.getElementById("saveBtn").addEventListener("click", ()=>{
+  const inputs = document.querySelectorAll("input[data-key][data-field]");
+  const updates = {};
+  inputs.forEach(input=>{
+    const key = input.dataset.key;
+    const field = input.dataset.field;
+    if(!updates[key]) updates[key]={};
+    updates[key][field] = input.value;
+  });
+
+  // Save to Firebase preserving nested structure
+  Object.keys(updates).forEach(key=>{
+    if(key.startsWith("member") || key.startsWith("design") || key.startsWith("doc") || key==="home"){
+      set(ref(db,key), updates[key]);
+    }
+  });
+  alert("Saved successfully!");
+});
+</script>
+</body>
+</html>
