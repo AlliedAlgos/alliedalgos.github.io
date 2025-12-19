@@ -1,76 +1,49 @@
-const members = [
-    {
-        id: 1,
-        name: "Sid Agrawal",
-        role: "Build and Website Lead",
-        bio: "I am an 8th grader with 6 years of experience in FLL. I love to play with things that move. Outside of robotics I also play the trumpet and practice Taekwondo.",
-        image: "../images/members/IMG_3721.JPEG"
-    },
-    {
-        id: 2,
-        name: "Aariv Mulki",
-        role: "Programming Lead",
-        bio: "I have been doing FLL since the pandemic. Outside of FLL, I like math and social studies. I have played the clarinet and currently play the violin. I enjoy acting in the Wilton Children’s Theater and play tennis.",
-        image: "https://st.depositphotos.com/1779253/5140/v/450/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg"
-    },
-    {
-        id: 3,
-        name: "Tanush Nardeddy",    
-        role: "Strategy Lead",
-        bio: "I'm in 8th grade. I love to code and build with legos. Outside of robotics I play the violin and do fencing.",
-        image: "https://st.depositphotos.com/1779253/5140/v/450/depositphotos_51405259-stock-illustration-male-avatar-profile-picture-use.jpg"
-    },
-        {
-        id: 4,
-        name: "Sarthak Shetty",
-        role: "Outreach and Research",
-        bio: "I am a 7th grader who loves to read and do math. I am an extremely curious person and love to learn new things.I am new to FLL and have over 5 years of experience of coding in Scratch and Python.",
-        image: "https://i.pinimg.com/originals/d9/92/64/d99264eefc942c2d10ef0521ab0656ff.gif"
-    },
-    {
-        id: 5,
-        name: "Ganesh Mulki",
-        role: "Coach",
-        bio: "Drives brand growth",
-        image: "https://cdn.dribbble.com/userupload/24896180/file/original-c250b2ac5ee879252e2b7703f70ed95a.gif"
-    },
-    {
-        id: 6,
-        name: "Amit Agrawal",
-        role: "Coach",
-        bio: "Bridges the gap between technical teams",
-        image: "https://i.pinimg.com/originals/d9/92/64/d99264eefc942c2d10ef0521ab0656ff.gif"
-    },
-    {
-        id: 7,
-        name: "Shashi Nareddy",
-        role: "Mentor",
-        bio: "",
-        image: "https://i.pinimg.com/originals/d9/92/64/d99264eefc942c2d10ef0521ab0656ff.gif"
-    },
-    {
-        id: 8,
-        name: "Sandeep Shetty",
-        role: "Mentor",
-        bio: "Bridges the gap between technical teams",
-        image: "https://i.pinimg.com/originals/d9/92/64/d99264eefc942c2d10ef0521ab0656ff.gif"
-    }
-];
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-function renderMembers() {
-    const container = document.getElementById('members-container');
-    if (!container) return;
+// Supabase config
+const SUPABASE_URL = "https://eyxhddkoqotedgucpfbz.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_h4nlL7bfvrg-amPOoqyhTw_CJjsVfJc";
 
-    container.innerHTML = members.map(member => `
-        <div class="member-card animate-fade-in">
-            <div class="profile-icon">
-                <img src="${member.image}" alt="${member.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 9999px;">
-            </div>
-            <div class="card-content">
-                <h3>${member.name}</h3>
-                <p style="color: #00fff9; font-weight: 500;">${member.role}</p>
-                ${member.bio ? `<p>${member.bio}</p>` : ""}
-            </div>
-        </div>
-    `).join('');
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function renderMembers() {
+  const container = document.getElementById("members-container");
+  container.innerHTML = "";
+
+  const { data: members, error } = await supabase
+    .from("members")
+    .select("*")
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error(error);
+    container.innerHTML = "<p class='text-red-400'>Failed to load members.</p>";
+    return;
+  }
+
+  members.forEach((member, index) => {
+    const card = document.createElement("div");
+    card.className = `
+      animate-fade-in
+      bg-gray-900/70 border border-white/15 backdrop-blur-xl rounded-3xl
+      shadow-lg hover:shadow-2xl hover:-translate-y-2 transform transition-all duration-300
+      flex flex-col items-center text-center p-8
+    `;
+    card.style.animationDelay = `${index * 100}ms`;
+
+    card.innerHTML = `
+      <div class="relative w-64 h-72 rounded-3xl overflow-hidden bg-black before:absolute before:inset-[-5px]]">
+        <img src="${member.img || ''}" alt="${member.name}" class="w-full h-full object-cover rounded-2xl relative z-10" />
+      </div>
+      <div class="mt-6 text-white">
+        <h3 class="text-2xl font-semibold mb-1">${member.name}</h3>
+        <p class="text-cyan-400 font-medium">${member.role}</p>
+        <p class="mt-2 text-gray-300">${member.des || ""}</p>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
 }
+
+window.renderMembers = renderMembers;

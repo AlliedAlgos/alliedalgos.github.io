@@ -22,6 +22,9 @@
     </script>
 
     <style>
+        body{
+            background: #070707;
+        }
         /* Navbar active link */
         .navbar-links .members {
             background-color: rgba(0, 191, 255, 0.2) !important;
@@ -57,9 +60,9 @@
 
         /* Profile icon with animated border */
         .profile-icon {
-            width: 120px;
-            height: 120px;
-            border-radius: 9999px;
+            width: 250px;
+            height: 300px;
+            border-radius: 50px;
             position: relative;
             overflow: hidden;
             background: black;
@@ -117,23 +120,20 @@
         }
     </style>
 </head>
-<body class="text-white font-sans bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen flex flex-col">
+<body class="text-white font-sans min-h-screen flex flex-col">
 
-    <!-- Navbar -->
+
     <div id="includedContent"></div>
-
-    <!-- Members Section -->
+    <!-- space -->
+    <div class="mt-40"></div>
     <main class="container mx-auto flex-1 flex items-center justify-center py-12">
         <div id="members-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-            <!-- Member cards will be rendered here via members.js -->
         </div>
     </main>
 
-    <!-- Footer -->
     <div id="Content"></div>
 
     <script>
-        // Ensure members render after DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof renderMembers === 'function') {
                 renderMembers();
