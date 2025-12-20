@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us - Allied Algorithms</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- jQuery for navbar/footer -->
+  <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   <link rel="icon" type="image/x-icon" href="../images/logo.png">
-  <link rel="stylesheet" href="./index.css">
 
   <script>
     $(function () {
@@ -22,51 +21,84 @@
   </script>
 </head>
 
-<body class="bg-gray-900 text-gray-100 font-sans pt-20">
+<body class="bg-gray-900 text-gray-100 mt-[170px]">
 
-  <!-- Navbar -->
-  <div id="navbar"></div>
+  <div id="navbar" class="w-full"></div>
 
-  <!-- Contact Form Section -->
-  <section class="max-w-2xl mx-auto my-12 p-6 bg-gray-800 rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold mb-4">Get in Touch</h2>
-    <p class="mb-6 text-gray-300">Have questions or want to collaborate? Fill out the form below and we'll get back to you!</p>
+  <!-- Contact Section -->
+  <section
+    class="max-w-3xl mx-auto my-16 p-8
+           bg-[rgba(20,20,30,0.7)]
+           rounded-lg shadow-xl
+           border border-white/10">
 
-    <form id="contactForm" class="space-y-4">
-      <div class="grid grid-cols-1 gap-4">
-        <div>
-          <label class="block mb-1" for="name">Name</label>
-          <input type="text" id="name" name="name" required
-                 class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>  
-      </div>
+    <h2 class="text-3xl font-semibold mb-4 text-white">
+      Get in Touch
+    </h2>
 
+    <p class="text-gray-300 mb-8">
+      Have questions or want to collaborate? You may submit this form.
+    </p>
+
+    <form id="contactForm" class="space-y-6">
+
+      <!-- Name (Optional) -->
       <div>
-        <label class="block mb-1" for="email">Email</label>
-        <input type="email" id="email" name="email" required
-               class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <label class="block mb-1 font-medium">
+          Name <span class="text-gray-400 text-sm"></span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Name"
+          class="w-full p-3 rounded-md
+                 bg-gray-800 border border-gray-700
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500">
       </div>
 
+      <!-- Email -->
       <div>
-        <label class="block mb-1" for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required
-                  class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+        <label class="block mb-1 font-medium">Email</label>
+        <input    
+          type="email"
+          id="email"
+          placeholder="email"
+          required
+          class="w-full p-3 rounded-md
+                 bg-gray-800 border border-gray-700
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500">
       </div>
 
-      <button type="submit"
-              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded font-semibold transition">
+      <!-- Message -->
+      <div>
+        <label class="block mb-1 font-medium">Message</label>
+        <textarea
+          id="message"
+          rows="5"
+          required
+          class="w-full p-3 rounded-md
+                 bg-gray-800 border border-gray-700
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+      </div>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="w-full py-3 rounded-md
+               bg-indigo-600 hover:bg-indigo-700
+               font-semibold text-white
+               transition">
         Send Message
       </button>
+
     </form>
 
-    <p id="status" class="mt-4 text-center hidden"></p>
-
+    <p id="status" class="mt-6 text-center hidden"></p>
   </section>
 
-  <!-- Footer -->
-  <div id="footer"></div>
+  <div id="footer" class="w-full"></div>
 
-  <!-- Discord Webhook Script -->
+  <!-- Discord Webhook -->
   <script>
     const DISCORD_WEBHOOK_URL =
       "https://discord.com/api/webhooks/1377087321203150941/iK28JWFiXjPouGOpEVnvhExkIqPdp8H7P7HT5oSJHdpPFOgMsOde9s8fD-xSnyl_MNbQ";
@@ -77,57 +109,52 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById("name").value.trim();
-      const number = document.getElementById("number").value.trim();
+      const name =
+        document.getElementById("name").value.trim() || "Anonymous";
       const email = document.getElementById("email").value.trim();
-      const messageText = document.getElementById("message").value.trim();
+      const message = document.getElementById("message").value.trim();
 
-      if (!name || !number || !email || !messageText) {
-        status.textContent = "Please fill out all fields.";
-        status.className = "mt-4 text-center text-red-400";
+      if (!email || !message) {
+        status.textContent = "Please fill out the required fields.";
+        status.className = "mt-6 text-center text-red-400";
         status.classList.remove("hidden");
         return;
       }
 
       status.textContent = "Sending message...";
-      status.className = "mt-4 text-center text-yellow-400";
+      status.className = "mt-6 text-center text-yellow-400";
       status.classList.remove("hidden");
 
       const payload = {
-        embeds: [
-          {
-            title: "📩 New Contact Form Submission",
-            color: 5814783,
-            fields: [
-              { name: "Name", value: name, inline: true },
-              { name: "Number", value: number, inline: true },
-              { name: "Email", value: email, inline: false },
-              { name: "Message", value: messageText, inline: false }
-            ],
-            timestamp: new Date().toISOString()
-          }
-        ]
+        embeds: [{
+          title: "📩 New Contact Submission",
+          color: 5814783,
+          fields: [
+            { name: "Name", value: name, inline: true },
+            { name: "Email", value: email },
+            { name: "Message", value: message }
+          ],
+          timestamp: new Date().toISOString()
+        }]
       };
 
       try {
-        const response = await fetch(DISCORD_WEBHOOK_URL, {
+        const res = await fetch(DISCORD_WEBHOOK_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
 
-        if (response.ok) {
+        if (res.ok) {
           status.textContent = "Message sent successfully!";
-          status.className = "mt-4 text-center text-green-400";
+          status.className = "mt-6 text-center text-green-400";
           form.reset();
         } else {
-          status.textContent = "Failed to send message. Error " + response.status;
-          status.className = "mt-4 text-center text-red-400";
+          throw new Error();
         }
-      } catch (error) {
-        status.textContent = "Error sending message.";
-        status.className = "mt-4 text-center text-red-400";
-        console.error(error);
+      } catch {
+        status.textContent = "Failed to send message.";
+        status.className = "mt-6 text-center text-red-400";
       }
     });
   </script>
