@@ -1,48 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supabase Dashboard</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlliedDash</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex justify-center items-center">
 
-<div id="login-container" class="bg-white p-8 rounded shadow-md w-full max-w-md">
-  <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
-  <input id="email" type="email" placeholder="Email" class="w-full p-2 border rounded mb-4">
-  <input id="password" type="password" placeholder="Password" class="w-full p-2 border rounded mb-4">
-  <button id="login-btn" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
-  <p id="login-error" class="text-red-500 mt-2"></p>
-</div>
+<body class="bg-gray-950 text-gray-100">
 
-<div id="dashboard-container" class="hidden p-8 w-full max-w-5xl">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">Supabase Dashboard</h1>
-    <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</button>
+<!-- TOP NAV -->
+<header class="flex justify-between items-center px-6 py-4 bg-gray-900 border-b border-gray-800">
+  <h1 class="text-xl font-bold">AlliedDash</h1>
+
+  <div class="flex items-center gap-3">
+    <span id="user-name" class="text-sm"></span>
+    <img id="user-avatar" class="w-8 h-8 rounded-full hidden" />
   </div>
+</header>
 
-  <table class="min-w-full bg-white rounded shadow overflow-hidden mb-4" id="data-table">
-    <thead class="bg-gray-200">
-      <tr>
-        <th class="py-2 px-4 border">ID</th>
-        <th class="py-2 px-4 border">Name</th>
-        <th class="py-2 px-4 border">Email</th>
-        <th class="py-2 px-4 border">Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<div class="flex">
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-gray-900 border-r border-gray-800 p-4 min-h-screen">
+    <nav class="flex flex-col gap-2">
+<a data-page="members.html" href="members.html" target="content"
+   class="nav-link px-4 py-2 rounded hover:bg-gray-800">
+  Members
+</a>
 
-  <div class="mb-4">
-    <h2 class="text-xl font-semibold mb-2">Add New Record</h2>
-    <input id="new-name" type="text" placeholder="Name" class="p-2 border rounded mr-2">
-    <input id="new-email" type="text" placeholder="Email" class="p-2 border rounded mr-2">
-    <button id="add-btn" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Add</button>
-  </div>
+<a data-page="seasons.html" href="seasons.html" target="content"
+   class="nav-link px-4 py-2 rounded hover:bg-gray-800">
+  Seasons
+</a>
+
+<a data-page="robots.html" href="robots.html" target="content"
+   class="nav-link px-4 py-2 rounded hover:bg-gray-800">
+  Robot Designs
+</a>
+<script>
+const links = document.querySelectorAll(".nav-link");
+
+links.forEach(link => {
+  link.addEventListener("click", () => {
+    links.forEach(l => l.classList.remove("bg-gray-800"));
+    link.classList.add("bg-gray-800");
+  });
+});
+</script>
+
+      <a href="login.html" class="mt-6 text-red-400">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- PAGE CONTENT -->
+  <iframe
+    name="content"
+    src="members.html"
+    class="flex-1 h-[calc(100vh-64px)] border-0"
+  ></iframe>
 </div>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-<script type="module" src="dashboard.js"></script>
+const supabase = createClient(
+  "https://eyxhddkoqotedgucpfbz.supabase.co",
+  "sb_publishable_h4nlL7bfvrg-amPOoqyhTw_CJjsVfJc"
+);
+
+const { data } = await supabase.auth.getUser();
+if (data.user) {
+  document.getElementById("user-name").textContent =
+    data.user.user_metadata.full_name || data.user.email;
+
+  const avatar = data.user.user_metadata.avatar_url;
+  if (avatar) {
+    const img = document.getElementById("user-avatar");
+    img.src = avatar;
+    img.classList.remove("hidden");
+  }
+}
+</script>
+
 </body>
 </html>

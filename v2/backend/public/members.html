@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlliedDash – Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-950 text-gray-100">
+
+  <!-- DASHBOARD CONTENT ONLY -->
+  <div id="dashboard-container" class="p-6">
+    
+    <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+
+    <!-- Members Table -->
+    <div class="bg-gray-900 border border-gray-800 rounded overflow-hidden">
+      <table class="min-w-full" id="data-table">
+        <thead class="bg-gray-800">
+          <tr>
+            <th class="py-2 px-4 text-left">ID</th>
+            <th class="py-2 px-4 text-left">Name</th>
+            <th class="py-2 px-4 text-left">Role</th>
+            <th class="py-2 px-4 text-left">Des</th>
+            <th class="py-2 px-4 text-left">Img</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
