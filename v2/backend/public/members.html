@@ -1,37 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AlliedDash – Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Members – AlliedDash</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-950 text-gray-100 p-4">
 
-<body class="bg-gray-950 text-gray-100">
+<h2 class="text-2xl font-bold mb-4 text-center md:text-left">Team Members</h2>
 
-  <!-- DASHBOARD CONTENT ONLY -->
-  <div id="dashboard-container" class="p-6">
-    
-    <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+<div class="overflow-x-auto bg-gray-900 border border-gray-800 rounded mb-6 shadow-md">
+  <table class="min-w-full text-sm" id="members-table">
+    <thead class="bg-gray-800 sticky top-0">
+      <tr>
+        <th class="px-3 py-2 text-left">ID</th>
+        <th class="px-3 py-2 text-left">Name</th>
+        <th class="px-3 py-2 text-left">Role</th>
+        <th class="px-3 py-2 text-left">Description</th>
+        <th class="px-3 py-2 text-left">Image</th>
+        <th class="px-3 py-2 text-left">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="bg-gray-900"></tbody>
+  </table>
+</div>
 
-    <!-- Members Table -->
-    <div class="bg-gray-900 border border-gray-800 rounded overflow-hidden">
-      <table class="min-w-full" id="data-table">
-        <thead class="bg-gray-800">
-          <tr>
-            <th class="py-2 px-4 text-left">ID</th>
-            <th class="py-2 px-4 text-left">Name</th>
-            <th class="py-2 px-4 text-left">Role</th>
-            <th class="py-2 px-4 text-left">Des</th>
-            <th class="py-2 px-4 text-left">Img</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
+<!-- Add Member Form -->
+<div class="bg-gray-900 border border-gray-800 rounded p-4 shadow-md">
+  <h3 class="font-semibold mb-3">Add New Member</h3>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+    <input id="new-name" placeholder="Name" class="p-2 bg-gray-800 border border-gray-700 rounded">
+    <input id="new-role" placeholder="Role" class="p-2 bg-gray-800 border border-gray-700 rounded">
+    <input id="new-des" placeholder="Description" class="p-2 bg-gray-800 border border-gray-700 rounded">
+    <input id="new-img" placeholder="Image URL" class="p-2 bg-gray-800 border border-gray-700 rounded">
   </div>
+  <button id="add-btn" class="mt-3 w-full md:w-auto bg-green-600 px-4 py-2 rounded hover:bg-green-700">Add Member</button>
+</div>
 
-  <script type="module" src="dashboard.js"></script>
+<script type="module">
+import { supabase } from "./supabaseClient.js";
+
+// Elements
+const tableBody = document.querySelector("#members-table tbody");
+
+// Load members
+async function loadMembers() {
+  const { data, error } = await supabase.from("members").select("*").order("id");
+  if (error) return alert(error.message);
+  tableBody.innerHTML = "";
+  
+  data.forEach(m => {
+    const row = document.createElement("tr");
+    row.classList.add("border-b", "border-gray-800");
+    row.innerHTML = `
+      <td class="px-3 py-2">${m.id}</td>
+      <td class="px-3 py-2"><input class="w-full bg-gray-800 p-1 rounded" value="${m.name ?? ''}"></td>
+      <td class="px-3 py-2"><input class="w-full bg-gray-800 p-1 rounded" value="${m.role ?? ''}"></td>
+      <td class="px-3 py-2"><input class="w-full bg-gray-800 p-1 rounded" value="${m.des ?? ''}"></td>
+      <td class="px-3 py-2"><input class="w-full bg-gray-800 p-1 rounded" value="${m.img ?? ''}"></td>
+      <td class="px-3 py-2 flex gap-2">
+        <button class="save bg-blue-600 px-2 py-1 rounded hover:bg-blue-700">Save</button>
+        <button class="delete bg-red-600 px-2 py-1 rounded hover:bg-red-700">Delete</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+
+    // Save
+    row.querySelector(".save").onclick = async () => {
+      const [name, role, des, img] = [...row.querySelectorAll("input")].map(i => i.value);
+      await supabase.from("members").update({ name, role, des, img }).eq("id", m.id);
+      loadMembers();
+    };
+
+    // Delete
+    row.querySelector(".delete").onclick = async () => {
+      if (!confirm("Delete this member?")) return;
+      await supabase.from("members").delete().eq("id", m.id);
+      loadMembers();
+    };
+  });
+}
+
+// Add member
+document.getElementById("add-btn").onclick = async () => {
+  const name = document.getElementById("new-name").value;
+  if (!name) return alert("Name is required");
+  
+  await supabase.from("members").insert([{
+    name,
+    role: document.getElementById("new-role").value,
+    des: document.getElementById("new-des").value,
+    img: document.getElementById("new-img").value
+  }]);
+
+  document.querySelectorAll("#new-name, #new-role, #new-des, #new-img").forEach(i => i.value = "");
+  loadMembers();
+};
+
+loadMembers();
+</script>
+
+<script type="module" src="./auth-guard.js"></script>
 </body>
 </html>

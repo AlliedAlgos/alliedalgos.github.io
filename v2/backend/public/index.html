@@ -6,80 +6,65 @@
   <title>AlliedDash</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-gray-950 text-gray-100 flex flex-col min-h-screen">
 
-<body class="bg-gray-950 text-gray-100">
-
-<!-- TOP NAV -->
-<header class="flex justify-between items-center px-6 py-4 bg-gray-900 border-b border-gray-800">
-  <h1 class="text-xl font-bold">AlliedDash</h1>
+<!-- Top Navbar -->
+<header class="flex items-center justify-between bg-gray-900 px-4 py-3 border-b border-gray-800">
+  <div class="flex items-center gap-3">
+    <button id="menu-btn" class="md:hidden text-gray-100">&#9776;</button>
+    <h1 class="text-xl font-bold">AlliedDash</h1>
+  </div>
 
   <div class="flex items-center gap-3">
-    <span id="user-name" class="text-sm"></span>
+    <span id="user-name" class="text-sm hidden md:inline"></span>
     <img id="user-avatar" class="w-8 h-8 rounded-full hidden" />
   </div>
 </header>
 
-<div class="flex">
-  <!-- SIDEBAR -->
-  <aside class="w-64 bg-gray-900 border-r border-gray-800 p-4 min-h-screen">
+<div class="flex flex-1 overflow-hidden">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="bg-gray-900 w-64 md:block hidden border-r border-gray-800 p-4 flex-shrink-0">
     <nav class="flex flex-col gap-2">
-<a data-page="members.html" href="members.html" target="content"
-   class="nav-link px-4 py-2 rounded hover:bg-gray-800">
-  Members
-</a>
-
-<a data-page="seasons.html" href="seasons.html" target="content"
-   class="nav-link px-4 py-2 rounded hover:bg-gray-800">
-  Seasons
-</a>
-
-<a data-page="robots.html" href="robots.html" target="content"
-   class="nav-link px-4 py-2 rounded hover:bg-gray-800">
-  Robot Designs
-</a>
-<script>
-const links = document.querySelectorAll(".nav-link");
-
-links.forEach(link => {
-  link.addEventListener("click", () => {
-    links.forEach(l => l.classList.remove("bg-gray-800"));
-    link.classList.add("bg-gray-800");
-  });
-});
-</script>
-
-      <a href="login.html" class="mt-6 text-red-400">Logout</a>
+      <a data-page="members.html" href="members.html" target="content" class="nav-link px-4 py-2 rounded hover:bg-gray-800">Members</a>
+      <a data-page="seasons.html" href="seasons.html" target="content" class="nav-link px-4 py-2 rounded hover:bg-gray-800">Seasons</a>
+      <a data-page="robots.html" href="robots.html" target="content" class="nav-link px-4 py-2 rounded hover:bg-gray-800">Robot Designs</a>
+      <a href="login.html" class="mt-6 px-4 py-2 rounded text-red-400 hover:bg-gray-800">Logout</a>
     </nav>
   </aside>
 
-  <!-- PAGE CONTENT -->
-  <iframe
-    name="content"
-    src="members.html"
-    class="flex-1 h-[calc(100vh-64px)] border-0"
-  ></iframe>
+  <!-- Page Content -->
+  <iframe name="content" src="members.html" class="flex-1 border-0"></iframe>
 </div>
+
 <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+  import { supabase } from "./supabaseClient.js";
 
-const supabase = createClient(
-  "https://eyxhddkoqotedgucpfbz.supabase.co",
-  "sb_publishable_h4nlL7bfvrg-amPOoqyhTw_CJjsVfJc"
-);
-
-const { data } = await supabase.auth.getUser();
-if (data.user) {
-  document.getElementById("user-name").textContent =
-    data.user.user_metadata.full_name || data.user.email;
-
-  const avatar = data.user.user_metadata.avatar_url;
-  if (avatar) {
-    const img = document.getElementById("user-avatar");
-    img.src = avatar;
-    img.classList.remove("hidden");
+  // Load user info
+  const { data } = await supabase.auth.getUser();
+  if (data.user) {
+    document.getElementById("user-name").textContent = data.user.user_metadata.full_name || data.user.email;
+    const avatar = data.user.user_metadata.avatar_url;
+    if (avatar) {
+      const img = document.getElementById("user-avatar");
+      img.src = avatar;
+      img.classList.remove("hidden");
+    }
   }
-}
-</script>
 
+  // Sidebar toggle for mobile
+  const sidebar = document.getElementById("sidebar");
+  document.getElementById("menu-btn").onclick = () => {
+    sidebar.classList.toggle("hidden");
+  };
+
+  // Active link highlighting
+  const links = document.querySelectorAll(".nav-link");
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      links.forEach(l => l.classList.remove("bg-gray-800"));
+      link.classList.add("bg-gray-800");
+    });
+  });
+</script>
 </body>
 </html>
