@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlliedWork Editor</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Monaco Editor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+
+<style>
+  html, body { height: 100%; margin: 0; font-family: 'Inter', sans-serif; background: #0f0f12; color: #fff; }
+  #editor { flex: 1; border-radius: 1rem; overflow: hidden; box-shadow: 0 0 30px rgba(75,0,130,0.5); }
+  #console, #mapIframe { border-radius: 1rem; backdrop-filter: blur(12px); background: rgba(15,15,18,0.85); box-shadow: 0 0 20px rgba(75,0,130,0.5); }
+  #console { height: 150px; font-family: monospace; padding: 1rem; overflow-y:auto; }
+  .glass { background: rgba(15,15,18,0.7); backdrop-filter: blur(14px); border: 1px solid rgba(75,0,130,0.3); }
+  .sidebar { width: 4.5rem; transition: width 0.3s; }
+  .sidebar:hover { width: 16rem; }
+  .sidebar button span.label { display: none; }
+  .sidebar:hover button span.label { display: inline-block; margin-left: 12px; font-weight: 500; color: #8b5cf6; }
+  .sidebar button { display: flex; align-items: center; justify-content: flex-start; gap: 0.5rem; padding: 0.75rem; border-radius: 0.75rem; color: #fff; }
+  .sidebar button:hover { background: rgba(75,0,130,0.2); }
+</style>
+</head>
+
+<body class="flex flex-col h-screen">
+
+<!-- Top Navbar -->
+<div class="glass flex items-center justify-between px-6 py-3 shadow-lg border-b border-purple-700">
+  <div class="flex items-center gap-3">
+    <img src="../images/logo.png" alt="logo" class="w-8 h-8 rounded-full shadow-md">
+    <span class="text-xl font-semibold text-purple-400 tracking-wide">AlliedWork</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <span id="userName" class="text-gray-300 font-medium">Guest</span>
+    <img id="userAvatar" class="w-9 h-9 rounded-full border border-purple-600" src="https://via.placeholder.com/40" alt="profile">
+    <button id="logoutBtn" class="px-3 py-1 bg-purple-600 rounded-xl font-medium hover:bg-purple-500 transition">Logout</button>
+  </div>
+</div>
+
+<div class="flex flex-1 overflow-hidden">
+
+  <!-- Sidebar -->
+  <div class="glass sidebar flex flex-col py-4 gap-4 border-r border-purple-700 shadow-lg px-2">
+    <button title="Home" onclick="location.href='index.html'">
+      <span class="material-icons text-white">home</span>
+      <span class="label">Home</span>
+    </button>
+    <button id="leftThemeToggle">
+      <span class="material-icons text-white">brightness_4</span>
+      <span class="label">Theme</span>
+    </button>
+    <button onclick="window.open('https://agsid.github.io/portfolio/v2index.html','_blank')">
+      <span class="material-icons text-white">public</span>
+      <span class="label">Portfolio</span>
+    </button>
+    <button id="toggleExplorer">
+      <span class="material-icons text-white">menu</span>
+      <span class="label">Explorer</span>
+    </button>
+    <button id="toggleMap">
+      <span class="material-icons text-white">map</span>
+      <span class="label">Map</span>
+    </button>
+  </div>
+
+  <!-- Explorer Panel -->
+  <div class="explorer glass w-64 border-r border-purple-700 p-4 text-sm overflow-y-auto transition-all duration-300">
+    <h2 class="text-purple-400 uppercase text-xs mb-3 font-semibold tracking-widest">Explorer</h2>
+
+    <div class="mb-4">
+      <div class="text-white font-medium mb-1">User Files</div>
+      <div id="file-user-main.py" class="cursor-pointer pl-4 py-1 rounded transition" onclick="openFile('main.py')">main.py</div>
+    </div>
+
+    <div class="mb-4">
+      <div class="text-white font-medium mb-1">Available Commands</div>
+      <div id="file-avalComm.txt" class="cursor-pointer pl-4 py-1 rounded transition" onclick="openFile('avalComm.txt')">avalComm.txt</div>
+    </div>
+
+    <div>
+      <div class="text-white font-medium mb-1">Generated</div>
+      <div id="file-generated-generated.py" class="cursor-pointer pl-4 py-1 rounded transition" onclick="openFile('generated.py')">generated.py</div>
+    </div>
+  </div>
+
+  <!-- Editor + Map + Console -->
+  <div class="flex-1 flex flex-col space-y-3 p-3">
+    <div id="editor" class="flex-1"></div>
+    <iframe id="mapIframe" src="robot-map.html" class="flex-1 w-full"></iframe>
+    <div id="console"></div>
+  </div>
+</div>
+
+<script>
+/* ======================
+   Monaco Editor + Files
+====================== */
+const defaultMain = `print('Hello FLL Team!')`;
+const availableCommands = `
+drive(inches)
+turn(degrees)
+speed(%)
+speed_motor(%)
+turn_motor(port, degrees)
+wait(milliseconds)
+arm()
+`;
+
+let currentFile = 'main.py';
+let editor;
+let files = { 'main.py': localStorage.getItem('main.py') || defaultMain, 'avalComm.txt': availableCommands };
+
+function logConsole(msg){
+  const consoleEl = document.getElementById('console');
+  const p = document.createElement('div');
+  p.textContent = msg;
+  consoleEl.appendChild(p);
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+}
+
+require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
+require(['vs/editor/editor.main'], function() {
+  editor = monaco.editor.create(document.getElementById('editor'), {
+    value: files['main.py'],
+    language: 'python',
+    theme: 'vs-dark',
+    automaticLayout: true,
+    fontSize: 14,
+    minimap: { enabled: false }
+  });
+  editor.onDidChangeModelContent(() => {
+    files['main.py'] = editor.getValue();
+    localStorage.setItem('main.py', files['main.py']);
+  });
+});
+
+function openFile(name){
+  currentFile = name;
+  const modelType = name.endsWith('.py') ? 'python' : 'plaintext';
+  const content = files[name];
+  const model = monaco.editor.createModel(content, modelType);
+  editor.setModel(model);
+}
+
+/* Sidebar toggles */
+const explorer = document.querySelector('.explorer');
+const mapIframe = document.getElementById('mapIframe');
+document.getElementById('toggleExplorer').addEventListener('click', ()=> explorer.classList.toggle('hidden'));
+document.getElementById('toggleMap').addEventListener('click', ()=> mapIframe.classList.toggle('hidden'));
+document.getElementById('leftThemeToggle').addEventListener('click', ()=>{
+  const newTheme = editor._themeService._theme.themeName==='vs-dark'?'vs':'vs-dark';
+  monaco.editor.setTheme(newTheme);
+});
+
+/* Logout */
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const supabase = createClient(
+  "https://bqagmevmzpuvgiigyime.supabase.co",
+  "sb_publishable_rcXEO06dge8l_iJI_AUbSA_vD321UNP"
+);
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  const { error } = await supabase.auth.signOut();
+  if(!error) window.location.href = "login.html";
+});
+
+/* Example user info */
+document.getElementById('userName').textContent = "Sid Ag";
+document.getElementById('userAvatar').src = "https://avatars.githubusercontent.com/u/583231?v=4";
+</script>
+</body>
+</html>
