@@ -2,164 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login</title>
+  <title>AlliedWork – Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="min-h-screen bg-gradient-to-br from-zinc-900 via-black to-zinc-800 flex items-center justify-center text-white">
-
-  <div class="w-full max-w-md bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl">
-
-    <h1 class="text-2xl font-semibold text-center mb-6">Welcome</h1>
-
-    <!-- Tabs -->
-    <div class="flex bg-zinc-800 rounded-xl p-1 mb-6">
-      <button id="loginTab" class="flex-1 py-2 rounded-lg bg-zinc-900 text-sm">Login</button>
-      <button id="signupTab" class="flex-1 py-2 rounded-lg text-sm text-zinc-400">Sign Up</button>
+<body class="min-h-screen bg-[#050505] flex items-center justify-center text-white font-sans">
+  <div class="w-full max-w-md bg-zinc-900/40 backdrop-blur-2xl border border-white/5 rounded-3xl p-10 shadow-2xl">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold tracking-tighter mb-2 italic">ALLIEDWORK</h1>
+      <p class="text-zinc-500 text-sm">Sign in to access your missions</p>
     </div>
 
-    <!-- Inputs -->
+    <div class="flex bg-white/5 rounded-2xl p-1.5 mb-8 border border-white/5">
+      <button id="loginTab" class="flex-1 py-2.5 rounded-xl bg-zinc-800 text-sm font-medium transition-all">Login</button>
+      <button id="signupTab" class="flex-1 py-2.5 rounded-xl text-sm font-medium text-zinc-500 hover:text-white transition-all">Sign Up</button>
+    </div>
+
     <div class="space-y-4">
-      <input
-        id="email"
-        type="email"
-        placeholder="Email"
-        class="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        class="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-      <input
-        id="confirmPassword"
-        type="password"
-        placeholder="Confirm Password"
-        class="hidden w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
+      <div class="space-y-2">
+        <label class="text-xs font-semibold uppercase tracking-wider text-zinc-500 ml-1">Email</label>
+        <input id="email" type="email" placeholder="name@school.edu" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition" />
+      </div>
+      <div class="space-y-2">
+        <label class="text-xs font-semibold uppercase tracking-wider text-zinc-500 ml-1">Password</label>
+        <input id="password" type="password" placeholder="••••••••" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition" />
+      </div>
+      <div id="confirmWrapper" class="hidden space-y-2">
+        <label class="text-xs font-semibold uppercase tracking-wider text-zinc-500 ml-1">Confirm Password</label>
+        <input id="confirmPassword" type="password" placeholder="••••••••" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition" />
+      </div>
     </div>
 
-    <!-- Action Button -->
-    <button
-      id="actionBtn"
-      class="w-full mt-6 py-3 rounded-xl font-medium
-             bg-gradient-to-r from-indigo-500 to-violet-600
-             hover:from-indigo-400 hover:to-violet-500 transition"
-    >
-      Login
-    </button>
+    <button id="actionBtn" class="w-full mt-8 py-4 rounded-2xl font-bold bg-white text-black hover:bg-zinc-200 transition-all active:scale-[0.98]">Login</button>
 
-    <!-- Divider -->
-    <div class="flex items-center gap-3 my-6 text-zinc-500 text-sm">
-      <div class="flex-1 h-px bg-zinc-700"></div>
-      or
-      <div class="flex-1 h-px bg-zinc-700"></div>
+    <div class="flex items-center gap-4 my-8 text-zinc-600 text-xs font-bold uppercase tracking-widest">
+      <div class="flex-1 h-px bg-white/5"></div> or <div class="flex-1 h-px bg-white/5"></div>
     </div>
-    <div class="grid grid-cols-2">
-    <!-- OAuth Buttons -->
-        <button
-        id="googleBtn"
-        class="w-11/12 bg-gray-800 text-white py-3 rounded-xl font-medium hover:bg-gray-700 transition mt-3"
-        >
-        G
-        </button>
-        <button
-        id="githubBtn"
-        class="w-11/12 bg-gray-800 text-white py-3 rounded-xl font-medium hover:bg-gray-700 transition mt-3 flex items-center"
-        >
-        <img class="h-10" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png">
-        </button>
-    </div>
-    <p id="msg" class="text-center text-sm text-zinc-400 mt-4"></p>
 
+    <div class="grid grid-cols-2 gap-4">
+      <button id="googleBtn" class="flex items-center justify-center gap-2 bg-white/5 border border-white/10 py-3 rounded-2xl hover:bg-white/10 transition">
+        <img class="h-5" src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png">
+        <span class="text-sm font-medium">Google</span>
+      </button>
+      <button id="githubBtn" class="flex items-center justify-center gap-2 bg-white/5 border border-white/10 py-3 rounded-2xl hover:bg-white/10 transition">
+        <img class="h-5 invert" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg">
+        <span class="text-sm font-medium">GitHub</span>
+      </button>
+    </div>
+    <p id="msg" class="text-center text-xs mt-6 min-h-[1em] font-medium"></p>
   </div>
 
-  <!-- Supabase + Logic -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-    // ✅ YOUR SUPABASE KEYS
-    const supabase = createClient(
-      "https://bqagmevmzpuvgiigyime.supabase.co",
-      "sb_publishable_rcXEO06dge8l_iJI_AUbSA_vD321UNP"
-    );
+    const supabase = createClient("https://bqagmevmzpuvgiigyime.supabase.co", "sb_publishable_rcXEO06dge8l_iJI_AUbSA_vD321UNP");
 
     let mode = "login";
-    const loginTab = document.getElementById("loginTab");
-    const signupTab = document.getElementById("signupTab");
-    const actionBtn = document.getElementById("actionBtn");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const msg = document.getElementById("msg");
+    const loginTab = document.getElementById("loginTab"), signupTab = document.getElementById("signupTab"), actionBtn = document.getElementById("actionBtn"), confirmWrapper = document.getElementById("confirmWrapper"), msg = document.getElementById("msg");
 
     function setMode(m) {
-      mode = m;
-      msg.textContent = "";
-
+      mode = m; msg.textContent = "";
       if (m === "login") {
-        confirmPassword.classList.add("hidden");
-        actionBtn.textContent = "Login";
-        loginTab.classList.add("bg-zinc-900","text-white");
-        signupTab.classList.remove("bg-zinc-900","text-white");
-        signupTab.classList.add("text-zinc-400");
+        confirmWrapper.classList.add("hidden"); actionBtn.textContent = "Login";
+        loginTab.classList.add("bg-zinc-800", "text-white"); signupTab.classList.remove("bg-zinc-800", "text-white");
       } else {
-        confirmPassword.classList.remove("hidden");
-        actionBtn.textContent = "Create Account";
-        signupTab.classList.add("bg-zinc-900","text-white");
-        loginTab.classList.remove("bg-zinc-900","text-white");
-        loginTab.classList.add("text-zinc-400");
+        confirmWrapper.classList.remove("hidden"); actionBtn.textContent = "Create Account";
+        signupTab.classList.add("bg-zinc-800", "text-white"); loginTab.classList.remove("bg-zinc-800", "text-white");
       }
     }
-
     loginTab.onclick = () => setMode("login");
     signupTab.onclick = () => setMode("signup");
 
-    // Email login / signup
-   // Email login / signup
-actionBtn.onclick = async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const confirm = confirmPassword.value;
+    actionBtn.onclick = async () => {
+      const email = document.getElementById("email").value, password = document.getElementById("password").value, confirm = document.getElementById("confirmPassword").value;
+      if (!email || !password) { msg.className = "text-center text-xs mt-6 text-amber-500"; msg.textContent = "Fill out all fields"; return; }
+      if (mode === "signup" && password !== confirm) { msg.className = "text-center text-xs mt-6 text-red-500"; msg.textContent = "Passwords do not match"; return; }
+      
+      const { error } = mode === "login" ? await supabase.auth.signInWithPassword({ email, password }) : await supabase.auth.signUp({ email, password });
+      if (error) { msg.className = "text-center text-xs mt-6 text-red-500"; msg.textContent = error.message; }
+      else { window.location.href = "index.html"; }
+    };
 
-  if (!email || !password) {
-    msg.textContent = "Fill out all fields";
-    return;
-  }
-  if (mode === "signup" && password !== confirm) {
-    msg.textContent = "Passwords do not match";
-    return;
-  }
-
-  msg.textContent = "Loading...";
-  const result = mode === "login"
-    ? await supabase.auth.signInWithPassword({ email, password })
-    : await supabase.auth.signUp({ email, password });
-
-  if (result.error) msg.textContent = result.error.message;
-  else window.location.href = "/index.html";  // <-- redirect after login
-};
-
-// Google OAuth
-document.getElementById("googleBtn").onclick = async () => {
-  await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: { redirectTo: window.location.origin + "/index.html" } // redirect after login
-  });
-};
-
-// GitHub OAuth
-document.getElementById("githubBtn").onclick = async () => {
-  await supabase.auth.signInWithOAuth({
-    provider: "github",
-    options: { redirectTo: window.location.origin + "/index.html" } // redirect after login
-  });
-};
-
-// Auto redirect if already logged in
-const { data: { session } } = await supabase.auth.getSession();
-if (session) window.location.href = "/index.html";  // <-- already logged in
-
+    const redirectUrl = window.location.origin + window.location.pathname.replace('login.html', 'index.html');
+    document.getElementById("googleBtn").onclick = () => supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: redirectUrl } });
+    document.getElementById("githubBtn").onclick = () => supabase.auth.signInWithOAuth({ provider: "github", options: { redirectTo: redirectUrl } });
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) window.location.href = "index.html";
   </script>
-
 </body>
 </html>
