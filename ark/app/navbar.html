@@ -1,0 +1,79 @@
+<!-- navbar.html -->
+<style>
+  /* Base reset & font */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+  /* Safe area + bottom nav spacing */
+  .content { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+
+  /* Bottom tab bar container */
+  .tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    z-index: 1000;
+  }
+
+  .tabbar a {
+    flex: 1;
+    text-decoration: none;
+    color: white;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0;
+    transition: background 0.2s;
+  }
+
+  .tabbar a.active,
+  .tabbar a:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .tabbar a img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    filter: invert(1) brightness(1.2);
+  }
+</style>
+
+<div class="tabbar">
+  <a href="sensors.html" id="tab-sensors">
+    <img src="https://cdn-icons-png.flaticon.com/512/1684/1684375.png" alt="Sensors" />
+    <span>Sensors</span>
+  </a>
+  <a href="motion.html" id="tab-motion">
+    <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Motion Logs" />
+    <span>Motion</span>
+  </a>
+  <a href="alerts.html" id="tab-alerts">
+    <img src="https://cdn-icons-png.flaticon.com/512/595/595067.png" alt="Alerts" />
+    <span>Alerts</span>
+  </a>
+  <a href="map.html" id="tab-map">
+    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Map" />
+    <span>Map</span>
+  </a>
+</div>
+
+<script>
+  // Mark the active tab based on current URL
+  const path = window.location.pathname;
+  if (path.endsWith("sensors.html"))      document.getElementById("tab-sensors").classList.add("active");
+  else if (path.endsWith("motion.html"))  document.getElementById("tab-motion").classList.add("active");
+  else if (path.endsWith("alerts.html"))  document.getElementById("tab-alerts").classList.add("active");
+  else if (path.endsWith("map.html"))     document.getElementById("tab-map").classList.add("active");
+</script>

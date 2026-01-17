@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedWork – Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-[#050505] flex items-center justify-center text-white font-sans">
+  <div class="w-full max-w-md bg-zinc-900/40 backdrop-blur-2xl border border-white/5 rounded-[2.5rem] p-10 shadow-2xl">
+    
+    <div class="text-center mb-10">
+      <div class="w-12 h-12 bg-indigo-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg shadow-indigo-600/20">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+      </div>
+      <h1 class="text-3xl font-bold tracking-tighter mb-2 italic uppercase">ALLIED WORK</h1>
+      <p class="text-zinc-500 text-sm">Authorized Personnel Access Only</p>
+    </div>
+
+    <div class="space-y-5">
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 ml-1">Admin Email</label>
+        <input id="email" type="email" placeholder="admin@allied.com" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition text-sm" />
+      </div>
+      <div class="space-y-2">
+        <label class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 ml-1">Secure Password</label>
+        <input id="password" type="password" placeholder="••••••••" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition text-sm" />
+      </div>
+    </div>
+
+    <button id="actionBtn" class="w-full mt-10 py-4 rounded-2xl font-black uppercase tracking-widest bg-white text-black hover:bg-indigo-500 hover:text-white transition-all active:scale-[0.98] text-xs">
+      Access Dashboard
+    </button>
+
+    <p id="msg" class="text-center text-[10px] mt-6 min-h-[1em] font-bold uppercase tracking-widest"></p>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+    const supabase = createClient("https://eyxhddkoqotedgucpfbz.supabase.co", "sb_publishable_h4nlL7bfvrg-amPOoqyhTw_CJjsVfJc");
+
+    const actionBtn = document.getElementById("actionBtn");
+    const msg = document.getElementById("msg");
+
+    actionBtn.onclick = async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) { 
+        msg.className = "text-center text-[10px] mt-6 text-amber-500 font-bold uppercase tracking-widest"; 
+        msg.textContent = "Credentials Required"; 
+        return; 
+      }
+      
+      msg.className = "text-center text-[10px] mt-6 text-indigo-400 font-bold uppercase tracking-widest animate-pulse";
+      msg.textContent = "Verifying Identity...";
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) { 
+        msg.className = "text-center text-[10px] mt-6 text-red-500 font-bold uppercase tracking-widest"; 
+        msg.textContent = error.message; 
+      }
+      else { 
+        window.location.href = "index.html"; 
+      }
+    };
+
+    // Auto-redirect if already logged in
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) window.location.href = "index.html";
+  </script>
+</body>
+</html>

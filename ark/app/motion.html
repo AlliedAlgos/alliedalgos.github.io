@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Motion Logs – ARK</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <style>
+    body {
+      background: #111827; /* dark background */
+      color: white;
+      font-family: sans-serif;
+      margin: 0;
+      padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    }
+
+    .motion-card {
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    .motion-card:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="pt-10 px-4">
+
+  <header class="text-center mb-6">
+    <h2 class="text-3xl font-bold">Motion Logs</h2>
+  </header>
+
+  <div id="motionLog" class="space-y-2">
+    <!-- Motion notifications will be inserted here -->
+  </div>
+
+  <!-- Bottom Navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html").then(r => r.text()).then(h => {
+      document.getElementById("navbar").innerHTML = h;
+    });
+  </script>
+
+  <script>
+    const motionLog = document.getElementById("motionLog");
+    const motionEvents = [
+      "Lid opened",
+      "Lid closed",
+      "Artifact taken out",
+      "Artifact placed back ins"
+    ];
+
+    function randomPastTime(minutesAgo) {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - minutesAgo);
+      const hours = now.getHours().toString().padStart(2,'0');
+      const mins = now.getMinutes().toString().padStart(2,'0');
+      return `${hours}:${mins}`;
+    }
+
+    // Generate 5 random notifications
+    for(let i = 5; i > 0; i--) {
+      const event = motionEvents[Math.floor(Math.random() * motionEvents.length)];
+      const timestamp = randomPastTime(i * 7); // spaced in past
+      const div = document.createElement("div");
+      div.className = "motion-card";
+      div.textContent = `${event} at ${timestamp}`;
+      motionLog.appendChild(div);
+    }
+  </script>
+
+</body>
+</html>
