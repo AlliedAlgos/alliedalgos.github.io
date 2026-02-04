@@ -1,5 +1,22 @@
 User-agent: *
-# Specifically allow the sitemap and the v5 directory
-Allow: /v5/sitemap.xml
-Allow: /v5/
+
+# Allow crawling of the main v5 project and its subfolders
+Allow: /v5/home/
+Allow: /v5/work/
+Allow: /v5/about-us/
+Allow: /v5/contact-us/
+Allow: /v5/seasons/
+Allow: /v5/docs/
+Allow: /v5/aac/
+
+# Disallow internal system/asset folders within v5
+Disallow: /v5/layout/
+Disallow: /v5/images/
+Disallow: /v5/robot/
+
+# Disallow everything else outside of the v5 folder 
+# (Remove the line below if you have other versions like /v4/ you want indexed)
+Disallow: /
+
+# Link to your Sitemap
 Sitemap: https://alliedalgos.github.io/v5/sitemap.xml
