@@ -2,7 +2,4 @@ User-agent: *
 # Specifically allow the sitemap and the v5 directory
 Allow: /v5/sitemap.xml
 Allow: /v5/
-# Block everything else AFTER the allows
-Disallow: /
-
 Sitemap: https://alliedalgos.github.io/v5/sitemap.xml
