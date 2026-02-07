@@ -1,4 +1,4 @@
-baseurl: "/webstie_v5/" # The name of your GitHub repository
+baseurl: "/website_v5/" # The name of your GitHub repository
 url: "https://alliedalgos.org" # Your custom domain
 title: "Allied Algorithms 58590"
 description: "FLL Team 58590's website."
