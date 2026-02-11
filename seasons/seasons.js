@@ -59,8 +59,8 @@ async function renderSeasons() {
                         ${current.year} <br class="hidden md:block"> <span class="text-blue-500">${current.title}</span>
                     </h2>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-                    ${statCard("Hours Spent", current.hours_spent)}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+                   
                     ${statCard("People Impacted", current.people_impacted)}
                     ${statCard("Missions Completed", current.missions_completed)}
                 </div>
