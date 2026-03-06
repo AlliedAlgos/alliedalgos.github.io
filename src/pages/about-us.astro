@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro'; // Use the standard name for consistency
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+// Data fetching
+const raw = readFileSync('./src/data/members.toml', 'utf-8');
+const { members } = parse(raw);
+
+// SEO Strategy: Focus on the "Brains" behind the algorithms
+const title = "Our Team | Allied Algorithms FLL 58590";
+const description = "Meet the engineers, designers, and strategists of Allied Algorithms. Discover the minds driving our technical excellence in FLL robotics.";
+---
+
+<Layout title={title} description={description}>
+    
+    <script type="application/ld+json" slot="head">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {members.map((member, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+              "@type": "Person",
+              "name": member.name,
+              "jobTitle": member.role,
+              "image": `https://alliedalgos.org${member.photo}`
+            }
+          }))}
+        ]
+      }
+    }
+    </script>
+
+    <section class="relative py-32 flex items-center justify-center text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_70%)]"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">Our Identity</span>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6 uppercase">
+                WE ARE <br><span class="text-blue-500 underline decoration-4 underline-offset-4">ALLIED.</span>
+            </h1>
+            <p class="text-zinc-500 text-lg max-w-md mx-auto leading-relaxed">
+               The minds driving our technical and strategic excellence in FIRST LEGO League.
+            </p>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {members.map((member) => (
+                <div class="group relative h-[600px] rounded-[3rem] overflow-hidden bg-zinc-900 border border-white/10 transition-all duration-500 hover:border-blue-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.25)]">
+                    
+                    <img 
+                        src={member.photo}
+                        alt={`Portrait of ${member.name}, ${member.role} at Allied Algorithms`}
+                        loading="lazy"
+                        decoding="async"
+                        class="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                    />
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90" aria-hidden="true"></div>
+
+                    <div class="absolute inset-0 flex flex-col justify-end p-10">
+                        <div class="transform transition-transform duration-500 group-hover:-translate-y-6">
+                            <p class="text-blue-400 text-sm font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">
+                                {member.role}
+                            </p>
+                            <h2 class="text-white font-black text-5xl tracking-tighter italic leading-none mb-4 uppercase drop-shadow-xl">
+                                {member.name}
+                            </h2>
+                            
+                            <div class="max-h-0 overflow-hidden opacity-0 group-hover:max-h-48 group-hover:opacity-100 transition-all duration-700 ease-in-out">
+                                <p class="text-zinc-200 text-base leading-relaxed border-l-4 border-blue-500 pl-4 bg-black/40 backdrop-blur-md p-4 rounded-r-xl">
+                                    {member.bio}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 mb-32">
+        <div class="relative bg-zinc-900 border border-white/10 rounded-[3.5rem] p-12 md:p-24 overflow-hidden text-center">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-blue-600/10 blur-[120px] pointer-events-none" aria-hidden="true"></div>
+
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-7xl font-black tracking-tighter italic text-white mb-8 leading-[0.9]">
+                    READY TO PARTNER <br>
+                    <span class="text-blue-500 underline decoration-4 underline-offset-8 uppercase">With Us</span> <br>
+                    ON OUR MISSION?
+                </h2>
+                
+                <p class="text-zinc-500 text-lg mb-12 max-w-xl mx-auto font-light">
+                    Whether you're a mentor, a potential sponsor, or a fellow builder—we'd love to have you join the alliance.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mt-10">
+                    <a href="https://robotics-catalyst.org/donate/allied-algorithms" 
+                       target="_blank" rel="noopener"
+                       class="w-full sm:w-auto px-12 py-5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl shadow-blue-600/30">
+                        Support Our Team
+                    </a>
+
+                    <a href="/contact-us/" class="w-full sm:w-auto px-12 py-5 bg-transparent border border-zinc-700 hover:border-white hover:bg-white/5 text-white font-black uppercase tracking-widest rounded-full transition-all duration-300">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</Layout>

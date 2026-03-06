@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// SEO Strategy: We tell search engines NOT to index this page if they find it.
+const title = "404: Design Not Found | Allied Algorithms";
+const description = "Oops! You've reached uncharted territory. Let's get you back to Allied Algorithms' robot designs and FLL journey.";
+---
+
+<Layout title={title} description={description}>
+  <main class="relative min-h-screen bg-[#0f0f0f] font-sans text-white overflow-hidden selection:bg-white selection:text-black">
+
+    <div class="relative flex flex-col items-center justify-center min-h-[70vh] text-center z-20 px-4">
+      <h1 aria-hidden="true" class="absolute inset-0 flex items-center justify-center text-[25vw] md:text-[35vw] font-black text-white/[0.03] pointer-events-none select-none z-0">
+        404
+      </h1>
+
+      <div class="z-10">
+        <h2 class="text-3xl md:text-6xl font-medium tracking-tight">
+          You're in <span class="text-zinc-500">uncharted</span> design territory!
+        </h2>
+        <p class="mt-6 text-zinc-400 max-w-md mx-auto leading-relaxed">
+          Looks like you took a wrong turn. But don't worry, even the best creatives get lost sometimes!
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-6 justify-center mt-8">
+            <a href="/" class="text-white underline underline-offset-8 hover:text-blue-400 transition-colors">
+                Return home
+            </a>
+            <a href="/seasons/" class="text-white underline underline-offset-8 hover:text-blue-400 transition-colors">
+                View our Seasons
+            </a>
+            <a href="/robot-designs/" class="text-white underline underline-offset-8 hover:text-blue-400 transition-colors">
+                Robot Library
+            </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 w-full h-48 pointer-events-none" aria-hidden="true">
+      
+      <div class="absolute bottom-10 left-[5%] bg-white text-black px-4 py-1 text-xs font-bold -rotate-[65deg] origin-bottom-left whitespace-nowrap">
+        Create a lasting impact
+      </div>
+      <div class="absolute bottom-4 left-[12%] bg-white text-black px-4 py-1 text-xs font-bold -rotate-12 whitespace-nowrap border-r border-black/10">
+        Get to know our stories
+      </div>
+      <div class="absolute bottom-0 left-[25%] bg-white text-black px-8 py-3 text-sm font-bold border-x border-zinc-200 whitespace-nowrap">
+        Team behind the brackets
+      </div>
+      <div class="absolute bottom-0 left-[45%] bg-white text-black px-8 py-3 text-sm font-bold border-x border-zinc-200 rotate-180 whitespace-nowrap">
+        404 Page not found
+      </div>
+      
+      <div class="absolute bottom-0 right-[5%] bg-white text-black px-8 py-3 text-sm font-bold border-x border-zinc-200 rotate-180 whitespace-nowrap">
+        Our narratives in design
+      </div>
+      <div class="absolute bottom-10 right-[10%] bg-white text-black px-4 py-1 text-xs font-bold whitespace-nowrap">
+        Where design takes shape
+      </div>
+
+      <div class="absolute bottom-8 right-[30%] bg-[#b4ff39] p-4 -rotate-45 hidden md:block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </div>
+      <div class="absolute bottom-4 right-4 bg-[#b4ff39] p-4 rotate-[135deg]">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </div>
+    </div>
+
+  </main>
+</Layout>

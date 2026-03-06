@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+const raw = readFileSync('./src/data/discord.toml', 'utf-8');
+const { webhook_url } = parse(raw);
+import {SEO} from 'astro-seo';
+---
+<SEO
+      title="AutoCorrection | Allied Algorithms"
+      description="Open-Source framework for millimeter-precise, globally consistent movement in FLL."
+      canonical={Astro.url.toString()}
+      openGraph={{
+        basic: {
+          title: "AutoCorrection | Allied Algorithms",
+          type: "website",
+          image: "https://alliedalgos.org/og-image.jpg",
+        }
+      }}
+      extend={{
+        meta: [
+          { name: "viewport", content: "width=device-width" },
+          { name: "generator", content: Astro.generator },
+        ],
+      }}
+    />
+
+<Layout title="AAC | Allied Algorithms">
+
+    <!-- Hero -->
+    <section class="relative py-32 text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.08),transparent_70%)]"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">Software Engineering</span>
+            <h1 class="text-6xl md:text-9xl font-black tracking-tighter italic text-white leading-none uppercase mb-8">
+                AUTO <br><span class="text-blue-500">CORRECTION.</span>
+            </h1>
+            <p class="text-zinc-500 text-lg max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                Improve accuracy, consistency, and mission efficiency for your FLL team with the AAC framework.
+            </p>
+            <button onclick="document.getElementById('download-section').scrollIntoView({ behavior: 'smooth' })"
+                    class="px-10 py-5 bg-white text-black font-black text-xs uppercase tracking-[0.3em] rounded-full hover:bg-blue-500 hover:text-white transition-all active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                Download <i class="fa-solid fa-arrow-down ml-2"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="max-w-6xl mx-auto px-6 mb-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="group p-10 rounded-[2.5rem] bg-zinc-900/40 backdrop-blur-xl border border-white/5 border-l-2 border-l-blue-500/50 hover:bg-blue-500/[0.02] transition-all">
+                <div class="w-14 h-14 bg-blue-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-crosshairs text-blue-500 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-black italic uppercase tracking-tight mb-3 text-white">Millimeter Precision</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed">
+                    Advanced PID algorithms and gyro-integration ensure your robot stays on track even with wheel slip or battery fluctuations.
+                </p>
+            </div>
+
+            <div class="group p-10 rounded-[2.5rem] bg-zinc-900/40 backdrop-blur-xl border border-white/5 border-l-2 border-l-cyan-500/50 hover:bg-cyan-500/[0.02] transition-all">
+                <div class="w-14 h-14 bg-cyan-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-arrows-rotate text-cyan-500 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-black italic uppercase tracking-tight mb-3 text-white">Global Consistency</h3>
+                <p class="text-zinc-400 text-sm leading-relaxed">
+                    Standardize your movement blocks across different missions. Write once, execute perfectly every single time on the field.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download-section" class="max-w-6xl mx-auto px-6 mb-32">
+        <div class="relative bg-zinc-900/40 backdrop-blur-xl border border-white/5 rounded-[4rem] p-8 md:p-16 overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] -mr-48 -mt-48 pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 relative z-10">
+
+                <!-- Form -->
+                <div class="lg:col-span-3 flex flex-col gap-10">
+                    <div>
+                        <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-4 block">Authorization Required</span>
+                        <h2 class="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none">Access <br>System.</h2>
+                    </div>
+
+                    <form id="downloadForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Team ID</label>
+                            <input type="text" id="teamNumber" placeholder="58590"
+                                   class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:border-blue-500 transition-all font-mono text-lg" />
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-1">Contact Email</label>
+                            <input type="email" id="email" placeholder="coach@team.com"
+                                   class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:border-blue-500 transition-all text-lg" />
+                        </div>
+                        <button type="submit"
+                                class="md:col-span-2 mt-4 bg-blue-600 hover:bg-blue-500 text-white font-black text-sm uppercase tracking-[0.3em] py-6 rounded-2xl shadow-2xl shadow-blue-600/30 transition-all active:scale-[0.98]">
+                            Download AAC Framework (LLSP3)
+                        </button>
+                    </form>
+                    <p id="status" class="text-center text-[10px] font-bold uppercase tracking-widest min-h-[1rem]"></p>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+                    <div class="bg-white/5 rounded-[2.5rem] p-8 border border-white/5">
+                        <h3 class="text-xl font-bold italic mb-6 uppercase">Technical Resources</h3>
+                        <div class="flex flex-col gap-4">
+                            <a href="/docs" class="flex items-center justify-between p-5 bg-black/20 border border-white/5 rounded-2xl hover:border-blue-500 transition-all group">
+                                <span class="font-bold text-[10px] uppercase tracking-widest">Documentation</span>
+                                <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-blue-500 transition-colors"></i>
+                            </a>
+                            <a href="https://github.com/AlliedAlgos" target="_blank"
+                               class="flex items-center justify-between p-5 bg-black/20 border border-white/5 rounded-2xl hover:border-white/40 transition-all group">
+                                <span class="font-bold text-[10px] uppercase tracking-widest">GitHub Repository</span>
+                                <i class="fa-solid fa-chevron-right text-zinc-600 group-hover:text-white transition-colors"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="p-8 border border-blue-500/20 bg-blue-500/5 rounded-[2.5rem]">
+                        <div class="flex items-center gap-3 text-blue-400 mb-3">
+                            <i class="fa-solid fa-circle-info text-sm"></i>
+                            <span class="text-[10px] font-bold uppercase tracking-widest">Deployment Note</span>
+                        </div>
+                        <p class="text-zinc-400 text-xs leading-relaxed">
+                            Requires SPIKE Prime v3.0 or higher. Built for competition-grade reliability.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</Layout>
+
+<script define:vars={{ webhookUrl: webhook_url }}>
+    document.getElementById('downloadForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const teamNumber = document.getElementById('teamNumber').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const status = document.getElementById('status');
+
+        if (!teamNumber || !email) {
+            status.textContent = 'Error: Input Missing';
+            status.className = 'text-red-500 text-center text-[10px] font-bold uppercase tracking-widest';
+            return;
+        }
+
+        status.textContent = 'Processing Signal...';
+        status.className = 'text-blue-400 text-center text-[10px] font-bold uppercase tracking-widest animate-pulse';
+
+        try {
+            await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: '📥 AAC System Accessed',
+                        color: 3447003,
+                        fields: [
+                            { name: 'Team ID', value: teamNumber, inline: true },
+                            { name: 'Email', value: email, inline: true }
+                        ],
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            });
+        } catch (e) {}
+
+        const link = document.createElement('a');
+        link.href = '/downloads/AutoCorrection.llsp3';
+        link.download = 'AutoCorrection.llsp3';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        status.textContent = 'Access Granted. Download Initialized.';
+        status.className = 'text-green-500 text-center text-[10px] font-bold uppercase tracking-widest';
+    });
+</script>

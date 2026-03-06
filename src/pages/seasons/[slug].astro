@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+export function getStaticPaths() {
+    const raw = readFileSync('./src/data/seasons.toml', 'utf-8');
+    const { seasons } = parse(raw);
+    return seasons.map(season => ({
+        params: { slug: season.slug },
+        props: { season }
+    }));
+}
+
+const { season } = Astro.props;
+---
+
+<Layout title={`${season.theme} | Allied Algorithms`}>
+
+    {season.is_current ? (
+        <!-- ========== CURRENT SEASON - SPECIAL LAYOUT ========== -->
+
+        <!-- Big cinematic hero -->
+        <section class="relative h-screen flex items-center overflow-hidden">
+            <img
+                src={season.cover_photo}
+                alt={season.theme}
+                class="absolute inset-0 w-full h-full object-cover scale-105"
+                onerror="this.style.display='none'"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
+
+            <div class="relative z-10 max-w-6xl mx-auto px-6 w-full">
+                <a href="/seasons" class="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs font-bold uppercase tracking-widest mb-8 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i> All Seasons
+                </a>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-full animate-pulse">
+                        Current Season
+                    </span>
+                    <span class="text-zinc-500 text-xs font-bold uppercase tracking-widest">{season.year}</span>
+                </div>
+                <h1 class="text-7xl md:text-[10rem] font-black tracking-tighter italic text-white leading-none mb-6">
+                    {season.theme}
+                </h1>
+                <p class="text-zinc-300 text-xl max-w-xl mb-10">{season.tagline}</p>
+
+                <!-- Animated stats -->
+                {season.stats && (
+                    <div class="flex flex-wrap gap-6">
+                        <div class="text-center">
+                            <p class="stat-number text-5xl font-black tracking-tighter text-blue-400" data-target={season.stats.score}>0</p>
+                            <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-widest mt-1">High Score</p>
+                        </div>
+                        <div class="w-px bg-white/10"></div>
+                        <div class="text-center">
+                            <p class="stat-number text-5xl font-black tracking-tighter text-white" data-target={season.stats.missions_completed}>0</p>
+                            <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-widest mt-1">Missions</p>
+                        </div>
+                        <div class="w-px bg-white/10"></div>
+                        <div class="text-center">
+                            <p class="stat-number text-5xl font-black tracking-tighter text-white" data-target={season.stats.events_attended}>0</p>
+                            <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-widest mt-1">Events</p>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            <!-- Scroll hint -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-600 animate-bounce">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+        </section>
+
+        <!-- Awards -->
+        <section class="max-w-6xl mx-auto px-6 py-24">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">Recognition</p>
+            <h2 class="text-5xl font-black tracking-tighter italic text-white mb-10">Awards</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {season.awards.map((award, i) => (
+                    <div class="flex items-center gap-4 p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/20 hover:bg-blue-500/5 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 font-black">
+                            {i + 1}
+                        </div>
+                        <span class="text-white font-semibold text-sm">{award}</span>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <!-- Robot -->
+        <section class="max-w-6xl mx-auto px-6 pb-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">The Robot</p>
+                    <h2 class="text-5xl font-black tracking-tighter italic text-white mb-6">Built for this.</h2>
+                    <p class="text-zinc-400 leading-relaxed">{season.robot_description}</p>
+                </div>
+                <div class="rounded-3xl overflow-hidden border border-white/5">
+                    <img
+                        src={season.robot_photo}
+                        alt="Robot"
+                        class="w-full h-80 object-cover"
+                        onerror="this.style.display='none'"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        {season.timeline && (
+            <section class="max-w-6xl mx-auto px-6 pb-24">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">How it happened</p>
+                <h2 class="text-5xl font-black tracking-tighter italic text-white mb-12">Timeline</h2>
+                <div class="relative">
+                    <!-- Vertical line -->
+                    <div class="absolute left-5 top-0 bottom-0 w-px bg-white/5"></div>
+                    <div class="flex flex-col gap-8">
+                        {season.timeline.map((item, i) => (
+                            <div class="flex gap-8 items-start pl-16 relative">
+                                <div class="absolute left-0 w-10 h-10 rounded-full bg-zinc-900 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xs font-black shrink-0">
+                                    {i + 1}
+                                </div>
+                                <div class="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/20 transition-all duration-300 flex-1">
+                                    <p class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-1">{item.date}</p>
+                                    <h3 class="text-white font-bold text-lg mb-2">{item.event}</h3>
+                                    <p class="text-zinc-500 text-sm">{item.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        )}
+
+        <!-- Gallery -->
+        {season.gallery && (
+            <section class="max-w-6xl mx-auto px-6 pb-32">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">Moments</p>
+                <h2 class="text-5xl font-black tracking-tighter italic text-white mb-10">Gallery</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {season.gallery.map(item => (
+                        <div class="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300">
+                            <img
+                                src={item.photo}
+                                alt={item.caption}
+                                class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+                                onerror="this.style.display='none'"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-4">
+                                <p class="text-white text-sm font-semibold">{item.caption}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+    ) : (
+        <!-- ========== PAST SEASON - STANDARD LAYOUT ========== -->
+
+        <section class="relative h-[55vh] flex items-end overflow-hidden">
+            <img
+                src={season.cover_photo}
+                alt={season.theme}
+                class="absolute inset-0 w-full h-full object-cover"
+                onerror="this.style.display='none'"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent"></div>
+            <div class="relative z-10 max-w-6xl mx-auto px-6 pb-16 w-full">
+                <a href="/seasons" class="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs font-bold uppercase tracking-widest mb-6 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i> All Seasons
+                </a>
+                <p class="text-zinc-500 font-bold tracking-[0.4em] text-xs uppercase mb-3">{season.year}</p>
+                <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none">{season.theme}</h1>
+                <p class="text-zinc-400 text-lg mt-4 max-w-xl">{season.tagline}</p>
+            </div>
+        </section>
+
+        <div class="max-w-6xl mx-auto px-6 py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">The Robot</p>
+                    <h2 class="text-4xl font-black tracking-tighter italic text-white mb-6">The Build</h2>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-8">{season.robot_description}</p>
+                    <div class="rounded-3xl overflow-hidden border border-white/5">
+                        <img
+                            src={season.robot_photo}
+                            alt="Robot"
+                            class="w-full h-72 object-cover"
+                            onerror="this.style.display='none'"
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">Awards</p>
+                    <h2 class="text-4xl font-black tracking-tighter italic text-white mb-6">Recognition</h2>
+                    <div class="flex flex-col gap-3">
+                        {season.awards.map((award, i) => (
+                            <div class="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/20 transition-all duration-300">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 font-black text-sm">
+                                    {i + 1}
+                                </div>
+                                <span class="text-white font-semibold text-sm">{award}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )}
+
+</Layout>
+
+<script>
+    // Animate stats counting up
+    document.querySelectorAll('.stat-number').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                el.textContent = target;
+                clearInterval(timer);
+            } else {
+                el.textContent = Math.floor(current);
+            }
+        }, 16);
+    });
+</script>

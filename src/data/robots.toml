@@ -1,0 +1,92 @@
+[[robots]]
+slug = "v1"
+heading = "Robot Design #1"
+description = "Our first open-source chassis designed for maximum stability and modularity. Built for FLL competition tables."
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+download_path = "/downloads/mk1-build.pdf"
+
+[[robots.images]]
+src = "/images/robot/mk1/1.jpg"
+alt = "MK1 front view"
+
+[[robots.images]]
+src = "/images/robot/mk1/2.jpg"
+alt = "MK1 side view"
+
+[[robots]]
+slug = "mk2"
+heading = "Robot Design #2"
+description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+download_path = "/downloads/mk2-build.pdf"
+
+[[robots.images]]
+src = "/images/robot/mk2/1.jpg"
+alt = "MK2 front view"
+
+[[robots.images]]
+src = "/images/robot/mk2/2.jpg"
+alt = "MK2 side view"
+
+[[robots.images]]
+src = "/images/robot/mk2/3.jpg"
+alt = "MK2 sid view"
+
+[[robots.images]]
+src = "/images/robot/mk2/4.jpg"
+alt = "MK2 back view"
+
+[[robots]]
+slug = "mk3"
+heading = "Robot Design #3"
+description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+download_path = "/downloads/mk3-build.pdf"
+
+[[robots.images]]
+src = "/images/robot/mk3/1.jpg"
+alt = "MK3 front view"
+
+[[robots.images]]
+src = "/images/robots/mk3/2.jpg"
+alt = "MK3 side view"
+[[robots.images]]
+src = "/images/robots/mk3/3.jpg"
+alt = "MK3 back view"
+
+[[robots]]
+slug = "mk4"
+heading = "Robot Design #4"
+description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+download_path = "/downloads/mk4-build.pdf"
+
+[[robots.images]]
+src = "/images/robots/mk4/1.jpg"
+alt = "MK4 front view"
+
+[[robots.images]]
+src = "/images/robots/mk4/2.jpg"
+alt = "MK4 side view"
+
+[[robots.images]]
+src = "/images/robots/mk4/3.jpg"
+alt = "MK4 back view"
+
+[[robots.images]]
+src = "/images/robots/mk4/4 .jpg"
+alt = "MK4 side view"
+
+[[robots]]
+slug = "mk5"
+heading = "Robot Design #5"
+description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+download_path = "/downloads/mk5-build.pdf"
+[[robots.images]]
+src = "/images/robots/mk5/1.jpg"
+alt = "MK5 front view"
+
+[[robots.images]]
+src = "/images/robots/mk5/2.jpg"
+alt = "MK5 side view"

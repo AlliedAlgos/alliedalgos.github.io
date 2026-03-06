@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+// 1. Data Fetching
+const raw = readFileSync('./src/data/robots.toml', 'utf-8');
+const { robots } = parse(raw);
+
+// 2. SEO Variables (Pass these to Layout)
+const title = "Robot Designs | Allied Algorithms";
+const description = "Explore our open-source robot designs, chassis, and attachments optimized for FLL competition.";
+---
+
+<Layout title={title} description={description}>
+    <section class="relative py-32 text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.08),transparent_70%)]"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">Hardware Library</span>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6">
+                ROBOT <br><span class="text-blue-500">DESIGNS.</span>
+            </h1>
+            <p class="text-zinc-500 text-lg max-w-lg mx-auto font-light leading-relaxed">
+                Explore our open-source chassis, attachments, and 3D CAD models optimized for competition.
+            </p>
+        </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 pb-32">
+        <div class="grid grid-cols-1 gap-8">
+            {robots.map((robot) => (
+                <a href={`/robot/${robot.slug}/`} 
+                   class="group bg-zinc-900/30 backdrop-blur-xl border border-white/5 rounded-[3rem] overflow-hidden p-4 sm:p-8 transition-all duration-500 hover:border-blue-500/40 flex flex-col gap-6">
+
+                    <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden bg-black/40 border border-white/5">
+                        <img
+                            src={robot.images[0].src}
+                            alt={robot.images[0].alt || `Technical design for ${robot.heading}`}
+                            loading="lazy"
+                            decoding="async"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                        {robot.images.length > 1 && (
+                            <div class="absolute bottom-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full text-zinc-400 text-[10px] font-bold uppercase tracking-widest">
+                                +{robot.images.length - 1} more views
+                            </div>
+                        )}
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 px-4 pb-2">
+                        <div>
+                            <span class="text-blue-500 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block">Allied Engineering</span>
+                            <h2 class="text-4xl md:text-5xl font-black tracking-tighter italic text-white uppercase group-hover:text-blue-400 transition-colors">
+                              {robot.heading}
+                            </h2>
+                            <p class="text-zinc-500 text-sm mt-2 max-w-md">{robot.description}</p>
+                        </div>
+                        <div class="shrink-0 flex items-center gap-2 text-zinc-500 group-hover:text-blue-400 transition-colors text-xs font-bold uppercase tracking-widest">
+                            Explore {robot.heading} <i class="fa-solid fa-arrow-right text-[10px] ml-1 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</Layout>

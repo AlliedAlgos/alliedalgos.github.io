@@ -1,0 +1,102 @@
+[[seasons]]
+year = "2025-2026"
+slug = "2025"   
+theme = "Unearthed"
+tagline = "Uncovering the history of innovation."
+awards = ["Champions Award", "Robot Performance Award"]
+robot_description = "Our most advanced robot yet, built for precision and modularity to tackle the complex missions of the Unearthed season."
+robot_photo = "/images/robot/mk5/1.jpg"
+cover_photo = "/images/seasons/yr_25-26.jpg"
+is_current = true
+
+[seasons.stats]
+missions_completed = 15
+score = 380
+events_attended = 3
+
+[[seasons.gallery]]
+photo = "/images/seasons/2024/gallery1.jpg"
+caption = "Regional qualifier"
+
+[[seasons.gallery]]
+photo = "/images/seasons/2024/gallery2.jpg"
+caption = "Robot reveal"
+
+[[seasons.gallery]]
+photo = "/images/seasons/2024/gallery3.jpg"
+caption = "Award ceremony"
+
+[[seasons.timeline]]
+date = "Sept 2025"
+event = "Season kickoff"
+description = "Received the challenge and started strategizing."
+
+[[seasons.timeline]]
+date = "Oct 2025"
+event = "First build complete"
+description = "Robot chassis finalized an   d initial programming began."
+
+[[seasons.timeline]]
+date = "Nov 2025"
+event = "Regional Qualifier"
+description = "Competed and advanced to the State championship."
+
+[[seasons.timeline]]
+date = "Dec 2025"
+event = "State Championship"
+description = "Won the Champions Award and Robot Performance Award."
+
+[[seasons]]
+year = "2024-2025"
+slug = "2024"
+theme = "Submerged"
+tagline = "Exploring the depths of innovation."
+awards = []
+robot_description = "Our most advanced robot yet, built for precision underwater-themed missions."
+robot_photo = "/images/seasons/2024/robot.jpg"
+cover_photo = "/images/seasons/yr_24-25.jpg"
+is_current = false
+
+[[seasons]]
+year = "2023-2024"
+slug = "2023"
+theme = "Masters Piece"
+tagline = "Crafting solutions like true artists."
+awards = ["Robot Design Award"]
+robot_description = "Elegant and efficient, designed around creative problem solving."
+robot_photo = "/images/seasons/2023/robot.jpg"
+cover_photo = "/images/seasons/yr_23-24.jpg"
+is_current = false
+
+[[seasons]]
+year = "2022-2023"
+slug = "2022"
+theme = "SUPERPOWERED"
+tagline = "Harnessing energy for a better world."
+awards = []
+robot_description = "First season with the new SPIKE Prime system. Focused on building a reliable and versatile robot to tackle the energy-themed missions."
+robot_photo = "/images/seasons/2022/robot.jpg"
+cover_photo = "/images/seasons/yr_22-23.jpg"
+is_current = false
+
+[[seasons]]
+year = "2021-2022"
+slug = "2021"
+theme = "CARGO CONNECT"
+tagline = "Connecting communities through smart transport."
+awards = ["Programming Award"]
+robot_description = "2nd year with FLL, starrting to understand the challenges."
+robot_photo = "/images/seasons/2021/robot.jpg"
+cover_photo = "/images/seasons/yr_21-22.jpg"
+is_current = false
+
+[[seasons]]
+year = "2020-2021"
+slug = "2020"
+theme = "REPLAY"
+tagline = "Playing it back, better than before."
+awards = []
+robot_description = "Our first season in FIRST LEGO League Explorer. Had a bunch of fun building and programming our robot to complete the missions."
+robot_photo = "/images/seasons/2020/robot.jpg"
+cover_photo = "/images/seasons/yr_20-21.jpg"
+is_current = false

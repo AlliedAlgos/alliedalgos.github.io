@@ -1,0 +1,180 @@
+    ---
+    import Layout from '../layouts/Layout.astro';
+    import { parse } from 'smol-toml';
+    import { readFileSync } from 'fs';
+
+    // Data fetching for potential dynamic sections
+    const sponsorsRaw = readFileSync('./src/data/sponsors.toml', 'utf-8');
+    const { sponsors } = parse(sponsorsRaw);
+
+    const title = "Allied Algorithms | Wilton's FLL Robotics Team 58590";
+    const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global views. We combine competitive excellence with an open-source philosophy.";
+    ---
+
+    <Layout title={title} description={description}>
+        
+        <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.1),transparent_70%)]"></div>
+            
+            <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+                <div class="fade-up inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-10">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400">Wilton, CT · Team 58590</span>
+                </div>
+
+                <h1 class="fade-up text-7xl md:text-[10rem] font-black italic tracking-tighter leading-[0.8] uppercase mb-12 text-white">
+                    Allied <br />
+                    <span class="text-blue-500">Algorithms.</span>
+                </h1>
+                <p class="text-xl text-zinc-400 mb-12 md:text-[3.5rem] font-black italic tracking-tighter leading-[0.8] uppercase mb-12 text-white">Where Engineering Meets Creativity</p>
+
+                <div class="fade-up inline-flex flex-wrap items-center gap-6 md:gap-10 p-8 md:p-10 bg-zinc-900/40 border border-white/5 rounded-[3rem] backdrop-blur-xl mb-16 shadow-2xl">
+                    <div class="text-left">
+                        <span class="block text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-2">Combined Global Reach</span>
+                        <span class="text-4xl md:text-5xl font-black italic text-white tracking-tighter">
+                            7,792 <span class="text-blue-500 text-xl md:text-2xl ml-1 uppercase">Views</span>
+                        </span>
+                    </div>
+                    
+                    <div class="h-12 w-px bg-white/10 hidden md:block"></div>
+
+                    <div class="flex items-center gap-6">
+                        <div class="flex -space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
+                                <i class="fa-brands fa-youtube"></i>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
+                                <i class="fa-brands fa-facebook"></i>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="fade-up flex flex-wrap gap-8">
+                    <a href="/seasons/" class="px-12 py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.4em] rounded-full hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20">
+                        Explore Journey
+                    </a>
+                    <a href="/contact-us/" class="px-12 py-6 border border-zinc-800 hover:border-white text-white font-black text-xs uppercase tracking-[0.4em] rounded-full transition-all">
+                        Partner With Us
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-6 py-40">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                <div class="fade-up">
+                    <span class="text-blue-500 font-black uppercase tracking-[0.4em] text-xs mb-6 block">The Competition</span>
+                    <h2 class="text-5xl md:text-7xl font-black italic text-white uppercase leading-none mb-8 tracking-tighter">
+                        FIRST LEGO <br><span class="text-zinc-700">League.</span>
+                    </h2>
+                    <p class="text-zinc-400 text-lg leading-relaxed font-light mb-10 max-w-lg">
+                    FIRST® LEGO® League (FLL) is a global STEM program for children ages 4–16 (divided into three divisions: Discover, Explore, and Challenge) that introduces science, technology, engineering, and math through hands-on, playful learning . Teams design, build, and program robots using LEGO® technology to solve real-world, theme-based challenges while developing teamwork, critical thinking, and coding skill </p>
+                    <div class="grid grid-cols-2 gap-8 border-t border-white/5 pt-10">
+                        <div>
+                            <span class="block text-white font-black italic text-2xl mb-1 uppercase">Innovation</span>
+                            <p class="text-zinc-600 text-xs font-bold uppercase tracking-widest">Project Research</p>
+                        </div>
+                        <div>
+                            <span class="block text-white font-black italic text-2xl mb-1 uppercase">Robotics</span>
+                            <p class="text-zinc-600 text-xs font-bold uppercase tracking-widest">Autonomous Systems</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-up aspect-square rounded-[4rem] overflow-hidden bg-zinc-900 border border-white/5 relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent z-10"></div>
+                    <div class="p-16 relative z-20 h-full flex flex-col justify-end">
+                        <i class="fa-solid fa-microchip text-6xl text-blue-500 mb-8"></i>
+                        <h3 class="text-3xl font-black italic text-white uppercase mb-4">6 Seasons of Excellence</h3>
+                        <p class="text-zinc-400 font-light">From Masterpiece to Submerged, we've built a legacy of technical documentation and awards in the Connecticut region.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-zinc-800 text-black py-40 rounded-[4rem] md:rounded-[6rem] mx-2 md:mx-6">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-24">
+                    <span class="text-zinc-400 font-black uppercase tracking-[0.4em] text-xs mb-6 block">Our Engineering Culture</span>
+                    <h2 class="text-6xl md:text-9xl font-black italic uppercase leading-none tracking-tighter mb-8 text-white">
+                        Open <br><span class="text-blue-600">Source.</span>
+                    </h2>
+                    <p class="text-zinc-200 text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                        We believe in the "Allied" part of our name. We publish our frameworks, CAD files, and technical logs to elevate the entire FLL community.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="space-y-6">
+                        <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white text-2xl">
+                            <i class="fa-solid fa-code-branch"></i>
+                        </div>
+                        <h4 class="text-2xl font-black italic uppercase text-white">Frameworks</h4>
+                        <p class="font-light text-sm text-white">Reusable code architectures that ensure precision and reliability across multiple seasons.</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white text-2xl">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                        <h4 class="text-2xl font-black italic uppercase text-white">CAD Assets</h4>
+                        <p class="font-light text-sm text-white">3D models and technical drawings shared to assist teams in mastering structural integrity.</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white text-2xl">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h4 class="text-2xl font-black italic uppercase text-white">Public Logs</h4>
+                        <p class="font-light text-sm text-white">A full archive of our design iterations—failures, breakthroughs, and final solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 text-center">
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="text-5xl md:text-7xl font-black italic text-white uppercase leading-none mb-12 tracking-tighter">
+                    Ready to <span class="text-blue-500">Collaborate?</span>
+                </h2>
+                <div class="flex flex-wrap justify-center gap-8">
+                    <a href="https://github.com/AlliedAlgos" class="px-12 py-6 bg-zinc-900 border border-white/5 text-white font-black text-xs uppercase tracking-[0.4em] rounded-full hover:bg-white hover:text-black transition-all">
+                        GitHub Repo
+                    </a>
+                    <a href="/contact-us/" class="px-12 py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.4em] rounded-full hover:shadow-xl hover:shadow-blue-600/30 transition-all">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </Layout>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+    <style>
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>

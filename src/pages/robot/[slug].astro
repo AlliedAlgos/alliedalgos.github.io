@@ -1,0 +1,157 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+export function getStaticPaths() {
+    const raw = readFileSync('./src/data/robots.toml', 'utf-8');
+    const { robots } = parse(raw);
+    return robots.map(robot => ({
+        params: { slug: robot.slug },
+        props: { robot }
+    }));
+}
+
+const { robot } = Astro.props;
+
+const discordRaw = readFileSync('./src/data/discord.toml', 'utf-8');
+const { webhook_url } = parse(discordRaw);
+---
+
+<Layout title={`${robot.heading} | Allied Algorithms`}>
+
+    <!-- Back -->
+    <div class="max-w-5xl mx-auto px-6 pt-28 pb-6">
+        <a href="/robot" class="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs font-bold uppercase tracking-widest transition-colors">
+            <i class="fa-solid fa-arrow-left text-[10px]"></i> All Designs
+        </a>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-6 pb-32">
+        <div class="bg-zinc-900/30 backdrop-blur-xl border border-white/5 rounded-[3rem] overflow-hidden p-4 sm:p-8 flex flex-col gap-8">
+
+            <!-- Carousel -->
+            <div class="relative w-full aspect-video sm:aspect-[21/9] rounded-[2rem] overflow-hidden bg-black/40 border border-white/5">
+                <div id="carousel">
+                    {robot.images.map((img, i) => (
+                        <img
+                            src={img.src}
+                            alt={img.alt}
+                            class={`carousel-img absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+                            onerror="this.style.display='none'"
+                        />
+                    ))}
+                </div>
+
+                {robot.images.length > 1 && (
+                    <div class="absolute inset-x-6 top-1/2 -translate-y-1/2 flex justify-between">
+                        <button id="prevBtn" class="w-12 h-12 bg-black/40 backdrop-blur-xl border border-white/10 rounded-full text-white hover:bg-blue-600 hover:scale-110 transition-all flex items-center justify-center">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button id="nextBtn" class="w-12 h-12 bg-black/40 backdrop-blur-xl border border-white/10 rounded-full text-white hover:bg-blue-600 hover:scale-110 transition-all flex items-center justify-center">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                )}
+
+                <!-- Dot indicators -->
+                {robot.images.length > 1 && (
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                        {robot.images.map((_, i) => (
+                            <div class={`dot w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white w-4' : 'bg-white/30'}`}></div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <!-- Info + Download -->
+            <div class="flex flex-col lg:flex-row justify-between items-start gap-8 px-4 pb-4">
+
+                <!-- Title + desc -->
+                <div class="flex-grow">
+                    <span class="text-blue-500 font-bold tracking-[0.3em] text-[10px] uppercase mb-2 block">Allied Engineering</span>
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tighter italic text-white uppercase">{robot.heading}</h1>
+                    <p class="text-zinc-500 text-sm mt-4 max-w-lg leading-relaxed">{robot.description}</p>
+                </div>
+
+                <!-- Download panel -->
+                <div class="w-full lg:w-96 space-y-4 shrink-0">
+                    <input
+                        type="text"
+                        id="teamInput"
+                        placeholder="ENTER TEAM ID TO UNLOCK"
+                        class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-blue-500 transition-all placeholder:text-zinc-600 font-mono text-sm"
+                    />
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="downloadBtn"
+                            class="py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold text-[11px] uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-blue-600/20">
+                            Get Build PDF
+                        </button>
+                        <a href={robot.cad_link} target="_blank"
+                            class="py-4 border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-white text-center rounded-2xl font-bold text-[11px] uppercase tracking-widest transition-all">
+                            Studio CAD
+                        </a>
+                    </div>
+                    <p id="status" class="text-[10px] font-bold uppercase tracking-widest text-center min-h-[1rem] text-zinc-500"></p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</Layout>
+
+<script define:vars={{ downloadPath: robot.download_path, heading: robot.heading, webhookUrl: webhook_url }}>
+    // Carousel
+    const images = document.querySelectorAll('.carousel-img');
+    const dots = document.querySelectorAll('.dot');
+    let current = 0;
+
+    function goTo(index) {
+        images[current].classList.replace('opacity-100', 'opacity-0');
+        dots[current].classList.remove('bg-white', 'w-4');
+        dots[current].classList.add('bg-white/30');
+        current = (index + images.length) % images.length;
+        images[current].classList.replace('opacity-0', 'opacity-100');
+        dots[current].classList.add('bg-white', 'w-4');
+        dots[current].classList.remove('bg-white/30');
+    }
+
+    document.getElementById('prevBtn')?.addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn')?.addEventListener('click', () => goTo(current + 1));
+
+    // Download
+    document.getElementById('downloadBtn').addEventListener('click', async () => {
+        const team = document.getElementById('teamInput').value.trim();
+        const status = document.getElementById('status');
+
+        if (!team) {
+            status.textContent = 'Error: Team ID Required';
+            status.className = 'text-[10px] font-bold uppercase tracking-widest text-center text-red-500';
+            return;
+        }
+
+        const a = document.createElement('a');
+        a.href = downloadPath;
+        a.download = downloadPath.split('/').pop();
+        a.click();
+
+        status.textContent = 'Logging...';
+        status.className = 'text-[10px] font-bold uppercase tracking-widest text-center text-zinc-500';
+
+        try {
+            await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: `📥 **Robot Downloaded**\n**Team:** ${team}\n**Design:** ${heading}`
+                })
+            });
+            status.textContent = 'Logged Successfully';
+            status.className = 'text-[10px] font-bold uppercase tracking-widest text-center text-blue-500';
+        } catch (e) {
+            status.textContent = 'Log Failed';
+            status.className = 'text-[10px] font-bold uppercase tracking-widest text-center text-red-500';
+        }
+    });
+</script>
