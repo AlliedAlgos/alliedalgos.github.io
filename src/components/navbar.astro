@@ -1,284 +1,202 @@
 ---
-// Navbar.astro - God Tier V2 (The Final Polish)
+// Navbar.astro
 ---
 
-<style is:global>
-  :root {
-    --nav-pill-width: 580px;
-    --accent-blue: 59, 130, 246;
-    --ease-heavy: cubic-bezier(0.25, 1, 0.3, 1);
-    --ease-spring: cubic-bezier(0.3, 1.5, 0.5, 1);
+<style>
+  /* These are kept in CSS because Tailwind doesn't have native keyframe/clip-path utilities */
+  @keyframes shine {
+    to { background-position: 200% center; }
   }
-
-  /* 1. THE DYNAMIC ISLAND CORE */
-  #navContainer {
-    transition: 
-      width 0.8s var(--ease-heavy),
-      height 0.6s var(--ease-heavy),
-      border-radius 0.7s var(--ease-heavy),
-      background 0.5s ease,
-      padding 0.7s var(--ease-heavy),
-      box-shadow 0.5s ease;
-    will-change: width, border-radius, transform;
+  .animate-shine {
+    background-size: 200% auto;
+    animation: shine 4s linear infinite;
   }
-
-  /* 2. SPATIAL STATE MAPPING */
-  .nav-state-full {
-    width: 95%;
-    max-width: 1200px;
-    border-radius: 24px;
-    padding: 0 32px;
-    background: rgba(10, 10, 12, 0.6);
+  .animate-donate {
+    background-size: 300% auto;
+    transition: background-position 0.5s ease;
   }
-
-  .nav-state-pill {
-    width: var(--nav-pill-width);
-    border-radius: 999px;
-    padding: 0 12px;
-    background: rgba(10, 10, 12, 0.9);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  .animate-donate:hover {
+    background-position: right center;
   }
-
-  /* 3. LIQUID INDICATOR */
-  #navIndicator {
-    position: absolute;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 999px;
-    transition: all 0.5s var(--ease-spring);
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0;
+  #mobileMenu {
+    clip-path: circle(0% at 90% 5%);
+    transition: clip-path 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
-
-  /* 4. MEGA PANEL SPATIAL LOGIC */
-  #megaPanel {
-    transition: 
-      opacity 0.4s ease, 
-      transform 0.6s var(--ease-heavy), 
-      width 0.8s var(--ease-heavy),
-      border-radius 0.8s var(--ease-heavy);
-    transform-origin: top center;
-  }
-
-  .nav-state-full #megaPanel {
-    width: 100%;
-    border-radius: 0 0 32px 32px;
-  }
-
-  .nav-state-pill #megaPanel {
-    width: 500px;
-    border-radius: 32px;
-  }
-
-  /* 5. GHOST BRANDING */
-  .brand-anim {
-    transition: all 0.6s var(--ease-heavy);
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .nav-state-pill .brand-anim {
-    width: 0;
-    opacity: 0;
-    margin: 0;
-    transform: translateX(-20px);
-  }
-
-  /* 6. SPOTLIGHT GRID EFFECT */
-  .spotlight-grid {
-    position: relative;
-  }
-  .spotlight-grid::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      400px circle at var(--mouse-x) var(--mouse-y),
-      rgba(var(--accent-blue), 0.1),
-      transparent 80%
-    );
-    opacity: 0;
-    transition: opacity 0.5s;
-    pointer-events: none;
-  }
-  .spotlight-grid:hover::before { opacity: 1; }
-
-  .glass-blur {
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  #mobileMenu.is-open {
+    clip-path: circle(150% at 90% 5%);
   }
 </style>
 
-<div class="fixed top-[-100px] left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/10 blur-[120px] pointer-events-none z-[9999]"></div>
+<div class="promo-banner fixed top-0 left-0 right-0 z-[10002] h-10 flex items-center justify-center px-4 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900 animate-shine">
+  <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="text-white text-[11px] md:text-xs font-bold tracking-wide flex items-center justify-center gap-2 group">
+    <span>Support the AlliedAlgorithms Trip to Worlds!</span>
+    <span class="bg-white text-blue-700 px-2 py-0.5 rounded-full text-[10px] uppercase font-black group-hover:bg-blue-50 transition-colors">Donate →</span>
+  </a>
+</div>
 
-<header id="navWrapper" class="fixed inset-x-0 top-0 z-[10000] flex justify-center pt-10">
-  <nav id="navContainer" class="nav-state-full glass-blur h-16 flex items-center justify-between relative">
-    
-    <a href="/" class="flex items-center gap-3 z-20 group relative pl-2">
-      <div class="w-10 h-10 flex-shrink-0 relative">
-        <div class="absolute inset-0 bg-blue-500/20 blur-xl rounded-full scale-0 group-hover:scale-150 transition-transform duration-700"></div>
-        <img src="/images/Allied-Algorithms_logo.svg" class="w-full h-full relative transition-transform duration-500 group-hover:rotate-12" alt="Logo" />
-      </div>
-      <div class="brand-anim flex flex-col">
-        <span class="text-white font-black italic tracking-tighter text-xl leading-none">ALLIED</span>
-        <span class="text-blue-500 font-bold text-[9px] tracking-[0.3em] leading-none mt-1">ALGORITHMS</span>
-      </div>
-    </a>
+<div id="navWrapper" class="fixed left-0 right-0 z-[9999] flex justify-center pointer-events-none transition-all duration-500" style="top: 52px;">
 
-    <div id="navLinks" class="hidden md:flex items-center gap-1 relative z-10 px-2">
-      <div id="navIndicator"></div>
-      {['About', 'Seasons', 'Contact'].map(item => (
-        <a href={`/${item.toLowerCase()}`} class="nav-item px-5 py-2 text-sm font-bold text-zinc-400 hover:text-white transition-colors relative z-10">
-          {item}
-        </a>
-      ))}
+  <div id="navContainer" class="w-full px-6 pointer-events-auto transition-all duration-500 bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg">
 
-      <div class="relative group" id="megaTrigger">
-        <button class="nav-item flex items-center gap-2 px-5 py-2 text-sm font-bold text-zinc-400 group-hover:text-white transition-all z-10">
-          Projects
-          <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-width="3" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="flex items-center gap-3 z-20 pr-2">
-      <a href="/donate" class="magnetic-btn px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-black uppercase tracking-widest rounded-full transition-all hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] active:scale-95">
-        Donate
+    <div class="flex justify-between items-center h-14" id="navInner">
+      
+      <a href="/" class="flex items-center gap-3 group z-[10001] shrink-0">
+        <img class="w-8 h-8 transition-transform duration-300 group-hover:scale-110" src="/images/Allied-Algorithms_logo.svg" alt="Logo">
+        <span id="brandName" class="text-lg font-bold tracking-tighter italic text-white transition-all duration-500 overflow-hidden whitespace-nowrap">
+          Allied Algorithms
+        </span>
       </a>
-      <button id="mobileToggle" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 glass-blur rounded-full group">
-        <span class="w-5 h-[2px] bg-white transition-all group-hover:w-6"></span>
-        <span class="w-4 h-[2px] bg-white self-end mr-2.5"></span>
-      </button>
-    </div>
 
-    <div id="megaPanel" class="absolute top-[100%] left-1/2 -translate-x-1/2 opacity-0 invisible pointer-events-none glass-blur overflow-hidden z-[5] mt-4 spotlight-grid">
-      <div class="p-8 grid grid-cols-2 gap-4">
-        {[
-          { icon: 'fa-robot', title: 'Robot', desc: 'Hardware Specs', color: 'blue' },
-          { icon: 'fa-microchip', title: 'AAC', desc: 'Control Logic', color: 'purple' },
-          { icon: 'fa-route', title: 'Pathing', desc: 'Auto Planning', color: 'green' },
-          { icon: 'fa-book', title: 'Docs', desc: 'API Reference', color: 'orange' }
-        ].map(p => (
-          <a href="#" class="group/card flex items-start gap-4 p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all z-10">
-            <div class={`w-12 h-12 rounded-xl flex items-center justify-center bg-${p.color}-500/10 text-${p.color}-400 group-hover/card:scale-110 transition-transform`}>
-              <i class={`fa-solid ${p.icon} text-xl`}></i>
-            </div>
-            <div>
-              <div class="text-sm font-bold text-white mb-0.5 group-hover/card:text-blue-400 transition-colors">{p.title}</div>
-              <p class="text-[11px] text-zinc-500 leading-tight">{p.desc}</p>
-            </div>
+      <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-[5px] items-end p-2 z-[10001] outline-none group">
+        <span id="ham1" class="ham-line w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
+        <span id="ham2" class="ham-line w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
+        <span id="ham3" class="ham-line w-4 h-0.5 bg-white rounded-full transition-all duration-300"></span>
+      </button>
+
+      <ul class="hidden md:flex gap-1 items-center shrink-0">
+        <li><a href="/about-us" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">About Us</a></li>
+        <li><a href="/seasons" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">Seasons</a></li>
+        
+        <li class="relative" id="projectsMenuItem">
+          <button id="projectsBtn" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-5 transition-colors flex items-center gap-1.5 outline-none">
+            Projects <i id="projectsChevron" class="fa-solid fa-chevron-down text-[9px] opacity-60 transition-transform duration-300"></i>
+          </button>
+        </li>
+
+        <li><a href="/contact-us" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">Contact</a></li>
+        
+        <li class="ml-3">
+          <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate px-5 py-2 text-white text-[11px] uppercase font-black rounded-full tracking-wide bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 hover:shadow-[0_0_24px_rgba(59,130,246,0.45)] active:translate-y-0.5">
+            Donate
           </a>
-        ))}
-      </div>
+        </li>
+      </ul>
     </div>
-  </nav>
-</header>
+  </div>
+</div>
+
+<div id="projectDropdown" class="fixed left-0 right-0 opacity-0 invisible translate-y-2 z-[9998] bg-zinc-950/98 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-10 py-8">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-5">Projects</p>
+    <div class="grid grid-cols-4 gap-4">
+      <a href="/robot" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-400 border border-blue-500/20 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"><i class="fa-solid fa-robot"></i></div>
+        <div><div class="text-sm font-bold text-white mb-1">Robot</div><p class="text-xs text-zinc-500 leading-relaxed">CAD designs and build logs.</p></div>
+      </a>
+      <a href="/aac" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"><i class="fa-solid fa-microchip"></i></div>
+        <div><div class="text-sm font-bold text-white mb-1">AAC</div><p class="text-xs text-zinc-500 leading-relaxed">PID control & algorithms.</p></div>
+      </a>
+      <a href="https://alliedalgos.org/pathing/docs.html" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-green-500/10 text-green-400 border border-green-500/20 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]"><i class="fa-solid fa-route"></i></div>
+        <div><div class="text-sm font-bold text-white mb-1">Pathing</div><p class="text-xs text-zinc-500 leading-relaxed">Advanced planning docs.</p></div>
+      </a>
+      <a href="/docs" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)]"><i class="fa-solid fa-book"></i></div>
+        <div><div class="text-sm font-bold text-white mb-1">Docs</div><p class="text-xs text-zinc-500 leading-relaxed">API guides and reference.</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="mobileMenu" class="fixed inset-0 z-[10000] bg-zinc-950 flex flex-col p-8 pt-32 md:hidden pointer-events-none shadow-2xl">
+  <div class="flex flex-col gap-8 text-center">
+    <a href="/about-us" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">About Us</a>
+    <a href="/seasons" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Seasons</a>
+    <a href="/robot" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Robot</a>
+    <a href="/aac" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">AAC</a>
+    <a href="https://alliedalgos.org/pathing/docs.html" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Pathing</a>
+    <a href="/contact-us/" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Contact</a>
+    <div class="h-px bg-white/10 w-24 mx-auto my-2"></div>
+    <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate py-5 rounded-2xl text-white font-black uppercase tracking-widest bg-gradient-to-r from-blue-700 to-blue-500 shadow-xl shadow-blue-900/20">Donate Now</a>
+  </div>
+</div>
 
 <script>
-  class AlliedNav {
-    private nav = document.getElementById('navContainer') as HTMLElement;
-    private indicator = document.getElementById('navIndicator') as HTMLElement;
-    private megaTrigger = document.getElementById('megaTrigger') as HTMLElement;
-    private megaPanel = document.getElementById('megaPanel') as HTMLElement;
-    private navLinks = document.getElementById('navLinks') as HTMLElement;
-    private items = document.querySelectorAll('.nav-item');
-    private isPill = false;
-    private megaActive = false;
+(function () {
+  const navWrapper = document.getElementById('navWrapper');
+  const navContainer = document.getElementById('navContainer');
+  const brandName = document.getElementById('brandName');
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const projectsMenuItem = document.getElementById('projectsMenuItem');
+  const projectsBtn = document.getElementById('projectsBtn');
+  const projectsChevron = document.getElementById('projectsChevron');
+  const projectDropdown = document.getElementById('projectDropdown');
 
-    constructor() {
-      this.init();
+  const ham1 = document.getElementById('ham1'), ham2 = document.getElementById('ham2'), ham3 = document.getElementById('ham3');
+  let menuOpen = false;
+  let dropTimer = null;
+
+  function openProjects() {
+    if (dropTimer) clearTimeout(dropTimer);
+    const rect = navContainer.getBoundingClientRect();
+    projectDropdown.style.top = `${rect.bottom}px`;
+    projectDropdown.classList.remove('opacity-0', 'invisible', 'translate-y-2');
+    projectDropdown.classList.add('opacity-100', 'visible', 'translate-y-0');
+    projectsChevron.style.transform = 'rotate(180deg)';
+    projectsBtn.classList.add('text-white');
+  }
+
+  function closeProjects() {
+    dropTimer = setTimeout(() => {
+      projectDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
+      projectDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
+      projectsChevron.style.transform = '';
+      projectsBtn.classList.remove('text-white');
+    }, 300);
+  }
+
+  projectsMenuItem.addEventListener('mouseenter', openProjects);
+  projectsMenuItem.addEventListener('mouseleave', closeProjects);
+  projectDropdown.addEventListener('mouseenter', () => clearTimeout(dropTimer));
+  projectDropdown.addEventListener('mouseleave', closeProjects);
+
+  mobileMenuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    if (menuOpen) {
+      mobileMenu.classList.add('is-open', 'pointer-events-auto');
+      ham1.style.transform = 'rotate(45deg) translateY(10px)';
+      ham2.style.opacity = '0';
+      ham3.style.transform = 'rotate(-45deg) translateY(-10px)';
+      ham3.style.width = '24px';
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileMenu.classList.remove('is-open', 'pointer-events-auto');
+      ham1.style.transform = ''; ham2.style.opacity = '1'; ham3.style.transform = ''; ham3.style.width = '16px';
+      document.body.style.overflow = '';
     }
+  });
 
-    private init() {
-      if (!this.nav || !this.megaTrigger) return;
+  function applyNavState() {
+    const scrolled = window.scrollY > 20;
+    const isMobile = window.innerWidth < 768;
 
-      window.addEventListener('scroll', () => {
-        requestAnimationFrame(() => this.handleScroll());
-      }, { passive: true });
-
-      this.items.forEach(item => {
-        item.addEventListener('mouseenter', (e) => this.moveIndicator(e.target as HTMLElement));
-      });
-
-      this.navLinks.addEventListener('mouseleave', () => {
-        this.indicator.style.opacity = '0';
-      });
-
-      let timer: number;
-      this.megaTrigger.addEventListener('mouseenter', () => {
-        clearTimeout(timer);
-        this.showMega();
-      });
-
-      this.nav.addEventListener('mouseleave', () => {
-        timer = window.setTimeout(() => this.hideMega(), 200);
-      });
-
-      // Spotlight effect logic
-      this.megaPanel.addEventListener('mousemove', (e) => {
-        const rect = this.megaPanel.getBoundingClientRect();
-        this.megaPanel.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-        this.megaPanel.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-      });
-
-      const donateBtn = document.querySelector('.magnetic-btn') as HTMLElement;
-      if (donateBtn) {
-        donateBtn.addEventListener('mousemove', (e) => {
-          const r = donateBtn.getBoundingClientRect();
-          const x = e.clientX - r.left - r.width/2;
-          const y = e.clientY - r.top - r.height/2;
-          donateBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-        });
-        donateBtn.addEventListener('mouseleave', () => donateBtn.style.transform = '');
-      }
-
-      this.handleScroll();
-    }
-
-    private handleScroll() {
-      const y = window.scrollY;
-      const threshold = 60;
-
-      if (y > threshold && !this.isPill) {
-        this.nav.classList.replace('nav-state-full', 'nav-state-pill');
-        this.isPill = true;
-        if (this.megaActive) this.syncMegaPosition();
-      } else if (y <= threshold && this.isPill) {
-        this.nav.classList.replace('nav-state-pill', 'nav-state-full');
-        this.isPill = false;
-        if (this.megaActive) this.syncMegaPosition();
-      }
-    }
-
-    private moveIndicator(el: HTMLElement) {
-      const rect = el.getBoundingClientRect();
-      const parentRect = this.navLinks.getBoundingClientRect();
-      this.indicator.style.opacity = '1';
-      this.indicator.style.width = `${rect.width}px`;
-      this.indicator.style.left = `${rect.left - parentRect.left}px`;
-    }
-
-    private syncMegaPosition() {
-      this.megaPanel.style.transform = `translateX(-50%) translateY(${this.isPill ? '16px' : '0px'})`;
-    }
-
-    private showMega() {
-      this.megaActive = true;
-      this.megaPanel.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
-      this.megaPanel.classList.add('opacity-100', 'visible', 'pointer-events-auto');
-      this.syncMegaPosition();
-    }
-
-    private hideMega() {
-      this.megaActive = false;
-      this.megaPanel.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
-      this.megaPanel.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+    if (isMobile) {
+      navWrapper.style.top = '52px';
+      navWrapper.classList.add('px-4');
+      navContainer.classList.add('rounded-full', 'bg-zinc-900/90', 'border-white/10', 'shadow-2xl');
+      navContainer.classList.remove('w-full', 'bg-white/5');
+      navContainer.style.width = '100%';
+    } else if (scrolled) {
+      navWrapper.style.top = '52px';
+      navWrapper.classList.remove('px-4');
+      navContainer.classList.add('rounded-full', 'bg-zinc-900/90', 'border-white/10', 'shadow-2xl', 'px-5');
+      navContainer.classList.remove('w-full', 'bg-white/5');
+      navContainer.style.width = 'fit-content';
+      brandName.classList.add('max-w-0', 'opacity-0');
+    } else {
+      navWrapper.style.top = '40px';
+      navWrapper.classList.remove('px-4');
+      navContainer.classList.add('w-full', 'bg-white/5');
+      navContainer.classList.remove('rounded-full', 'bg-zinc-900/90', 'shadow-2xl', 'fit-content', 'px-5');
+      navContainer.style.width = '100%';
+      brandName.classList.remove('max-w-0', 'opacity-0');
     }
   }
 
-  new AlliedNav();
+  window.addEventListener('scroll', applyNavState, { passive: true });
+  window.addEventListener('resize', applyNavState);
+  applyNavState();
+})();
 </script>
