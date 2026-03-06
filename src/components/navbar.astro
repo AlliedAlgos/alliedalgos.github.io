@@ -35,9 +35,7 @@
 </div>
 
 <div id="navWrapper" class="fixed left-0 right-0 z-[9999] flex justify-center pointer-events-none transition-all duration-500" style="top: 52px;">
-
   <div id="navContainer" class="w-full px-6 pointer-events-auto transition-all duration-500 bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg">
-
     <div class="flex justify-between items-center h-14" id="navInner">
       
       <a href="/" class="flex items-center gap-3 group z-[10001] shrink-0">
@@ -48,9 +46,9 @@
       </a>
 
       <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-[5px] items-end p-2 z-[10001] outline-none group">
-        <span id="ham1" class="ham-line w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
-        <span id="ham2" class="ham-line w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
-        <span id="ham3" class="ham-line w-4 h-0.5 bg-white rounded-full transition-all duration-300"></span>
+        <span id="ham1" class="w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+        <span id="ham2" class="w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
+        <span id="ham3" class="w-4 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
       </button>
 
       <ul class="hidden md:flex gap-1 items-center shrink-0">
@@ -128,6 +126,7 @@
   let menuOpen = false;
   let dropTimer = null;
 
+  // --- Projects Dropdown Logic ---
   function openProjects() {
     if (dropTimer) clearTimeout(dropTimer);
     const rect = navContainer.getBoundingClientRect();
@@ -152,33 +151,43 @@
   projectDropdown.addEventListener('mouseenter', () => clearTimeout(dropTimer));
   projectDropdown.addEventListener('mouseleave', closeProjects);
 
+  // --- Mobile Menu Logic ---
   mobileMenuBtn.addEventListener('click', () => {
     menuOpen = !menuOpen;
     if (menuOpen) {
       mobileMenu.classList.add('is-open', 'pointer-events-auto');
-      ham1.style.transform = 'rotate(45deg) translateY(10px)';
+      // Create X icon
+      ham1.style.transform = 'rotate(45deg) translate(5px, 5px)';
       ham2.style.opacity = '0';
-      ham3.style.transform = 'rotate(-45deg) translateY(-10px)';
+      ham3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
       ham3.style.width = '24px';
       document.body.style.overflow = 'hidden';
     } else {
       mobileMenu.classList.remove('is-open', 'pointer-events-auto');
-      ham1.style.transform = ''; ham2.style.opacity = '1'; ham3.style.transform = ''; ham3.style.width = '16px';
+      // Reset hamburger icon
+      ham1.style.transform = ''; 
+      ham2.style.opacity = '1'; 
+      ham3.style.transform = ''; 
+      ham3.style.width = '16px';
       document.body.style.overflow = '';
     }
   });
 
+  // --- Scroll & Responsive States ---
   function applyNavState() {
     const scrolled = window.scrollY > 20;
     const isMobile = window.innerWidth < 768;
 
     if (isMobile) {
+      // Force mobile appearance regardless of scroll
       navWrapper.style.top = '52px';
       navWrapper.classList.add('px-4');
-      navContainer.classList.add('rounded-full', 'bg-zinc-900/90', 'border-white/10', 'shadow-2xl');
+      navContainer.classList.add('rounded-full', 'bg-zinc-900/95', 'border-white/10', 'shadow-2xl');
       navContainer.classList.remove('w-full', 'bg-white/5');
       navContainer.style.width = '100%';
+      brandName.classList.remove('max-w-0', 'opacity-0'); // Usually keep logo visible on mobile
     } else if (scrolled) {
+      // Desktop Scrolled (Pill mode)
       navWrapper.style.top = '52px';
       navWrapper.classList.remove('px-4');
       navContainer.classList.add('rounded-full', 'bg-zinc-900/90', 'border-white/10', 'shadow-2xl', 'px-5');
@@ -186,6 +195,7 @@
       navContainer.style.width = 'fit-content';
       brandName.classList.add('max-w-0', 'opacity-0');
     } else {
+      // Desktop Top (Full width)
       navWrapper.style.top = '40px';
       navWrapper.classList.remove('px-4');
       navContainer.classList.add('w-full', 'bg-white/5');
@@ -197,6 +207,6 @@
 
   window.addEventListener('scroll', applyNavState, { passive: true });
   window.addEventListener('resize', applyNavState);
-  applyNavState();
+  applyNavState(); // Run on load
 })();
 </script>
