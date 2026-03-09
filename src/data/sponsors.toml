@@ -2,3 +2,8 @@
 name = "Robotics Catalyst Foundation"
 website_url = "https://robolyst.org"
 logo_url = "https://eyxhddkoqotedgucpfbz.supabase.co/storage/v1/object/public/website_imgs/whiterobolystlong.png"
+
+[[sponsors]]
+name = "Russian School of Mathematics"
+website_url = "https://www.mathschool.com/"
+logo_url = "images/sponsors/rsm.jpg"
