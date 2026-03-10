@@ -1,0 +1,64 @@
+---
+// src/components/SponsorReel.astro
+const { sponsors = [] } = Astro.props;
+
+// Triple the array to ensure a seamless infinite loop on all screen sizes
+const displaySponsors = [...sponsors, ...sponsors, ...sponsors];
+---
+
+<div class="relative w-full overflow-hidden bg-zinc-900/10 py-12 group border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-6 mb-10 text-center">
+        <h3 class="text-zinc-500 font-bold uppercase tracking-[0.5em] text-[10px] mb-2">Our Mission Partners</h3>
+        <p class="text-white font-black italic uppercase tracking-tighter text-2xl">
+            A Huge <span class="text-blue-500">Thank You</span> to the Organizations Supporting Our Journey
+        </p>
+    </div>
+
+    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent z-20 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-20 pointer-events-none"></div>
+
+    <div class="flex animate-marquee-fast whitespace-nowrap items-center">
+        {displaySponsors.map((sponsor) => (
+            <div class="flex items-center justify-center mx-12 min-w-[220px]">
+                {sponsor.logo_url ? (
+                    <a 
+                        href={sponsor.website_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="block transform transition-transform hover:scale-110 active:scale-95"
+                    >
+                        <img 
+                            src={sponsor.logo_url} 
+                            alt={`${sponsor.name} Logo`}
+                            class="h-16 md:h-24 w-auto object-contain opacity-100" 
+                            loading="lazy"
+                        />
+                    </a>
+                ) : (
+                    <span class="text-white font-black italic text-xl uppercase tracking-tighter">
+                        {sponsor.name}
+                    </span>
+                )}
+            </div>
+        ))}
+    </div>
+</div>
+
+<style>
+    @keyframes marquee-fast {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-33.333%); }
+    }
+
+    .animate-marquee-fast {
+        display: flex;
+        width: max-content;
+        /* Adjusted to 20s for a much faster, energetic scroll */
+        animation: marquee-fast 20s linear infinite;
+    }
+
+    /* Pause on hover so people can click the links easily */
+    .group:hover .animate-marquee-fast {
+        animation-play-state: paused;
+    }
+</style>
