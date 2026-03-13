@@ -3,80 +3,76 @@
 ---
 
 <style>
-  /* These are kept in CSS because Tailwind doesn't have native keyframe/clip-path utilities */
-  @keyframes shine {
-    to { background-position: 200% center; }
-  }
-  .animate-shine {
-    background-size: 200% auto;
-    animation: shine 4s linear infinite;
-  }
-  .animate-donate {
-    background-size: 300% auto;
-    transition: background-position 0.5s ease;
-  }
-  .animate-donate:hover {
-    background-position: right center;
-  }
+  @keyframes shine { to { background-position: 200% center; } }
+  .animate-shine { background-size: 200% auto; animation: shine 4s linear infinite; }
+  .animate-donate { background-size: 300% auto; transition: background-position 0.5s ease; }
+  .animate-donate:hover { background-position: right center; }
+
   #mobileMenu {
     clip-path: circle(0% at 90% 5%);
     transition: clip-path 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
   }
   #mobileMenu.is-open {
     clip-path: circle(150% at 90% 5%);
+    pointer-events: auto;
   }
 </style>
 
-<div class="promo-banner fixed top-0 left-0 right-0 z-[10002] h-10 flex items-center justify-center px-4 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900 animate-shine">
-  <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="text-white text-[11px] md:text-xs font-bold tracking-wide flex items-center justify-center gap-2 group">
+<!-- Promo Banner -->
+<div class="fixed top-0 inset-x-0 z-[10002] h-10 flex items-center justify-center bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900 animate-shine">
+  <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="text-white text-[11px] md:text-xs font-bold tracking-wide flex items-center gap-2 group">
     <span>Support the AlliedAlgorithms Trip to Worlds!</span>
     <span class="bg-white text-blue-700 px-2 py-0.5 rounded-full text-[10px] uppercase font-black group-hover:bg-blue-50 transition-colors">Donate →</span>
   </a>
 </div>
 
-<div id="navWrapper" class="fixed left-0 right-0 z-[9999] flex justify-center pointer-events-none transition-all duration-500" style="top: 52px;">
-  <div id="navContainer" class="w-full px-6 pointer-events-auto transition-all duration-500 bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg">
-    <div class="flex justify-between items-center h-14" id="navInner">
-      
-      <a href="/" class="flex items-center gap-3 group z-[10001] shrink-0">
+<!-- Nav Wrapper -->
+<div id="navWrapper" class="fixed inset-x-0 z-[9999] flex justify-center pointer-events-none transition-all duration-500" style="top: 52px;">
+  <div id="navContainer" class="pointer-events-auto transition-all duration-500 w-full bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg">
+    <div class="flex justify-between items-center h-14 px-6">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group shrink-0 z-[10001]">
         <img class="w-8 h-8 transition-transform duration-300 group-hover:scale-110" src="/images/Allied-Algorithms_logo.svg" alt="Logo">
         <span id="brandName" class="text-lg font-bold tracking-tighter italic text-white transition-all duration-500 overflow-hidden whitespace-nowrap">
           Allied Algorithms
         </span>
       </a>
 
-      <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-[5px] items-end p-2 z-[10001] outline-none group">
+      <!-- Hamburger (mobile) -->
+      <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-[5px] items-end p-2 z-[10001] outline-none">
         <span id="ham1" class="w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
         <span id="ham2" class="w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
         <span id="ham3" class="w-4 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
       </button>
 
+      <!-- Desktop Nav -->
       <ul class="hidden md:flex gap-1 items-center shrink-0">
         <li><a href="/about-us" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">About Us</a></li>
-        <li><a href="/seasons" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">Seasons</a></li>
-        
+        <li><a href="/seasons"  class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">Seasons</a></li>
         <li class="relative" id="projectsMenuItem">
-          <button id="projectsBtn" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-5 transition-colors flex items-center gap-1.5 outline-none">
+          <button id="projectsBtn" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-5 flex items-center gap-1.5 outline-none transition-colors">
             Projects <i id="projectsChevron" class="fa-solid fa-chevron-down text-[9px] opacity-60 transition-transform duration-300"></i>
           </button>
         </li>
-
         <li><a href="/contact-us" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">Contact</a></li>
-        
         <li class="ml-3">
-          <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate px-5 py-2 text-white text-[11px] uppercase font-black rounded-full tracking-wide bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 hover:shadow-[0_0_24px_rgba(59,130,246,0.45)] active:translate-y-0.5">
+          <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate px-5 py-2 text-white text-[11px] uppercase font-black rounded-full tracking-wide bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 hover:shadow-[0_0_24px_rgba(59,130,246,0.45)] active:translate-y-0.5 transition-all">
             Donate
           </a>
         </li>
       </ul>
+
     </div>
   </div>
 </div>
 
-<div id="projectDropdown" class="fixed left-0 right-0 opacity-0 invisible translate-y-2 z-[9998] bg-zinc-950/98 backdrop-blur-3xl border-b border-white/10 shadow-2xl transition-all duration-300">
-  <div class="max-w-6xl mx-auto px-10 py-8">
-    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-5">Projects</p>
-    <div class="grid grid-cols-4 gap-4">
+<!-- Projects Dropdown -->
+<div id="projectDropdown" class="fixed opacity-0 invisible translate-y-2 z-[9998] bg-zinc-950/98 backdrop-blur-3xl border border-white/10 shadow-2xl transition-all duration-300 rounded-2xl overflow-hidden">
+  <div class="px-6 py-6">
+    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">Projects</p>
+    <div class="grid grid-cols-2 gap-3">
       <a href="/robot" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-400 border border-blue-500/20 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"><i class="fa-solid fa-robot"></i></div>
         <div><div class="text-sm font-bold text-white mb-1">Robot</div><p class="text-xs text-zinc-500 leading-relaxed">CAD designs and build logs.</p></div>
@@ -97,116 +93,101 @@
   </div>
 </div>
 
-<div id="mobileMenu" class="fixed inset-0 z-[10000] bg-zinc-950 flex flex-col p-8 pt-32 md:hidden pointer-events-none shadow-2xl">
-  <div class="flex flex-col gap-8 text-center">
-    <a href="/about-us" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">About Us</a>
-    <a href="/seasons" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Seasons</a>
-    <a href="/robot" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Robot</a>
-    <a href="/aac" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">AAC</a>
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="fixed inset-0 z-[10000] bg-zinc-950 flex flex-col p-8 pt-32 md:hidden shadow-2xl">
+  <nav class="flex flex-col gap-8 text-center">
+    <a href="/about-us"   class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">About Us</a>
+    <a href="/seasons"    class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Seasons</a>
+    <a href="/robot"      class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Robot</a>
+    <a href="/aac"        class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">AAC</a>
     <a href="https://alliedalgos.org/pathing/docs.html" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Pathing</a>
-    <a href="/contact-us/" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Contact</a>
+    <a href="/contact-us" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Contact</a>
     <div class="h-px bg-white/10 w-24 mx-auto my-2"></div>
-    <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate py-5 rounded-2xl text-white font-black uppercase tracking-widest bg-gradient-to-r from-blue-700 to-blue-500 shadow-xl shadow-blue-900/20">Donate Now</a>
-  </div>
+    <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate py-5 rounded-2xl text-white font-black uppercase tracking-widest bg-gradient-to-r from-blue-700 to-blue-500 shadow-xl shadow-blue-900/20">
+      Donate Now
+    </a>
+  </nav>
 </div>
 
 <script>
 (function () {
-  const navWrapper = document.getElementById('navWrapper');
-  const navContainer = document.getElementById('navContainer');
-  const brandName = document.getElementById('brandName');
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
+  const navWrapper       = document.getElementById('navWrapper');
+  const navContainer     = document.getElementById('navContainer');
+  const brandName        = document.getElementById('brandName');
+  const mobileMenuBtn    = document.getElementById('mobileMenuBtn');
+  const mobileMenu       = document.getElementById('mobileMenu');
   const projectsMenuItem = document.getElementById('projectsMenuItem');
-  const projectsBtn = document.getElementById('projectsBtn');
-  const projectsChevron = document.getElementById('projectsChevron');
-  const projectDropdown = document.getElementById('projectDropdown');
+  const projectsChevron  = document.getElementById('projectsChevron');
+  const projectDropdown  = document.getElementById('projectDropdown');
+  const ham1 = document.getElementById('ham1');
+  const ham2 = document.getElementById('ham2');
+  const ham3 = document.getElementById('ham3');
 
-  const ham1 = document.getElementById('ham1'), ham2 = document.getElementById('ham2'), ham3 = document.getElementById('ham3');
   let menuOpen = false;
   let dropTimer = null;
 
-  // --- Projects Dropdown Logic ---
-  function openProjects() {
-    if (dropTimer) clearTimeout(dropTimer);
-    const rect = navContainer.getBoundingClientRect();
-    projectDropdown.style.top = `${rect.bottom}px`;
+  // --- Dropdown ---
+  function positionDropdown() {
+    const r = navContainer.getBoundingClientRect();
+    projectDropdown.style.top   = (r.bottom + 8) + 'px';
+    projectDropdown.style.left  = r.left + 'px';
+    projectDropdown.style.width = r.width + 'px';
+  }
+  function openDropdown() {
+    clearTimeout(dropTimer);
+    positionDropdown();
     projectDropdown.classList.remove('opacity-0', 'invisible', 'translate-y-2');
     projectDropdown.classList.add('opacity-100', 'visible', 'translate-y-0');
     projectsChevron.style.transform = 'rotate(180deg)';
-    projectsBtn.classList.add('text-white');
   }
-
-  function closeProjects() {
+  function closeDropdown() {
     dropTimer = setTimeout(() => {
       projectDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
       projectDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
       projectsChevron.style.transform = '';
-      projectsBtn.classList.remove('text-white');
-    }, 300);
+    }, 150);
   }
 
-  projectsMenuItem.addEventListener('mouseenter', openProjects);
-  projectsMenuItem.addEventListener('mouseleave', closeProjects);
+  projectsMenuItem.addEventListener('mouseenter', openDropdown);
+  projectsMenuItem.addEventListener('mouseleave', closeDropdown);
   projectDropdown.addEventListener('mouseenter', () => clearTimeout(dropTimer));
-  projectDropdown.addEventListener('mouseleave', closeProjects);
+  projectDropdown.addEventListener('mouseleave', closeDropdown);
 
-  // --- Mobile Menu Logic ---
+  // --- Mobile Menu ---
   mobileMenuBtn.addEventListener('click', () => {
     menuOpen = !menuOpen;
-    if (menuOpen) {
-      mobileMenu.classList.add('is-open', 'pointer-events-auto');
-      // Create X icon
-      ham1.style.transform = 'rotate(45deg) translate(5px, 5px)';
-      ham2.style.opacity = '0';
-      ham3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
-      ham3.style.width = '24px';
-      document.body.style.overflow = 'hidden';
-    } else {
-      mobileMenu.classList.remove('is-open', 'pointer-events-auto');
-      // Reset hamburger icon
-      ham1.style.transform = ''; 
-      ham2.style.opacity = '1'; 
-      ham3.style.transform = ''; 
-      ham3.style.width = '16px';
-      document.body.style.overflow = '';
-    }
+    mobileMenu.classList.toggle('is-open', menuOpen);
+    ham1.style.transform = menuOpen ? 'rotate(45deg) translate(5px, 5px)'   : '';
+    ham2.style.opacity   = menuOpen ? '0'                                     : '1';
+    ham3.style.transform = menuOpen ? 'rotate(-45deg) translate(5px, -5px)'  : '';
+    ham3.style.width     = menuOpen ? '24px'                                  : '16px';
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
   });
 
-  // --- Scroll & Responsive States ---
+  // --- Nav scroll state ---
   function applyNavState() {
     const scrolled = window.scrollY > 20;
     const isMobile = window.innerWidth < 768;
 
-    if (isMobile) {
-      // Force mobile appearance regardless of scroll
+    if (isMobile || !scrolled) {
+      navWrapper.style.top = isMobile ? '52px' : '40px';
+      navContainer.className = 'pointer-events-auto transition-all duration-500 w-full bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg';
+      navContainer.style.width = '';
+      brandName.classList.remove('max-w-0', 'opacity-0');
+    } else {
+      // Pill mode
       navWrapper.style.top = '52px';
-      navWrapper.classList.add('px-4');
-      navContainer.classList.add('rounded-full', 'bg-zinc-900/95', 'border-white/10', 'shadow-2xl');
-      navContainer.classList.remove('w-full', 'bg-white/5');
-      navContainer.style.width = '100%';
-      brandName.classList.remove('max-w-0', 'opacity-0'); // Usually keep logo visible on mobile
-    } else if (scrolled) {
-      // Desktop Scrolled (Pill mode)
-      navWrapper.style.top = '52px';
-      navWrapper.classList.remove('px-4');
-      navContainer.classList.add('rounded-full', 'bg-zinc-900/90', 'border-white/10', 'shadow-2xl', 'px-5');
-      navContainer.classList.remove('w-full', 'bg-white/5');
+      navContainer.className = 'pointer-events-auto transition-all duration-500 rounded-full bg-zinc-900/90 backdrop-blur-2xl border border-white/10 shadow-2xl px-5';
       navContainer.style.width = 'fit-content';
       brandName.classList.add('max-w-0', 'opacity-0');
-    } else {
-      // Desktop Top (Full width)
-      navWrapper.style.top = '40px';
-      navWrapper.classList.remove('px-4');
-      navContainer.classList.add('w-full', 'bg-white/5');
-      navContainer.classList.remove('rounded-full', 'bg-zinc-900/90', 'shadow-2xl', 'fit-content', 'px-5');
-      navContainer.style.width = '100%';
-      brandName.classList.remove('max-w-0', 'opacity-0');
     }
+
+    // Re-anchor dropdown if it's open
+    if (!projectDropdown.classList.contains('invisible')) positionDropdown();
   }
 
   window.addEventListener('scroll', applyNavState, { passive: true });
   window.addEventListener('resize', applyNavState);
-  applyNavState(); // Run on load
+  applyNavState();
 })();
 </script>

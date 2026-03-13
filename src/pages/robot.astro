@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RobotCard from '../components/robotCard.astro';
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+const raw = readFileSync('./src/data/robots.toml', 'utf-8');
+const { robots } = parse(raw);
+
+const title = "Robot Designs | Allied Algorithms";
+---
+
+<Layout title={title}>
+    <section class="relative py-24 flex items-center justify-center text-center overflow-hidden">
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">The Lab</span>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6 uppercase">
+                OPEN SOURCE <br><span class="text-blue-500 underline decoration-4 underline-offset-4">HARDWARE.</span>
+            </h1>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
+            {robots.map((robot) => (
+                <RobotCard {...robot} />
+            ))}
+        </div>
+    </section>
+</Layout>

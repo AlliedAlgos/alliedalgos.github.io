@@ -1,6 +1,6 @@
 [[members]]
 name = "Sid Agrawal"
-role = "Team Captain, FInace Lead, Organization Lead"
+role = "Team Captain, Strategy Lead"
 bio = "I am an 8th grader with 6 years of experience in FLL. I love to play with things that move. Outside of robotics I also play the trumpet and practice Taekwondo."
 photo = "/images/members/sid.jpg"
 
@@ -12,15 +12,21 @@ photo = "/images/members/aariv.jpg"
 
 [[members]]
 name = "Tanush Narredy"
-role = "Build Lead"
+role = "Hardware Lead"
 bio = "I'm in 8th grade. I love to code and build with legos. Outside of robotics I play the violin and do fencing."
 photo = "/images/members/tanush.jpg"
 
 [[members]]
 name = "Sarthak Shetty"
-role = "Innovation Lead"
+role = "Reasearch Lead"
 bio = "I am a 7th grader who loves to read and do math. I am an extremely curious person and love to learn new things.I am new to FLL and have over 5 years of experience of coding in Scratch and Python."
 photo = "/images/members/sarthak.jpg"
+
+[[members]]
+name = "Aarushi Agrawal"
+role = "Mentor, Marketing Lead"
+bio = "I am a Mechanical Engineer studying at Northeastern University. I have done FTC for 5 years, and am marketing director at other organizations."
+photo = "/images/members/aarushi.jpg"
 
 [[members]]
 name = "Amit Agrawal"
