@@ -7,3 +7,12 @@ logo_url = "https://eyxhddkoqotedgucpfbz.supabase.co/storage/v1/object/public/we
 name = "Russian School of Mathematics"
 website_url = "https://www.mathschool.com/"
 logo_url = "images/sponsors/rsm.jpg"
+
+[[sponsors]]
+name = "YB World Taekwondo Academy"
+website_url = "https://ybworldtkd.com/"
+logo_url = "https://ybworldtkd.com/wp-content/uploads/2023/08/yb_logo_blk-1.png"
+
+
+
+
