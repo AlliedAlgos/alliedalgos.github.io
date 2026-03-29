@@ -2,9 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { parse } from 'smol-toml';
 import { readFileSync } from 'fs';
-import SponsorReel from '../components/SponsorReel.astro'; // Import here
+import SponsorReel from '../components/SponsorReel.astro'; 
 
-// Data fetching for potential dynamic sections
 const sponsorsRaw = readFileSync('./src/data/sponsors.toml', 'utf-8');
 const { sponsors } = parse(sponsorsRaw);
 
@@ -13,33 +12,7 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
 ---
 
 <Layout title={title} description={description}>
-    <div id="fundraiser-modal" class="fixed inset-0 z-[10000] flex items-center justify-center p-6 bg-black/85 backdrop-blur-md" style="display: none;">
-        <div class="relative w-full max-w-lg bg-zinc-900 border-2 border-blue-500 rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(59,130,246,0.4)]">
-            <button id="close-modal-x" class="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            
-            <span class="inline-block px-3 py-1 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-4">World Championship Fundraiser</span>
-            
-            <h2 class="text-3xl font-black italic text-white uppercase mb-4 tracking-tighter">
-                Pizza <span class="text-blue-500">Fundraiser</span>
-            </h2>
-            
-            <div class="text-zinc-300 text-sm space-y-4 leading-relaxed">
-                <p>Supporting <strong>Allied Algorithms</strong>, the only FLL team from Connecticut to qualify for the World Festival this year!</p>
-                <p>Orders will be picked up on <strong>March 27th</strong>. Pizzas provided by <strong>Wilton Pizza</strong>.</p>
-                <p class="pt-2">
-                    <a href="https://robotics-catalyst.org/donate/allied-algorithms-pizza" target="_blank" class="text-blue-100 bg-blue-600 p-5 rounded-xl font-bold underline decoration-blue-500/30 underline-offset-4 hover:text-blue-900">
-                        Order Pizza or Donate Here →
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section class="relative min-h-screen flex items-center pt-32 overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.1),transparent_70%)]"></div>
         
         <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
@@ -52,13 +25,15 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
                 Allied <br />
                 <span class="text-blue-500">Algorithms.</span>
             </h1>
-            <p class="fade-up text-xl text-zinc-400 mb-12 md:text-[3.5rem] font-black italic tracking-tighter leading-[0.8] uppercase text-white">Where Engineering Meets Creativity</p>
-
+            <p class="fade-up text-xl text-zinc-400 mb-12 md:text-[3.5rem] font-black italic tracking-tighter leading-[0.8] uppercase">
+                Where Engineering Meets Creativity
+            </p>
+               
             <div class="fade-up inline-flex flex-wrap items-center gap-6 md:gap-10 p-8 md:p-10 bg-zinc-900/40 border border-white/5 rounded-[3rem] backdrop-blur-xl mb-16 shadow-2xl">
                 <div class="text-left">
                     <span class="block text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-2">Combined Global Reach</span>
                     <span class="text-4xl md:text-5xl font-black italic text-white tracking-tighter">
-                        7,792 <span class="text-blue-500 text-xl md:text-2xl ml-1 uppercase">Views</span>
+                        <span id="view-count" data-target="12186">0</span> <span class="text-blue-500 text-xl md:text-2xl ml-1 uppercase">Views</span>
                     </span>
                 </div>
                 
@@ -66,18 +41,11 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
 
                 <div class="flex items-center gap-6">
                     <div class="flex -space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
-                            <i class="fa-brands fa-youtube"></i>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
-                            <i class="fa-brands fa-facebook"></i>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
-                        <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
-                            <i class="fa-solid fa-globe"></i>
-                        </div>
+                        {['youtube', 'facebook', 'instagram', 'globe'].map((icon) => (
+                            <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
+                                <i class={`fa-brands fa-${icon === 'globe' ? '' : icon} fa-solid fa-${icon === 'globe' ? 'globe' : ''}`}></i>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -86,53 +54,72 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
                 <a href="/seasons/" class="px-12 py-6 bg-blue-600 text-white font-black text-xs uppercase tracking-[0.4em] rounded-full hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20">
                     Explore Journey
                 </a>
-                <a href="/contact-us/" class="px-12 py-6 border border-zinc-800 hover:border-white text-white font-black text-xs uppercase tracking-[0.4em] rounded-full transition-all">
-                    Partner With Us
+                <a href="#donate" class="px-12 py-6 border border-zinc-800 hover:border-white text-white font-black text-xs uppercase tracking-[0.4em] rounded-full transition-all">
+                    Support Our Team
                 </a>
             </div>
 
-            <div class="fade-up relative group w-full max-w-6xl">
-                <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 via-blue-400 to-cyan-500 rounded-[4rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <div class="relative flex flex-col lg:flex-row items-stretch bg-zinc-900 border border-white/10 rounded-[4rem] overflow-hidden backdrop-blur-md min-h-[400px]">
-                    
-                    <div class="w-full lg:w-2/5 bg-gradient-to-br from-blue-600/20 to-blue-900/40 flex flex-col items-center justify-center p-12 border-b lg:border-b-0 lg:border-r border-white/5">
-                        <i class="fa-solid fa-pizza-slice text-[8rem] text-blue-500 drop-shadow-[0_0_30px_rgba(59,130,246,0.6)] mb-6 animate-bounce" style="animation-duration: 3s;"></i>
-                        <div class="text-center">
-                            <p class="text-white font-black italic text-3xl uppercase tracking-tighter">Wilton Pizza</p>
+            <div id="donate" class="fade-up relative group w-full max-w-6xl mt-12">
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 via-purple-500 to-blue-400 rounded-[4rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                <div class="relative flex flex-col lg:flex-row items-stretch bg-zinc-900 border border-white/10 rounded-[4rem] overflow-hidden backdrop-blur-md">
+                    <div class="w-full lg:w-2/5 bg-zinc-950/50 flex flex-col items-center justify-center p-12 border-b lg:border-b-0 lg:border-r border-white/5 text-center">
+                        <div class="w-24 h-24 bg-blue-600/20 rounded-3xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-trophy text-5xl text-blue-500"></i>
                         </div>
+                        <p class="text-white font-black italic text-2xl uppercase tracking-tighter mb-2">Road to Worlds</p>
+                        <p class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Houston, Texas • 2026</p>
                     </div>
 
-                    <div class="w-full lg:w-3/5 p-12 lg:p-20 flex flex-col justify-center">
-                        <div class="flex items-center gap-3 mb-8">
-                            <span class="px-4 py-1.5 bg-blue-500 text-white font-black uppercase tracking-[0.3em] text-[10px] rounded-full">Active Campaign</span>
-                            <span class="text-zinc-500 font-bold text-[10px] uppercase tracking-widest">Houston 2026</span>
-                        </div>
-
-                        <h2 class="text-5xl lg:text-7xl font-black italic text-white uppercase mb-8 tracking-tighter leading-[0.9]">
-                            Fuel the <br><span class="text-blue-500">Championship.</span>
+                    <div class="w-full lg:w-3/5 p-12 lg:p-16 flex flex-col justify-center">
+                        <h2 class="text-4xl lg:text-6xl font-black italic text-white uppercase mb-6 tracking-tighter leading-none">
+                            Support Our <span class="text-blue-500">Team.</span>
                         </h2>
-
-                        <p class="text-zinc-300 text-lg lg:text-xl mb-12 leading-relaxed font-light max-w-2xl">
-                            Support <strong>Allied Algorithms</strong>, the only FLL team from Connecticut to qualify for the World Championship. All proceeds go directly toward our competition fees and logistics.
+                        <p class="text-zinc-400 text-lg mb-10 leading-relaxed font-light">
+                            Help <strong>Allied Algorithms</strong> represent Connecticut at the FLL World Championship. Your contribution supports our technical innovation and covers essential travel costs.
                         </p>
-                        
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-                            <a href="https://robotics-catalyst.org/donate/allied-algorithms-pizza" target="_blank" class="w-full sm:w-auto text-center px-14 py-7 bg-white text-black font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-blue-500 hover:text-white transition-all transform hover:scale-105 shadow-2xl">
-                                Order Pizza Now
-                            </a>
-                            <div class="flex flex-col">
-                                <span class="text-zinc-500 font-bold uppercase tracking-[0.2em] text-[10px]">Pickup Date</span>
-                                <span class="text-white font-black italic text-lg">March 27th, 2026</span>
-                            </div>
-                        </div>
+                        <a href="https://alliedalgorithms.org/donate" target="_blank" class="w-full sm:w-auto text-center px-10 py-6 bg-blue-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-blue-500 transition-all transform hover:scale-105 shadow-xl shadow-blue-600/20">
+                            Donate to Our Team
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-<section class="py-20 bg-zinc-950">
+
+    <section class="py-20 bg-zinc-950">
         <SponsorReel sponsors={sponsors} />
     </section>
+
+    <section class="bg-blue-600 py-24 rounded-[3rem] md:rounded-[5rem] mx-2 md:mx-6 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-blue-200 font-black uppercase tracking-[0.4em] text-[10px] mb-4 block">Our Engineering Culture</span>
+                <h2 class="text-5xl md:text-7xl font-black italic uppercase leading-none tracking-tighter mb-6 text-white">
+                    Open <br><span class="text-black">Source.</span>
+                </h2>
+                <p class="text-blue-100 text-lg max-w-xl mx-auto font-light leading-relaxed">
+                    We believe in the "Allied" part of our name. We publish our technical logs and CAD to elevate the entire FLL community.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                    { icon: 'code-branch', title: 'Frameworks', desc: 'Reusable code architectures for precision and reliability.' },
+                    { icon: 'cube', title: 'CAD Assets', desc: '3D models shared to assist teams in mastering structural integrity.' },
+                    { icon: 'book-open', title: 'Public Logs', desc: 'A full archive of our design iterations and breakthroughs.' }
+                ].map((item) => (
+                    <div class="space-y-4 group p-6 bg-blue-700/20 rounded-[2rem] border border-white/10">
+                        <div class="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform">
+                            <i class={`fa-solid fa-${item.icon}`}></i>
+                        </div>
+                        <h4 class="text-xl font-black italic uppercase text-white">{item.title}</h4>
+                        <p class="font-light text-sm text-blue-200 leading-snug">{item.desc}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
     <section class="max-w-7xl mx-auto px-6 py-40">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div class="fade-up">
@@ -141,7 +128,8 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
                     FIRST LEGO <br><span class="text-zinc-700">League.</span>
                 </h2>
                 <p class="text-zinc-400 text-lg leading-relaxed font-light mb-10 max-w-lg">
-                FIRST® LEGO® League (FLL) is a global STEM program for children ages 4–16 that introduces science, technology, engineering, and math through hands-on, playful learning. Teams design, build, and program robots using LEGO® technology to solve real-world, theme-based challenges. </p>
+                    FIRST® LEGO® League (FLL) is a global STEM program that introduces science, technology, engineering, and math through hands-on learning.
+                </p>
                 <div class="grid grid-cols-2 gap-8 border-t border-white/5 pt-10">
                     <div>
                         <span class="block text-white font-black italic text-2xl mb-1 uppercase">Innovation</span>
@@ -158,86 +146,38 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
                 <div class="p-16 relative z-20 h-full flex flex-col justify-end">
                     <i class="fa-solid fa-microchip text-6xl text-blue-500 mb-8"></i>
                     <h3 class="text-3xl font-black italic text-white uppercase mb-4">6 Seasons of Excellence</h3>
-                    <p class="text-zinc-400 font-light">From Masterpiece to Submerged, we've built a legacy of technical documentation and awards in the Connecticut region.</p>
+                    <p class="text-zinc-400 font-light">From Masterpiece to Submerged, we've built a legacy of technical documentation.</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <section class="bg-zinc-800 text-black py-40 rounded-[4rem] md:rounded-[6rem] mx-2 md:mx-6">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-24">
-                <span class="text-zinc-400 font-black uppercase tracking-[0.4em] text-xs mb-6 block">Our Engineering Culture</span>
-                <h2 class="text-6xl md:text-9xl font-black italic uppercase leading-none tracking-tighter mb-8 text-white">
-                    Open <br><span class="text-blue-600">Source.</span>
-                </h2>
-                <p class="text-zinc-200 text-xl max-w-2xl mx-auto font-light leading-relaxed">
-                    We believe in the "Allied" part of our name. We publish our frameworks, CAD files, and technical logs to elevate the entire FLL community.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div class="space-y-6">
-                    <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white text-2xl">
-                        <i class="fa-solid fa-code-branch"></i>
-                    </div>
-                    <h4 class="text-2xl font-black italic uppercase text-white">Frameworks</h4>
-                    <p class="font-light text-sm text-white">Reusable code architectures that ensure precision and reliability across multiple seasons.</p>
-                </div>
-                <div class="space-y-6">
-                    <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white text-2xl">
-                        <i class="fa-solid fa-cube"></i>
-                    </div>
-                    <h4 class="text-2xl font-black italic uppercase text-white">CAD Assets</h4>
-                    <p class="font-light text-sm text-white">3D models and technical drawings shared to assist teams in mastering structural integrity.</p>
-                </div>
-                <div class="space-y-6">
-                    <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white text-2xl">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-                    <h4 class="text-2xl font-black italic uppercase text-white">Public Logs</h4>
-                    <p class="font-light text-sm text-white">A full archive of our design iterations—failures, breakthroughs, and final solutions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
 </Layout>
 
 <script is:inline>
-    // POP-UP LOGIC
-    const modal = document.getElementById('fundraiser-modal');
-    const closeX = document.getElementById('close-modal-x');
-    const closeBtn = document.getElementById('close-modal-btn');
-
-    function showPopUp() {
-        if (modal) {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; 
-        }
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+            if (progress < 1) window.requestAnimationFrame(step);
+        };
+        window.requestAnimationFrame(step);
     }
 
-    function hidePopUp() {
-        if (modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-    }
-
-    closeX?.addEventListener('click', hidePopUp);
-    closeBtn?.addEventListener('click', hidePopUp);
-    modal?.addEventListener('click', (e) => { if (e.target === modal) hidePopUp(); });
-
-    setTimeout(showPopUp, 100);
-
-    // SCROLL OBSERVER
+    const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                if (entry.target.contains(document.getElementById('view-count'))) {
+                    const counter = document.getElementById('view-count');
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    animateValue(counter, 0, target, 2000);
+                }
             }
         });
-    }, { threshold: 0.1 });
+    }, observerOptions);
 
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
@@ -251,5 +191,8 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
     .fade-up.visible {
         opacity: 1;
         transform: translateY(0);
+    }
+    html {
+        scroll-behavior: smooth;
     }
 </style>
