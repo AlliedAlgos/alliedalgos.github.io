@@ -1,0 +1,830 @@
+---
+import '../styles/global.css';
+---
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlliedPath Docs — Allied Algorithms #58590</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        navy:       '#040c18',
+        navy2:      '#070e1c',
+        navy3:      '#0a1929',
+        blue:       '#3b9eff',
+        'blue-dim': '#1e3a5f',
+        'blue-bright':'#7ecfff',
+        ivory:      '#eef2ff',
+        gray:       '#7a90a8',
+        'gray-dim': '#3a4a5a',
+        gold:       '#ffb830',
+      },
+      fontFamily: {
+        mono:    ['"Space Mono"', 'monospace'],
+        display: ['"Bebas Neue"', 'sans-serif'],
+        body:    ['"DM Sans"', 'sans-serif'],
+      },
+      keyframes: {
+        fadeUp: { from:{ opacity:'0', transform:'translateY(18px)' }, to:{ opacity:'1', transform:'translateY(0)' } },
+      },
+      animation: {
+        'fade-up-0':  'fadeUp .55s ease both',
+        'fade-up-1':  'fadeUp .55s .1s ease both',
+        'fade-up-2':  'fadeUp .55s .2s ease both',
+        'fade-up-3':  'fadeUp .55s .3s ease both',
+        'fade-up-5':  'fadeUp .55s .5s ease both',
+        'fade-up-65': 'fadeUp .55s .65s ease both',
+      },
+    }
+  }
+}
+</script>
+<style>
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #040c18; }
+  ::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 2px; }
+
+  /* Sidebar scrollbar */
+  #doc-sidebar::-webkit-scrollbar { width: 3px; }
+  #doc-sidebar::-webkit-scrollbar-thumb { background: #1e3a5f; }
+
+  /* Sidebar max-height transition */
+  .sb-items { overflow: hidden; max-height: 0; transition: max-height .25s ease; }
+  .sb-items.open { max-height: 500px; }
+
+  /* Scroll reveal */
+  .scroll-reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Sidebar arrow rotation */
+  .sb-arrow { transition: transform .2s; fill:none; stroke:currentColor; stroke-width:2; }
+  .sb-toggle.open .sb-arrow { transform: rotate(90deg); }
+
+  /* Active sidebar link */
+  .sb-link.active { color: #7ecfff; border-left-color: #3b9eff; background: rgba(59,158,255,0.05); }
+
+  /* Search highlight */
+  .sr-highlight { color: #3b9eff; }
+
+  /* Mobile hamburger animation */
+  #hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  #hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile drawer */
+  #mobile-drawer { transform: translateX(100%); transition: transform .3s ease; }
+  #mobile-drawer.open { transform: translateX(0); }
+
+  /* Feature card glow */
+  .feature-card::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at top left, rgba(59,158,255,0.05), transparent 70%);
+    border-radius: 14px;
+  }
+
+  /* Team hero patterns */
+  .team-hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 55% 45% at 25% 50%, rgba(59,158,255,0.07), transparent),
+                radial-gradient(ellipse 55% 45% at 75% 50%, rgba(59,158,255,0.05), transparent);
+  }
+  .team-hero::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(circle, rgba(59,158,255,0.12) 1px, transparent 1px);
+    background-size: 26px 26px; opacity: .4;
+  }
+
+  /* Ref row hover */
+  .ref-row { transition: border-color .18s; }
+  .ref-row:hover { border-color: #1e3a5f; }
+
+  /* Step connector */
+  .step-connector { flex: 1; width: 1px; background: linear-gradient(to bottom, #1e3a5f, transparent); margin-top: 4px; min-height: 24px; }
+
+  /* Step note */
+  .step-note { margin-top: .5rem; font-family: 'Space Mono', monospace; font-size: .6rem; color: #3b9eff; background: rgba(59,158,255,0.06); border-left: 2px solid #3b9eff; padding: 5px 10px; border-radius: 0 5px 5px 0; }
+
+  /* Divider gradient */
+  .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(59,158,255,0.18), transparent); margin: 0 3rem; }
+
+  /* Hero radial vignette */
+  #hero::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 90% 70% at 50% 50%, transparent 20%, #040c18 100%); }
+
+  /* Nav search dropdown */
+  #search-results { display: none; }
+  #search-results.visible { display: block; }
+
+  /* Ref type badge */
+  .ref-type { font-family: 'Space Mono', monospace; font-size: .6rem; color: #ffe066; background: rgba(255,224,102,0.06); padding: 2px 7px; border-radius: 4px; display: inline-block; }
+
+  /* code inline */
+  code { font-family: 'Space Mono', monospace; font-size: .78em; background: rgba(59,158,255,0.07); border: 1px solid #1e3a5f; border-radius: 4px; padding: 1px 6px; color: #7ecfff; }
+
+  /* Sidebar hidden by default */
+  #doc-sidebar { display: none; }
+  #doc-sidebar.visible { display: block; }
+
+  @media (max-width: 768px) {
+    #doc-sidebar { display: none !important; }
+    .divider { margin: 0 1.25rem; }
+  }
+</style>
+</head>
+<body class="bg-navy text-ivory font-body overflow-x-hidden">
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-10 h-[60px] bg-navy/90 backdrop-blur-[16px] border-b border-blue/10">
+  <a href="#" class="font-display text-2xl tracking-[4px] no-underline leading-none">
+    <span class="text-white">ALLIED</span><span class="text-blue">PATH</span>
+  </a>
+
+  <div class="hidden md:flex items-center gap-8">
+    <ul class="flex gap-7 list-none">
+      <li><a href="#overview"         class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Overview</a></li>
+      <li><a href="#getting-started"  class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Guide</a></li>
+      <li><a href="#reference"        class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Reference</a></li>
+      <li><a href="#playback"         class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Playback</a></li>
+      <li><a href="#team"             class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Team</a></li>
+    </ul>
+
+    <!-- Search -->
+    <div class="relative flex items-center" id="search-wrap">
+      <svg class="absolute left-[11px] pointer-events-none text-gray-dim" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14">
+        <circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l3 3"/>
+      </svg>
+      <input id="search-input" type="text" placeholder="Search docs…" autocomplete="off" spellcheck="false"
+        class="font-mono text-[.62rem] tracking-[1px] bg-navy3/80 border border-blue-dim text-ivory pl-8 pr-3 py-[7px] rounded-full outline-none w-[210px] focus:w-[260px] focus:border-blue focus:bg-navy3 transition-all placeholder-gray-dim">
+      <div id="search-results" class="absolute top-[calc(100%+8px)] left-0 w-[320px] bg-navy2 border border-blue-dim rounded-xl p-2 z-[300] max-h-[360px] overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <div class="hidden md:flex items-center gap-3">
+    <a href="https://alliedalgos.org/pathing" target="_blank"
+       class="font-mono text-[.58rem] tracking-[1.5px] uppercase no-underline bg-blue text-navy px-[18px] py-[7px] rounded-full font-bold hover:bg-blue-bright transition-all whitespace-nowrap">
+      Open Path ↗
+    </a>
+  </div>
+
+  <!-- Hamburger -->
+  <button id="hamburger" class="flex md:hidden flex-col justify-center gap-[5px] cursor-pointer p-1.5 border-none bg-transparent z-[300]" aria-label="Menu">
+    <span class="block w-[22px] h-[2px] bg-blue rounded-sm transition-all duration-300"></span>
+    <span class="block w-[22px] h-[2px] bg-blue rounded-sm transition-all duration-300"></span>
+    <span class="block w-[22px] h-[2px] bg-blue rounded-sm transition-all duration-300"></span>
+  </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div id="mobile-drawer" class="md:hidden fixed top-[56px] left-0 right-0 bottom-0 bg-navy/[.98] backdrop-blur-[20px] z-[200] flex flex-col px-6 pt-8 pb-8 gap-0 overflow-y-auto">
+  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-white no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#overview"        onclick="closeMobileMenu()">Overview</a>
+  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-white no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#getting-started" onclick="closeMobileMenu()">Guide</a>
+  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-white no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#reference"       onclick="closeMobileMenu()">Reference</a>
+  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-white no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#playback"        onclick="closeMobileMenu()">Playback</a>
+  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-white no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#team"           onclick="closeMobileMenu()">Team</a>
+  <div class="mt-8 flex flex-col gap-3">
+    <div class="font-mono text-[.55rem] tracking-[2px] uppercase text-gold bg-gold/5 border border-gold/20 rounded-full py-2 px-4 text-center">🏆 Worlds 2025–2026 · CT 1st</div>
+    <a href="https://alliedalgos.org/pathing" target="_blank" class="font-mono text-[.65rem] tracking-[2px] uppercase no-underline bg-blue text-navy py-3.5 rounded-full font-bold text-center hover:bg-blue-bright transition-all">Open AlliedPath ↗</a>
+    <a href="https://alliedalgos.org"      target="_blank" class="font-mono text-[.65rem] tracking-[2px] uppercase no-underline border border-blue-dim text-blue py-3.5 rounded-full text-center">alliedalgos.org ↗</a>
+  </div>
+</div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-8 pt-[90px] pb-20 md:pt-[90px]">
+  <canvas id="hero-canvas" class="absolute inset-0 w-full h-full opacity-[.38]"></canvas>
+
+  <div class="relative z-[2] text-center flex flex-col items-center gap-6">
+    <div class="animate-fade-up-0 font-mono text-[.58rem] tracking-[4px] uppercase text-blue bg-blue/[.07] border border-blue/20 rounded-full px-[22px] py-[6px]">
+      FLL Path Planning Tool &nbsp;·&nbsp; Season 2025–2026
+    </div>
+
+    <div class="animate-fade-up-1 font-display leading-[.88] tracking-[6px]" style="font-size:clamp(5rem,15vw,12rem)">
+      <span class="block text-white">ALLIED</span>
+      <span class="block text-blue" style="text-shadow:0 0 70px rgba(59,158,255,0.5),0 0 140px rgba(59,158,255,0.18)">PATH</span>
+    </div>
+
+    <p class="animate-fade-up-2 text-[1.05rem] font-light text-gray max-w-[500px] leading-[1.75]">
+      A browser-based <strong class="text-blue-bright font-medium">autonomous path planner</strong> for FIRST LEGO League.
+      Plot waypoints, configure headings, visualize trajectories, and simulate robot movement — all in a single file.
+    </p>
+
+    <div class="animate-fade-up-3 flex gap-4 flex-wrap justify-center">
+      <a href="https://alliedalgos.org/pathing" target="_blank"
+         class="font-mono text-[.62rem] tracking-[2px] uppercase no-underline bg-blue text-navy px-[30px] py-[13px] rounded-full font-bold hover:bg-blue-bright hover:-translate-y-px transition-all shadow-[0_0_24px_rgba(59,158,255,0.35)]">
+        Open Path
+      </a>
+      <a href="#getting-started"
+         class="font-mono text-[.62rem] tracking-[2px] uppercase no-underline border border-blue-dim text-blue px-[30px] py-[13px] rounded-full hover:border-blue hover:bg-blue/[.07] hover:-translate-y-px transition-all">
+        Read the Docs
+      </a>
+    </div>
+  </div>
+
+  <!-- Credits -->
+  <div class="animate-fade-up-5 relative z-[2] mt-16 flex flex-col items-center gap-2">
+    <div class="font-mono text-[.46rem] tracking-[4px] text-blue-dim uppercase">Created by</div>
+    <div class="flex items-center gap-4 bg-navy2/80 border border-blue/[.14] rounded-full px-7 py-2.5 backdrop-blur-[10px] flex-wrap justify-center">
+      <div class="font-display text-[1.05rem] tracking-[3px] text-white">ALLIED ALGORITHMS</div>
+      <div class="w-px h-[22px] bg-blue-dim hidden sm:block"></div>
+      <div class="font-mono text-[.7rem] text-blue bg-blue/10 border border-blue-dim rounded-full px-3 py-[3px]">#58590</div>
+      <div class="w-px h-[22px] bg-blue-dim hidden sm:block"></div>
+      <div class="font-mono text-[.56rem] tracking-[2px] text-gray hidden sm:block">alliedalgos.org</div>
+    </div>
+  </div>
+
+  <!-- Achievement strip -->
+  <div class="animate-fade-up-65 relative z-[2] mt-7 flex gap-2.5 flex-wrap justify-center">
+    <div class="flex items-center gap-[.45rem] bg-gold/5 border border-gold/[.22] rounded-full px-[15px] py-[5px]">
+      <span class="font-mono text-[.55rem] tracking-[1.5px] uppercase text-gold">CT State Championship &mdash; 1st Place</span>
+    </div>
+    <div class="flex items-center gap-[.45rem] bg-gold/5 border border-gold/[.22] rounded-full px-[15px] py-[5px]">
+      <span class="font-mono text-[.55rem] tracking-[1.5px] uppercase text-gold">World Championship Qualifier</span>
+    </div>
+    <div class="flex items-center gap-[.45rem] bg-gold/5 border border-gold/[.22] rounded-full px-[15px] py-[5px]">
+      <span class="font-mono text-[.55rem] tracking-[1.5px] uppercase text-gold">FLL &middot; 2025–2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ DOCS BODY ══════════════════ -->
+<div id="docs-body" class="flex relative max-w-[1280px] mx-auto px-6">
+
+  <!-- LEFT SIDEBAR -->
+  <aside id="doc-sidebar" class="sticky top-[60px] self-start w-[240px] min-w-[240px] h-[calc(100vh-60px)] overflow-y-auto py-8 border-r border-blue/[.08] flex-shrink-0">
+
+    <div class="mb-1">
+      <button class="sb-toggle open flex items-center justify-between w-full px-4 py-[.55rem] cursor-pointer rounded-lg font-mono text-[.6rem] tracking-[2px] uppercase text-gray hover:bg-blue/5 hover:text-white transition-all border-none bg-transparent text-left" data-target="sb-overview">
+        Overview
+        <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sb-items open pl-2" id="sb-overview">
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#overview">Introduction</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#overview">Key Features</a>
+      </div>
+    </div>
+
+    <div class="mb-1">
+      <button class="sb-toggle open flex items-center justify-between w-full px-4 py-[.55rem] cursor-pointer rounded-lg font-mono text-[.6rem] tracking-[2px] uppercase text-gray hover:bg-blue/5 hover:text-white transition-all border-none bg-transparent text-left" data-target="sb-guide">
+        Getting Started
+        <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sb-items open pl-2" id="sb-guide">
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#getting-started">Opening the Tool</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#getting-started">Robot Configuration</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#getting-started">Placing Waypoints</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#getting-started">Editing Points</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#getting-started">Setting Headings</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#getting-started">Saving Your Path</a>
+      </div>
+    </div>
+
+    <div class="h-px bg-blue/[.07] my-3 mx-4"></div>
+
+    <div class="mb-1">
+      <button class="sb-toggle open flex items-center justify-between w-full px-4 py-[.55rem] cursor-pointer rounded-lg font-mono text-[.6rem] tracking-[2px] uppercase text-gray hover:bg-blue/5 hover:text-white transition-all border-none bg-transparent text-left" data-target="sb-ref">
+        Field Reference
+        <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sb-items open pl-2" id="sb-ref">
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#reference">Coordinate System</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#reference">Field Dimensions</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#reference">Heading Convention</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#reference">Sidebar Fields</a>
+      </div>
+    </div>
+
+    <div class="mb-1">
+      <button class="sb-toggle open flex items-center justify-between w-full px-4 py-[.55rem] cursor-pointer rounded-lg font-mono text-[.6rem] tracking-[2px] uppercase text-gray hover:bg-blue/5 hover:text-white transition-all border-none bg-transparent text-left" data-target="sb-playback">
+        Playback
+        <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sb-items open pl-2" id="sb-playback">
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#playback">Play / Pause</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#playback">Progress Slider</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#playback">Speed Control</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#playback">Live Telemetry</a>
+      </div>
+    </div>
+
+    <div class="h-px bg-blue/[.07] my-3 mx-4"></div>
+
+    <div class="mb-1">
+      <button class="sb-toggle flex items-center justify-between w-full px-4 py-[.55rem] cursor-pointer rounded-lg font-mono text-[.6rem] tracking-[2px] uppercase text-gray hover:bg-blue/5 hover:text-white transition-all border-none bg-transparent text-left" data-target="sb-team">
+        Team
+        <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sb-items pl-2" id="sb-team">
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="#team">Allied Algorithms</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-white hover:border-blue-dim transition-all" href="https://alliedalgos.org" target="_blank">alliedalgos.org ↗</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="doc-content" class="flex-1 min-w-0 px-12 pt-16 pb-24">
+
+    <!-- OVERVIEW -->
+    <div class="max-w-[760px] mb-20 scroll-reveal" id="overview" style="scroll-margin-top:80px">
+      <div class="font-mono text-[.5rem] tracking-[4px] uppercase text-blue mb-3 flex items-center gap-2">
+        <span class="inline-block w-[18px] h-px bg-blue"></span>01 — Overview
+      </div>
+      <h2 class="font-display leading-[1] tracking-[4px] mb-4" style="font-size:clamp(2.2rem,4.5vw,3.5rem)">
+        What is <span class="text-blue">AlliedPath</span>?
+      </h2>
+      <p class="text-gray text-[.95rem] leading-[1.75] max-w-[560px] font-light">AlliedPath is a browser-based path planning tool built in-house by Team Allied Algorithms for FLL autonomous mission runs. Map your robot's waypoints on a coordinate grid, measure real distances in inches, and preview the full run before competition day.</p>
+
+      <div class="grid gap-3 mt-10 scroll-reveal" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Waypoint Plotting</div>
+          <div class="text-[.87rem] text-gray leading-[1.6] font-light">Click any cell on the 93×45 inch grid to drop a waypoint. Edit coordinates and heading inline. Click again to remove.</div>
+        </div>
+        <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Inch-Accurate Grid</div>
+          <div class="text-[.87rem] text-gray leading-[1.6] font-light">Each cell equals one inch. Axis labels display real measurements so paths map directly to the physical FLL mat.</div>
+        </div>
+        <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Turn Angles</div>
+          <div class="text-[.87rem] text-gray leading-[1.6] font-light">Signed turn angles display at every intermediate waypoint. Positive values indicate left turns, negative values indicate right turns.</div>
+        </div>
+        <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Per-Point Headings</div>
+          <div class="text-[.87rem] text-gray leading-[1.6] font-light">Each waypoint stores an editable heading in degrees. An arrow renders on the canvas showing the robot's facing at that point.</div>
+        </div>
+        <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Robot Simulation</div>
+          <div class="text-[.87rem] text-gray leading-[1.6] font-light">Configure robot width and length in inches. The rectangle follows the path, rotating to match segment heading in real time.</div>
+        </div>
+        <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Save &amp; Share</div>
+          <div class="text-[.87rem] text-gray leading-[1.6] font-light">Download the tool as a single self-contained HTML file with all waypoints embedded. No server or login required.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- GETTING STARTED -->
+    <div class="max-w-[760px] mb-20 mt-20 scroll-reveal" id="getting-started" style="scroll-margin-top:80px">
+      <div class="font-mono text-[.5rem] tracking-[4px] uppercase text-blue mb-3 flex items-center gap-2">
+        <span class="inline-block w-[18px] h-px bg-blue"></span>02 — Guide
+      </div>
+      <h2 class="font-display leading-[1] tracking-[4px] mb-4" style="font-size:clamp(2.2rem,4.5vw,3.5rem)">
+        Getting <span class="text-blue">Started</span>
+      </h2>
+      <p class="text-gray text-[.95rem] leading-[1.75] max-w-[560px] font-light">From a blank grid to a complete autonomous path in a few minutes.</p>
+
+      <div class="flex flex-col mt-10">
+        <!-- Step 1 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">01</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Open the Tool</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Navigate to <code>alliedalgos.org/pathing</code> or open <code>alliedpath.html</code> locally in any modern browser. The tool runs entirely client-side — no installation required.</div>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">02</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Configure Robot Size</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Enter your robot's <strong class="text-white font-medium">Width</strong> and <strong class="text-white font-medium">Length</strong> in inches via the Vehicle Size panel in the sidebar. These values control the simulated robot rectangle.</div>
+            <div class="step-note">FLL robots must fit within the 12"×12" starting square — use your robot's actual dimensions for accurate path previewing.</div>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">03</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Place Waypoints</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Click grid cells to drop waypoints. Each point connects to the next with a blue line. Segment distances in inches appear as floating midpoint labels.</div>
+            <div class="step-note">Click an existing point to remove it. Points connect in the order they were placed.</div>
+          </div>
+        </div>
+        <!-- Step 4 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">04</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Edit Points in the Sidebar</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Each point appears with editable <code>x</code>, <code>y</code>, and <code>h°</code> fields. Enter exact values and press Enter — the canvas updates immediately.</div>
+          </div>
+        </div>
+        <!-- Step 5 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">05</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Set Headings</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">The <code>h°</code> field at each waypoint sets the robot's facing direction in degrees. A yellow arrow renders on canvas. <code>0°</code> = right (East), <code>90°</code> = up (North).</div>
+          </div>
+        </div>
+        <!-- Step 6 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">06</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Run the Simulation</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Press Play to animate the robot along the path. Use the progress slider to scrub to any position. Adjust speed from <code>0.5×</code> to <code>4×</code>. Live heading and position update each frame.</div>
+          </div>
+        </div>
+        <!-- Step 7 -->
+        <div class="step flex gap-7 pb-8 scroll-reveal">
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class="step-num w-[38px] h-[38px] rounded-full bg-navy3 border border-blue flex items-center justify-center font-mono text-[.68rem] font-bold text-blue">07</div>
+          </div>
+          <div class="pt-[.35rem] flex-1">
+            <div class="font-mono text-[.75rem] tracking-[1px] text-white mb-1.5">Save Your Path</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Click Save File to download <code>alliedpath.html</code> with all waypoints embedded. Reopen the file at any time or share it with teammates.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- REFERENCE -->
+    <div class="max-w-[760px] mb-20 mt-20 scroll-reveal" id="reference" style="scroll-margin-top:80px">
+      <div class="font-mono text-[.5rem] tracking-[4px] uppercase text-blue mb-3 flex items-center gap-2">
+        <span class="inline-block w-[18px] h-px bg-blue"></span>03 — Reference
+      </div>
+      <h2 class="font-display leading-[1] tracking-[4px] mb-4" style="font-size:clamp(2.2rem,4.5vw,3.5rem)">
+        Field <span class="text-blue">Reference</span>
+      </h2>
+      <p class="text-gray text-[.95rem] leading-[1.75] max-w-[560px] font-light">
+        <strong class="text-blue-bright">(0, 0)</strong> sits at the bottom-left corner of the field. X increases rightward, Y increases upward. One cell = one inch.
+      </p>
+
+      <div class="flex flex-col gap-2.5 mt-8 scroll-reveal">
+        <!-- Header row -->
+        <div class="grid gap-4 pb-1" style="grid-template-columns:1.2fr .9fr 1.8fr">
+          <div class="font-mono text-[.55rem] tracking-[2px] text-gray-dim uppercase">Property</div>
+          <div class="font-mono text-[.55rem] tracking-[2px] text-gray-dim uppercase">Value</div>
+          <div class="font-mono text-[.55rem] tracking-[2px] text-gray-dim uppercase">Notes</div>
+        </div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Grid Width</div><div><span class="ref-type">93 in</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">X axis — 0 to 92 inches</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Grid Height</div><div><span class="ref-type">45 in</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Y axis — 0 to 44 inches</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Cell Size</div><div><span class="ref-type">1 in / cell</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Direct 1:1 inch mapping</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Origin</div><div><span class="ref-type">Bottom-Left</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Standard math coordinate convention</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Heading 0°</div><div><span class="ref-type">East / Right</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Counter-clockwise positive</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Heading 90°</div><div><span class="ref-type">North / Up</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Toward increasing Y</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Heading 180°</div><div><span class="ref-type">West / Left</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Toward decreasing X</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Turn angles</div><div><span class="ref-type">Signed °</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Positive = left turn, Negative = right turn</div></div>
+        <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Segment Distance</div><div><span class="ref-type">Euclidean in</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Straight-line distance between consecutive waypoints</div></div>
+      </div>
+
+      <div class="mt-10">
+        <div class="font-mono text-[.5rem] tracking-[4px] uppercase text-blue mb-4 flex items-center gap-2">
+          <span class="inline-block w-[18px] h-px bg-blue"></span>Sidebar Input Fields
+        </div>
+        <div class="flex flex-col gap-2.5 scroll-reveal">
+          <div class="grid gap-4 pb-1" style="grid-template-columns:1.2fr .9fr 1.8fr">
+            <div class="font-mono text-[.55rem] tracking-[2px] text-gray-dim uppercase">Field</div>
+            <div class="font-mono text-[.55rem] tracking-[2px] text-gray-dim uppercase">Type</div>
+            <div class="font-mono text-[.55rem] tracking-[2px] text-gray-dim uppercase">Description</div>
+          </div>
+          <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">x</div><div><span class="ref-type">integer, 0–92</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Horizontal position in inches from the left edge</div></div>
+          <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">y</div><div><span class="ref-type">integer, 0–44</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Vertical position in inches from the bottom edge</div></div>
+          <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">h°</div><div><span class="ref-type">float, degrees</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Robot heading at this waypoint — 0°=right, 90°=up, 180°=left, 270°=down</div></div>
+          <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Width</div><div><span class="ref-type">integer, inches</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Robot rectangle short-side dimension in inches</div></div>
+          <div class="ref-row grid gap-4 bg-navy2 border border-blue/[.09] rounded-[10px] px-[1.1rem] py-[.9rem]" style="grid-template-columns:1.2fr .9fr 1.8fr"><div class="font-mono text-[.73rem] text-blue-bright">Length</div><div><span class="ref-type">integer, inches</span></div><div class="text-[.82rem] text-gray font-light leading-[1.5]">Robot rectangle long-side dimension in inches</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PLAYBACK -->
+    <div class="max-w-[760px] mb-20 mt-20 scroll-reveal" id="playback" style="scroll-margin-top:80px">
+      <div class="font-mono text-[.5rem] tracking-[4px] uppercase text-blue mb-3 flex items-center gap-2">
+        <span class="inline-block w-[18px] h-px bg-blue"></span>04 — Playback
+      </div>
+      <h2 class="font-display leading-[1] tracking-[4px] mb-4" style="font-size:clamp(2.2rem,4.5vw,3.5rem)">
+        Simulation <span class="text-blue">Controls</span>
+      </h2>
+      <p class="text-gray text-[.95rem] leading-[1.75] max-w-[560px] font-light">All playback controls activate once two or more waypoints have been placed.</p>
+
+      <div class="grid grid-cols-2 gap-3 mt-10 scroll-reveal max-sm:grid-cols-1">
+        <div class="bg-navy2 border border-blue/10 rounded-xl px-5 py-4 hover:border-blue-dim transition-colors">
+          <div class="font-mono text-[.62rem] tracking-[2px] uppercase text-blue-bright mb-1.5">Play / Pause</div>
+          <div class="text-[.84rem] text-gray font-light leading-[1.55]">Starts or pauses the robot animation along the path. If playback has ended, pressing Play restarts from the beginning.</div>
+        </div>
+        <div class="bg-navy2 border border-blue/10 rounded-xl px-5 py-4 hover:border-blue-dim transition-colors">
+          <div class="font-mono text-[.62rem] tracking-[2px] uppercase text-blue-bright mb-1.5">Speed Selector</div>
+          <div class="text-[.84rem] text-gray font-light leading-[1.55]">Set playback speed to <code>0.5×</code>, <code>1×</code>, <code>2×</code>, or <code>4×</code> to preview fast or precise run timings.</div>
+        </div>
+        <div class="bg-navy2 border border-blue/10 rounded-xl px-5 py-4 hover:border-blue-dim transition-colors">
+          <div class="font-mono text-[.62rem] tracking-[2px] uppercase text-blue-bright mb-1.5">Progress Slider</div>
+          <div class="text-[.84rem] text-gray font-light leading-[1.55]">Scrub the robot to any point along the path during playback or while paused. Displays percent completion.</div>
+        </div>
+        <div class="bg-navy2 border border-blue/10 rounded-xl px-5 py-4 hover:border-blue-dim transition-colors">
+          <div class="font-mono text-[.62rem] tracking-[2px] uppercase text-blue-bright mb-1.5">Live Heading</div>
+          <div class="text-[.84rem] text-gray font-light leading-[1.55]">Displays the robot's current heading in degrees, derived from the current path segment direction.</div>
+        </div>
+        <div class="bg-navy2 border border-blue/10 rounded-xl px-5 py-4 hover:border-blue-dim transition-colors">
+          <div class="font-mono text-[.62rem] tracking-[2px] uppercase text-blue-bright mb-1.5">Live Position</div>
+          <div class="text-[.84rem] text-gray font-light leading-[1.55]">Shows the interpolated robot position as <code>(x", y")</code> in real inch coordinates, updated every animation frame.</div>
+        </div>
+        <div class="bg-navy2 border border-blue/10 rounded-xl px-5 py-4 hover:border-blue-dim transition-colors">
+          <div class="font-mono text-[.62rem] tracking-[2px] uppercase text-blue-bright mb-1.5">Segment Labels</div>
+          <div class="text-[.84rem] text-gray font-light leading-[1.55]">Each path segment displays its straight-line length in inches as a rotated midpoint label following the line.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TEAM -->
+    <div class="max-w-[760px] mb-20 mt-20 scroll-reveal" id="team" style="scroll-margin-top:80px">
+      <div class="font-mono text-[.5rem] tracking-[4px] uppercase text-blue mb-3 flex items-center gap-2">
+        <span class="inline-block w-[18px] h-px bg-blue"></span>05 — Team
+      </div>
+
+      <div class="team-hero relative bg-navy2 border border-blue-dim rounded-3xl overflow-hidden px-12 py-16 text-center">
+        <div class="team-inner relative z-[1] flex flex-col items-center gap-6">
+          <div class="inline-flex items-center gap-3 bg-blue/5 border border-blue/[.18] rounded-full px-6 py-2.5">
+            <div class="font-display text-[1.1rem] tracking-[4px] text-white">ALLIED ALGORITHMS</div>
+            <div class="font-mono text-[.7rem] text-blue bg-blue/[.14] rounded-full px-3 py-[2px]">#58590</div>
+          </div>
+          <div class="font-display leading-[.92] tracking-[5px]" style="font-size:clamp(2.5rem,6vw,5rem)">
+            <div class="text-white">BUILT FOR</div>
+            <div class="text-blue">CHAMPIONS</div>
+          </div>
+          <p class="text-[.97rem] text-gray font-light max-w-[500px] leading-[1.75]">
+            Team Allied Algorithms is a FIRST LEGO League team based in Connecticut.
+            In the 2025–2026 season we placed <strong class="text-gold">1st at the CT State Championship</strong>
+            and qualified for the <strong class="text-gold">FLL World Championship</strong>.
+            AlliedPath was built by our software division to give every team member a precise visual of our autonomous strategy.
+          </p>
+          <div class="flex gap-4 flex-wrap justify-center">
+            <div class="flex flex-col items-center gap-1.5 bg-gold/5 border border-gold/[.18] rounded-2xl px-7 py-4 min-w-[120px] hover:border-gold/40 hover:-translate-y-0.5 transition-all cursor-default">
+              <div class="font-display text-[1.9rem] tracking-[2px] text-gold leading-none">1st</div>
+              <div class="font-mono text-[.45rem] tracking-[2.5px] text-gray uppercase text-center">CT State Championship</div>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 bg-gold/5 border border-gold/[.18] rounded-2xl px-7 py-4 min-w-[120px] hover:border-gold/40 hover:-translate-y-0.5 transition-all cursor-default">
+              <div class="font-display text-[1.9rem] tracking-[2px] text-gold leading-none">Worlds</div>
+              <div class="font-mono text-[.45rem] tracking-[2.5px] text-gray uppercase text-center">World Championship Qualifier</div>
+            </div>
+            <div class="flex flex-col items-center gap-1.5 bg-gold/5 border border-gold/[.18] rounded-2xl px-7 py-4 min-w-[120px] hover:border-gold/40 hover:-translate-y-0.5 transition-all cursor-default">
+              <div class="font-display text-[1.9rem] tracking-[2px] text-gold leading-none">FLL</div>
+              <div class="font-mono text-[.45rem] tracking-[2.5px] text-gray uppercase text-center">FIRST Lego League · 2025–2026</div>
+            </div>
+          </div>
+          <a href="https://alliedalgos.org" target="_blank" class="font-mono text-[.62rem] tracking-[2px] text-blue no-underline border-b border-blue-dim hover:border-blue transition-colors">alliedalgos.org ↗</a>
+          <div class="font-mono text-[.52rem] tracking-[3px] text-blue-dim uppercase">FLL Season 2025–2026 · Connecticut · Team #58590</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-blue/[.08] py-10 text-center flex flex-col items-center gap-2.5">
+  <div class="font-display text-[1.3rem] tracking-[4px]"><span class="text-white">ALLIED</span><span class="text-blue">PATH</span></div>
+  <div class="font-mono text-[.5rem] tracking-[3px] text-blue-dim uppercase">Team Allied Algorithms #58590 · FLL 2025–2026 · Connecticut</div>
+  <a href="https://alliedalgos.org" target="_blank" class="font-mono text-[.52rem] text-blue no-underline tracking-[2px] hover:underline">alliedalgos.org ↗</a>
+</footer>
+
+<!-- Bottom Nav (mobile only) -->
+<nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-navy/95 backdrop-blur-[16px] border-t border-blue/[.12] z-[150] flex" style="padding: 8px 0 max(8px, env(safe-area-inset-bottom))">
+  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors active:text-blue" href="#overview" data-section="overview">
+    <span class="text-[1.1rem] leading-none">⊞</span>
+    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Overview</span>
+  </a>
+  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#getting-started" data-section="getting-started">
+    <span class="text-[1.1rem] leading-none">▶</span>
+    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Guide</span>
+  </a>
+  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#reference" data-section="reference">
+    <span class="text-[1.1rem] leading-none">📐</span>
+    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Ref</span>
+  </a>
+  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#playback" data-section="playback">
+    <span class="text-[1.1rem] leading-none">⏵</span>
+    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Play</span>
+  </a>
+  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#team" data-section="team">
+    <span class="text-[1.1rem] leading-none">🏆</span>
+    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Team</span>
+  </a>
+</nav>
+
+<script>
+// ── HERO CANVAS ──────────────────────────────────────────────────────────────
+const heroCanvas = document.getElementById('hero-canvas');
+const hCtx = heroCanvas.getContext('2d');
+let W, H;
+function resizeHero() {
+  W = heroCanvas.width  = window.innerWidth;
+  H = heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+const NUM = 7;
+const pts = Array.from({length:NUM}, () => ({
+  x:Math.random()*window.innerWidth, y:Math.random()*600+80,
+  ang:Math.random()*Math.PI*2, spd:0.35+Math.random()*0.35
+}));
+let scanY = 0;
+function drawHero() {
+  hCtx.clearRect(0,0,W,H);
+  const cs=30;
+  hCtx.strokeStyle='rgba(59,158,255,0.1)'; hCtx.lineWidth=.5;
+  for(let x=0;x<W;x+=cs){hCtx.beginPath();hCtx.moveTo(x,0);hCtx.lineTo(x,H);hCtx.stroke();}
+  for(let y=0;y<H;y+=cs){hCtx.beginPath();hCtx.moveTo(0,y);hCtx.lineTo(W,y);hCtx.stroke();}
+  pts.forEach(p=>{
+    p.x+=Math.cos(p.ang)*p.spd; p.y+=Math.sin(p.ang)*p.spd;
+    if(p.x<0||p.x>W){p.ang=Math.PI-p.ang;p.x=Math.max(0,Math.min(W,p.x));}
+    if(p.y<0||p.y>H){p.ang=-p.ang;p.y=Math.max(0,Math.min(H,p.y));}
+  });
+  for(let i=0;i<NUM-1;i++){
+    const a=pts[i],b=pts[i+1];
+    const d=Math.hypot(b.x-a.x,b.y-a.y);
+    const alpha=Math.max(0,1-d/500)*0.5;
+    hCtx.beginPath();hCtx.strokeStyle=`rgba(59,158,255,${alpha})`;
+    hCtx.lineWidth=1.5;hCtx.shadowColor='rgba(59,158,255,0.3)';hCtx.shadowBlur=6;
+    hCtx.moveTo(a.x,a.y);hCtx.lineTo(b.x,b.y);hCtx.stroke();hCtx.shadowBlur=0;
+  }
+  pts.forEach(p=>{
+    hCtx.fillStyle='rgba(59,158,255,0.7)';hCtx.shadowColor='rgba(59,158,255,0.6)';hCtx.shadowBlur=9;
+    hCtx.fillRect(p.x-4,p.y-4,8,8);hCtx.shadowBlur=0;
+  });
+  scanY=(scanY+0.55)%(H+60);
+  const sg=hCtx.createLinearGradient(0,scanY-28,0,scanY+28);
+  sg.addColorStop(0,'transparent');sg.addColorStop(.5,'rgba(59,158,255,0.04)');sg.addColorStop(1,'transparent');
+  hCtx.fillStyle=sg;hCtx.fillRect(0,scanY-28,W,56);
+  requestAnimationFrame(drawHero);
+}
+drawHero();
+
+// ── SIDEBAR VISIBILITY ────────────────────────────────────────────────────────
+const hero = document.getElementById('hero');
+const sidebar = document.getElementById('doc-sidebar');
+const heroObs = new IntersectionObserver(entries => {
+  entries.forEach(e => sidebar.classList.toggle('visible', !e.isIntersecting));
+}, { threshold: 0.1 });
+heroObs.observe(hero);
+
+// ── SIDEBAR TOGGLES ───────────────────────────────────────────────────────────
+document.querySelectorAll('.sb-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.target);
+    const isOpen = target.classList.contains('open');
+    target.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+  });
+});
+
+// ── SIDEBAR ACTIVE LINKS ──────────────────────────────────────────────────────
+const sbLinks = document.querySelectorAll('.sb-link[href^="#"]');
+const sectionObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      sbLinks.forEach(l=>l.classList.remove('active'));
+      sbLinks.forEach(l=>{ if(l.getAttribute('href')===`#${e.target.id}`) l.classList.add('active'); });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' });
+['overview','getting-started','reference','playback','team'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) sectionObs.observe(el);
+});
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+const searchData = [
+  { title:'Waypoint Plotting',   desc:'Click cells to place waypoints on the grid.',                    section:'Overview',  anchor:'#overview' },
+  { title:'Inch-Accurate Grid',  desc:'Each cell equals one inch. Maps 1:1 to the FLL mat.',            section:'Overview',  anchor:'#overview' },
+  { title:'Turn Angles',         desc:'Signed degree values shown at every intermediate waypoint.',     section:'Overview',  anchor:'#overview' },
+  { title:'Per-Point Headings',  desc:'Each waypoint stores a heading (h°) shown as a yellow arrow.',  section:'Overview',  anchor:'#overview' },
+  { title:'Robot Simulation',    desc:'Animated rectangle follows the path, rotates to match heading.', section:'Overview',  anchor:'#overview' },
+  { title:'Save & Share',        desc:'Download a self-contained HTML file with all points embedded.',  section:'Overview',  anchor:'#overview' },
+  { title:'Open the Tool',       desc:'Navigate to alliedalgos.org/pathing or open alliedpath.html.',      section:'Guide',     anchor:'#getting-started' },
+  { title:'Configure Robot Size',desc:'Set width and length in inches via the Vehicle Size panel.',     section:'Guide',     anchor:'#getting-started' },
+  { title:'Place Waypoints',     desc:'Click grid cells. Distances shown as floating labels.',          section:'Guide',     anchor:'#getting-started' },
+  { title:'Edit Points',         desc:'Use the sidebar x, y, h° fields to edit waypoints precisely.',  section:'Guide',     anchor:'#getting-started' },
+  { title:'Set Headings',        desc:'h° sets robot facing. 0°=right, 90°=up, 180°=left, 270°=down.',section:'Guide',     anchor:'#getting-started' },
+  { title:'Save Your Path',      desc:'Save File downloads alliedpath.html with all waypoints baked in.',section:'Guide',   anchor:'#getting-started' },
+  { title:'Grid Width',          desc:'93 inches. X axis from 0 to 92.',                               section:'Reference', anchor:'#reference' },
+  { title:'Grid Height',         desc:'45 inches. Y axis from 0 to 44.',                               section:'Reference', anchor:'#reference' },
+  { title:'Coordinate Origin',   desc:'(0,0) is at the bottom-left corner of the field.',              section:'Reference', anchor:'#reference' },
+  { title:'Heading Convention',  desc:'0°=East/Right, 90°=North/Up, counter-clockwise positive.',      section:'Reference', anchor:'#reference' },
+  { title:'x field',             desc:'Horizontal inch position of the waypoint, 0 to 92.',            section:'Reference', anchor:'#reference' },
+  { title:'y field',             desc:'Vertical inch position of the waypoint, 0 to 44.',              section:'Reference', anchor:'#reference' },
+  { title:'h° field',            desc:'Heading angle in degrees at a given waypoint.',                 section:'Reference', anchor:'#reference' },
+  { title:'Play / Pause',        desc:'Start or pause the robot simulation animation.',                 section:'Playback',  anchor:'#playback' },
+  { title:'Progress Slider',     desc:'Scrub the robot to any position along the path.',               section:'Playback',  anchor:'#playback' },
+  { title:'Speed Selector',      desc:'0.5×, 1×, 2×, or 4× playback speed.',                         section:'Playback',  anchor:'#playback' },
+  { title:'Live Heading',        desc:'Current robot heading in degrees during playback.',             section:'Playback',  anchor:'#playback' },
+  { title:'Live Position',       desc:'Real-time (x", y") position updated every frame.',             section:'Playback',  anchor:'#playback' },
+  { title:'Segment Labels',      desc:'Inch distance shown at the midpoint of each segment.',          section:'Playback',  anchor:'#playback' },
+  { title:'Allied Algorithms',   desc:'FLL Team #58590 from Connecticut.',                             section:'Team',      anchor:'#team' },
+  { title:'CT State Championship',desc:'1st place at the Connecticut State Championship 2025–2026.',   section:'Team',      anchor:'#team' },
+  { title:'World Championship',  desc:'Qualified for the FLL World Championship.',                     section:'Team',      anchor:'#team' },
+  { title:'alliedalgos.org',     desc:'Team website.',                                                 section:'Team',      anchor:'#team' },
+];
+
+function highlight(text, query) {
+  if(!query) return text;
+  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(re,'<span class="sr-highlight">$1</span>');
+}
+
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  searchResults.innerHTML = '';
+  if(!q){ searchResults.classList.remove('visible'); return; }
+  const matches = searchData.filter(d =>
+    d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q) || d.section.toLowerCase().includes(q)
+  ).slice(0,8);
+  if(!matches.length){
+    searchResults.innerHTML = '<div class="px-3 py-3 text-[.82rem] text-gray">No results found.</div>';
+  } else {
+    matches.forEach(m => {
+      const item = document.createElement('div');
+      item.className = 'px-3 py-2.5 rounded-lg cursor-pointer hover:bg-navy3 transition-colors';
+      item.innerHTML = `
+        <div class="font-mono text-[.65rem] tracking-[1px] text-blue-bright mb-0.5">${highlight(m.title,q)}</div>
+        <div class="text-[.8rem] text-gray">${highlight(m.desc,q)}</div>
+        <span class="inline-block font-mono text-[.5rem] tracking-[1.5px] uppercase text-blue-dim border border-blue-dim rounded px-1 mt-1">${m.section}</span>`;
+      item.addEventListener('click', () => {
+        document.querySelector(m.anchor)?.scrollIntoView({behavior:'smooth'});
+        searchResults.classList.remove('visible');
+        searchInput.value='';
+      });
+      searchResults.appendChild(item);
+    });
+  }
+  searchResults.classList.add('visible');
+});
+document.addEventListener('click', e => {
+  if(!document.getElementById('search-wrap').contains(e.target)) searchResults.classList.remove('visible');
+});
+searchInput.addEventListener('keydown', e => {
+  if(e.key==='Escape'){searchResults.classList.remove('visible'); searchInput.value='';}
+});
+
+// ── HAMBURGER ─────────────────────────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileDrawer = document.getElementById('mobile-drawer');
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileDrawer.classList.contains('open');
+  mobileDrawer.classList.toggle('open', !isOpen);
+  hamburger.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+});
+function closeMobileMenu() {
+  mobileDrawer.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── BOTTOM NAV ACTIVE ──────────────────────────────────────────────────────────
+const bnavItems = document.querySelectorAll('.bnav-item[data-section]');
+const bnavObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      bnavItems.forEach(b=>b.style.color='');
+      bnavItems.forEach(b=>{ if(b.dataset.section===e.target.id) b.style.color='#3b9eff'; });
+    }
+  });
+}, { threshold: 0.4 });
+['overview','getting-started','reference','playback','team'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) bnavObs.observe(el);
+});
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
+const reveals = document.querySelectorAll('.scroll-reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);} });
+}, { threshold: 0.08 });
+reveals.forEach(el=>revObs.observe(el));
+</script>
+</body>
+</html>
