@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const seasons = [
+  {
+    year: "2025-2026",
+    theme: "Unearthed",
+    tagline: "Uncovering the history of innovation.",
+    awards: ["Champions Award", "Robot Performance Award"],
+    robot_description: "Our most advanced robot yet, built for precision and modularity to tackle the complex missions of the Unearthed season.",
+    robot_photo: "/images/robot/mk5/1.jpg",
+    cover_photo: "/images/seasons/yr_25-26.jpg",
+    is_current: true
+  },
+  {
+    year: "2024-2025",
+    theme: "Submerged",
+    tagline: "Exploring the depths of innovation.",
+    awards: [],
+    robot_description: "Our most advanced robot yet, built for precision underwater-themed missions.",
+    cover_photo: "/images/seasons/yr_24-25.jpg",
+    is_current: false
+  },
+  {
+    year: "2023-2024",
+    theme: "Masters Piece",
+    tagline: "Crafting solutions like true artists.",
+    awards: ["Robot Design Award"],
+    robot_description: "Elegant and efficient, designed around creative problem solving.",
+    cover_photo: "/images/seasons/yr_23-24.jpg",
+    is_current: false
+  },
+  {
+    year: "2022-2023",
+    theme: "SUPERPOWERED",
+    tagline: "Harnessing energy for a better world.",
+    awards: [],
+    robot_description: "First season with the new SPIKE Prime system. Focused on building a reliable and versatile robot.",
+    cover_photo: "/images/seasons/yr_22-23.jpg",
+    is_current: false
+  },
+  {
+    year: "2021-2022",
+    theme: "CARGO CONNECT",
+    tagline: "Connecting communities through smart transport.",
+    awards: ["Programming Award"],
+    robot_description: "2nd year with FLL, starting to understand the challenges.",
+    cover_photo: "/images/seasons/yr_21-22.jpg",
+    is_current: false
+  },
+  {
+    year: "2020-2021",
+    theme: "REPLAY",
+    tagline: "Playing it back, better than before.",
+    awards: [],
+    robot_description: "Our first season in FLL Explorer. Had a bunch of fun building and programming our robot.",
+    cover_photo: "/images/seasons/yr_20-21.jpg",
+    is_current: false
+  }
+];
+
+const currentSeason = seasons.find(s => s.is_current);
+const otherSeasons = seasons.filter(s => !s.is_current);
+
+const title = "Seasons | Allied Algorithms";
+---
+
+<Layout title={title}>
+  <main class="relative min-h-screen bg-[#030712] pt-32 pb-40 overflow-hidden">
+    
+    <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[160px] pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      
+      <header class="mb-32">
+        <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
+            <span class="text-blue-400 text-[10px] font-black uppercase tracking-[0.5em]">Timeline Overview</span>
+        </div>
+        <h1 class="text-7xl md:text-[10rem] font-black italic text-white uppercase tracking-tighter leading-[0.75]">
+            Our <span class="text-white/10">Journey.</span>
+        </h1>
+      </header>
+
+      {currentSeason && (
+        <section class="mb-48">
+          <div class="group relative">
+            <div class="relative z-20 aspect-[16/8] rounded-[3.5rem] overflow-hidden border border-white/20 shadow-2xl shadow-blue-500/10">
+                <img src={currentSeason.cover_photo} alt={currentSeason.theme} class="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
+                <div class="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent"></div>
+            </div>
+
+            <div class="relative z-30 -mt-32 ml-auto max-w-2xl p-12 lg:p-16 bg-white/[0.03] border border-white/10 backdrop-blur-3xl rounded-[3rem] shadow-2xl mr-8 lg:mr-16">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="px-3 py-1 bg-blue-500 text-white text-[9px] font-black uppercase tracking-widest rounded-lg">Current Season</span>
+                    <span class="text-white/40 font-bold text-xs uppercase tracking-widest">{currentSeason.year}</span>
+                </div>
+                
+                <h2 class="text-5xl lg:text-7xl font-black italic text-white uppercase tracking-tighter mb-6 leading-none">
+                  {currentSeason.theme}
+                </h2>
+                
+                <p class="text-slate-300 text-xl font-light leading-relaxed mb-10">
+                    {currentSeason.robot_description}
+                </p>
+                
+                <div class="flex flex-wrap gap-3">
+                  {currentSeason.awards.map(award => (
+                    <div class="flex items-center gap-3 px-5 py-2.5 bg-white/5 border border-white/10 rounded-2xl">
+                      <span class="text-blue-400 text-xs">◆</span>
+                      <span class="text-white text-[10px] font-black uppercase tracking-widest">{award}</span>
+                    </div>
+                  ))}
+                </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section>
+        <div class="flex items-center gap-6 mb-16 px-4">
+            <h3 class="text-3xl font-black italic text-white uppercase tracking-tighter">Technical Lineage</h3>
+            <div class="h-px flex-1 bg-white/5"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {otherSeasons.map((season) => (
+            <div class="group relative flex flex-col bg-white/[0.02] border border-white/5 rounded-[4rem] backdrop-blur-xl transition-all duration-700 hover:bg-white/[0.05] hover:border-white/20">
+              
+              <div class="aspect-[16/10] overflow-hidden rounded-[3.8rem] m-3 relative">
+                 <img src={season.cover_photo} alt={season.theme} class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                 <div class="absolute inset-0 bg-gradient-to-t from-[#030712]/60 to-transparent"></div>
+              </div>
+
+              <div class="p-12 lg:p-16">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-slate-500 font-bold text-xs uppercase tracking-[0.4em]">{season.year}</span>
+                    <div class="h-px w-12 bg-white/10"></div>
+                </div>
+                
+                <h4 class="text-4xl lg:text-5xl font-black italic text-white uppercase tracking-tighter mb-6 leading-none">
+                  {season.theme}
+                </h4>
+                
+                <p class="text-slate-400 text-lg font-light leading-relaxed mb-10">
+                  {season.robot_description}
+                </p>
+
+                {season.awards.length > 0 && (
+                  <div class="flex flex-wrap gap-2 pt-8 border-t border-white/5">
+                    {season.awards.map(award => (
+                      <span class="text-[9px] font-black uppercase tracking-widest text-blue-400 bg-blue-400/5 px-4 py-2 rounded-xl border border-blue-400/20">
+                         {award}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* Removes AI feel by avoiding generic rounded corners and using intentional hierarchy */
+  h1, h2, h4 {
+    letter-spacing: -0.04em;
+  }
+  
+  /* Smooth scroll interaction */
+  .transition-transform {
+    will-change: transform;
+  }
+</style>

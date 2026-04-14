@@ -7,24 +7,58 @@ import { readFileSync } from 'fs';
 const raw = readFileSync('./src/data/robots.toml', 'utf-8');
 const { robots } = parse(raw);
 
-const title = "Robot Designs | Allied Algorithms";
+// Logic: Reverse the array so the latest version (V5) is first
+const chronologicalRobots = [...robots].reverse();
+
+const title = "Our Robots | Allied Algorithms";
 ---
 
 <Layout title={title}>
-    <section class="relative py-24 flex items-center justify-center text-center overflow-hidden">
-        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">The Lab</span>
-            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6 uppercase">
-                OPEN SOURCE <br><span class="text-blue-500 underline decoration-4 underline-offset-4">HARDWARE.</span>
+    <section class="relative pt-32 pb-20 flex items-center justify-center text-center overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.08),transparent_70%)]"></div>
+        
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <span class="text-purple-500 font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">Build History</span>
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter italic text-white leading-[0.8] mb-8 uppercase">
+                Robot <br><span class="text-purple-500">Evolution.</span>
             </h1>
+            <p class="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed">
+                A look at our engineering journey—from our early prototypes to the modular, high-precision systems we use today.
+            </p>
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 mb-32">
-        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
-            {robots.map((robot) => (
-                <RobotCard {...robot} />
+    <section class="max-w-5xl mx-auto px-6 pb-40">
+        <div class="flex flex-col gap-24">
+            {chronologicalRobots.map((robot, index) => (
+                <div class="relative">
+                    {index !== chronologicalRobots.length - 1 && (
+                        <div class="absolute left-1/2 top-full w-px h-24 bg-gradient-to-b from-purple-500/30 to-transparent -translate-x-1/2 hidden md:block"></div>
+                    )}
+                    
+                    <div class="group relative bg-zinc-900/30 border border-white/5 rounded-[3rem] p-4 backdrop-blur-sm transition-all hover:border-purple-500/40 hover:bg-purple-500/[0.02] shadow-2xl hover:shadow-purple-500/10">
+                        
+                        <div class="absolute -top-4 -left-4 bg-purple-600 text-white font-black italic px-6 py-2 rounded-xl text-xl shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20">
+                            V{chronologicalRobots.length - index}
+                        </div>
+                        
+                        <RobotCard {...robot} />
+                    </div>
+                </div>
             ))}
         </div>
     </section>
 </Layout>
+
+<style>
+    /* Focus on sleekness and impact */
+    h1 {
+        letter-spacing: -0.05em;
+    }
+
+    /* Ensuring the images/content inside RobotCard feel part of the theme */
+    :global(.robot-image-container) {
+        border-radius: 2rem;
+        overflow: hidden;
+    }
+</style>

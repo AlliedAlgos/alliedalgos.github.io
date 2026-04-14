@@ -1,5 +1,6 @@
 ---
 import '../../styles/global.css';
+import Footer from '../../components/footer.astro';
 ---
 
 
@@ -8,7 +9,7 @@ import '../../styles/global.css';
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlliedPath Docs — Allied Algorithms #58590</title>
+<title>AlliedGrid Docs — Allied Algorithms #58590</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -144,7 +145,7 @@ tailwind.config = {
 <!-- ══════════════════ NAV ══════════════════ -->
 <nav class="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-10 h-[60px] bg-navy/90 backdrop-blur-[16px] border-b border-blue/10">
   <a href="#" class="font-display text-2xl tracking-[4px] no-underline leading-none">
-    <span class="text-balck">ALLIED</span><span class="text-blue">PATH</span>
+    <span class="text-balck">ALLIED</span><span class="text-blue">GRID</span>
   </a>
 
   <div class="hidden md:flex items-center gap-8">
@@ -152,7 +153,7 @@ tailwind.config = {
       <li><a href="#overview"         class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Overview</a></li>
       <li><a href="#getting-started"  class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Guide</a></li>
       <li><a href="#reference"        class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Reference</a></li>
-      <li><a href="#playback"         class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Playback</a></li>
+      <li><a href="#playback"         class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Logic</a></li>
       <li><a href="#team"             class="font-mono text-[.58rem] tracking-[2px] uppercase text-gray hover:text-blue transition-colors no-underline">Team</a></li>
     </ul>
 
@@ -168,9 +169,9 @@ tailwind.config = {
   </div>
 
   <div class="hidden md:flex items-center gap-3">
-    <a href="https://alliedalgos.org/pathing" target="_blank"
+    <a href="https://alliedalgos.org/aac" target="_blank"
        class="font-mono text-[.58rem] tracking-[1.5px] uppercase no-underline bg-blue text-navy px-[18px] py-[7px] rounded-full font-bold hover:bg-blue-bright transition-all blackspace-nowrap">
-      Open Path ↗
+      Open Grid ↗
     </a>
   </div>
 
@@ -187,11 +188,11 @@ tailwind.config = {
   <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-black no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#overview"        onclick="closeMobileMenu()">Overview</a>
   <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-black no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#getting-started" onclick="closeMobileMenu()">Guide</a>
   <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-black no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#reference"       onclick="closeMobileMenu()">Reference</a>
-  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-black no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#playback"        onclick="closeMobileMenu()">Playback</a>
+  <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-black no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#playback"        onclick="closeMobileMenu()">Logic</a>
   <a class="mob-nav-link block py-4 font-display text-[2rem] tracking-[4px] text-black no-underline border-b border-blue/10 hover:text-blue transition-colors" href="#team"           onclick="closeMobileMenu()">Team</a>
   <div class="mt-8 flex flex-col gap-3">
     <div class="font-mono text-[.55rem] tracking-[2px] uppercase text-gold bg-gold/5 border border-gold/20 rounded-full py-2 px-4 text-center">🏆 Worlds 2025–2026 · CT 1st</div>
-    <a href="https://alliedalgos.org/pathing" target="_blank" class="font-mono text-[.65rem] tracking-[2px] uppercase no-underline bg-blue text-navy py-3.5 rounded-full font-bold text-center hover:bg-blue-bright transition-all">Open AlliedPath ↗</a>
+    <a href="https://alliedalgos.org/aac" target="_blank" class="font-mono text-[.65rem] tracking-[2px] uppercase no-underline bg-blue text-navy py-3.5 rounded-full font-bold text-center hover:bg-blue-bright transition-all">Open AlliedGrid ↗</a>
     <a href="https://alliedalgos.org"      target="_blank" class="font-mono text-[.65rem] tracking-[2px] uppercase no-underline border border-blue-dim text-blue py-3.5 rounded-full text-center">alliedalgos.org ↗</a>
   </div>
 </div>
@@ -202,12 +203,12 @@ tailwind.config = {
 
   <div class="relative z-[2] text-center flex flex-col items-center gap-6">
     <div class="animate-fade-up-0 font-mono text-[.58rem] tracking-[4px] uppercase text-blue bg-blue/[.07] border border-blue/20 rounded-full px-[22px] py-[6px]">
-      FLL Path Planning Tool &nbsp;·&nbsp; Season 2025–2026
+      FLL PID Control Tool &nbsp;·&nbsp; Season 2025–2026
     </div>
 
     <div class="animate-fade-up-1 font-display leading-[.88] tracking-[6px]" style="font-size:clamp(5rem,15vw,12rem)">
       <span class="block text-black">ALLIED</span>
-      <span class="block text-blue" style="text-shadow:0 0 70px rgba(59,158,255,0.5),0 0 140px rgba(59,158,255,0.18)">PATH</span>
+      <span class="block text-blue" style="text-shadow:0 0 70px rgba(12, 215, 120, 0.75),0 0 140px rgba(59,158,255,0.18)">GRID</span>
     </div>
 
     <p class="animate-fade-up-2 text-[1.05rem] font-light text-gray max-w-[500px] leading-[1.75]">
@@ -216,9 +217,9 @@ tailwind.config = {
     </p>
 
     <div class="animate-fade-up-3 flex gap-4 flex-wrap justify-center">
-      <a href="https://alliedalgos.org/pathing" target="_blank"
+      <a href="https://alliedalgos.org/aac" target="_blank"
          class="font-mono text-[.62rem] tracking-[2px] uppercase no-underline bg-blue text-navy px-[30px] py-[13px] rounded-full font-bold hover:bg-blue-bright hover:-translate-y-px transition-all shadow-[0_0_24px_rgba(59,158,255,0.35)]">
-        Open Path
+        Download AG
       </a>
       <a href="#getting-started"
          class="font-mono text-[.62rem] tracking-[2px] uppercase no-underline border border-blue-dim text-blue px-[30px] py-[13px] rounded-full hover:border-blue hover:bg-blue/[.07] hover:-translate-y-px transition-all">
@@ -276,12 +277,12 @@ tailwind.config = {
         <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="sb-items open pl-2" id="sb-guide">
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Opening the Tool</a>
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Robot Configuration</a>
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Placing Waypoints</a>
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Editing Points</a>
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Setting Headings</a>
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Saving Your Path</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Download AG</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Github</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Releases</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Drive</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">Turn</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#getting-started">AutoCorrection</a>
       </div>
     </div>
 
@@ -293,7 +294,7 @@ tailwind.config = {
         <svg class="sb-arrow w-[14px] h-[14px] flex-shrink-0" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="sb-items open pl-2" id="sb-ref">
-        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#reference">Coordinate System</a>
+        <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#reference">jfkldsa</a>
         <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#reference">Field Dimensions</a>
         <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#reference">Heading Convention</a>
         <a class="sb-link block px-4 py-[.45rem] font-body text-[.84rem] font-light text-gray no-underline rounded-md border-l-2 border-transparent hover:text-black hover:border-blue-dim transition-all" href="#reference">Sidebar Fields</a>
@@ -336,17 +337,20 @@ tailwind.config = {
         <span class="inline-block w-[18px] h-px bg-blue"></span>01 — Overview
       </div>
       <h2 class="font-display leading-[1] tracking-[4px] mb-4" style="font-size:clamp(2.2rem,4.5vw,3.5rem)">
-        What is <span class="text-blue">AlliedPath</span>?
+        What is <span class="text-blue">AlliedGrid</span>?
       </h2>
-      <p class="text-gray text-[.95rem] leading-[1.75] max-w-[560px] font-light">AlliedPath is a browser-based path planning tool built in-house by Team Allied Algorithms for FLL autonomous mission runs. Map your robot's waypoints on a coordinate grid, measure real distances in inches, and preview the full run before competition day.</p>
+      <p class="text-gray text-[.95rem] leading-[1.75] max-w-[560px] font-light">The Allied Algorithms (#58590) ecosystem is designed to solve one of the most persistent
+challenges in FIRST LEGO League (FLL): autonomous consistency. This document provides
+an in-depth technical explanation of the Allied Work workspace and the Allied AutoCorrection
+logic, illustrating how digital path planning translates into physical robot precision.</p>
 
       <div class="grid gap-3 mt-10 scroll-reveal" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
         <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
-          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Waypoint Plotting</div>
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Remove Drift</div>
           <div class="text-[.87rem] text-gray leading-[1.6] font-light">Click any cell on the 93×45 inch grid to drop a waypoint. Edit coordinates and heading inline. Click again to remove.</div>
         </div>
         <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
-          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Inch-Accurate Grid</div>
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">See what you want</div>
           <div class="text-[.87rem] text-gray leading-[1.6] font-light">Each cell equals one inch. Axis labels display real measurements so paths map directly to the physical FLL mat.</div>
         </div>
         <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
@@ -354,11 +358,11 @@ tailwind.config = {
           <div class="text-[.87rem] text-gray leading-[1.6] font-light">Signed turn angles display at every intermediate waypoint. Positive values indicate left turns, negative values indicate right turns.</div>
         </div>
         <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
-          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Per-Point Headings</div>
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Drive inches</div>
           <div class="text-[.87rem] text-gray leading-[1.6] font-light">Each waypoint stores an editable heading in degrees. An arrow renders on the canvas showing the robot's facing at that point.</div>
         </div>
         <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
-          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5">Robot Simulation</div>
+          <div class="font-mono text-[.58rem] tracking-[2px] uppercase text-blue mb-1.5"></div>
           <div class="text-[.87rem] text-gray leading-[1.6] font-light">Configure robot width and length in inches. The rectangle follows the path, rotating to match segment heading in real time.</div>
         </div>
         <div class="feature-card relative bg-navy2 border border-blue-dim rounded-[14px] p-5 overflow-hidden hover:border-blue hover:-translate-y-0.5 hover:shadow-[0_6px_28px_rgba(59,158,255,0.1)] transition-all duration-200">
@@ -389,7 +393,7 @@ tailwind.config = {
           </div>
           <div class="pt-[.35rem] flex-1">
             <div class="font-mono text-[.75rem] tracking-[1px] text-black mb-1.5">Open the Tool</div>
-            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Navigate to <code>alliedalgos.org/pathing</code> or open <code>alliedpath.html</code> locally in any modern browser. The tool runs entirely client-side — no installation required.</div>
+            <div class="text-[.9rem] text-gray leading-[1.65] font-light">Navigate to <code>alliedalgos.org/grid</code> or open <code>alliedgrid.html</code> locally in any modern browser. The tool runs entirely client-side — no installation required.</div>
           </div>
         </div>
         <!-- Step 2 -->
@@ -601,35 +605,10 @@ tailwind.config = {
 </div>
 
 <!-- FOOTER -->
-<footer class="border-t border-blue/[.08] py-10 text-center flex flex-col items-center gap-2.5">
-  <div class="font-display text-[1.3rem] tracking-[4px]"><span class="text-black">ALLIED</span><span class="text-blue">PATH</span></div>
-  <div class="font-mono text-[.5rem] tracking-[3px] text-blue-dim uppercase">Team Allied Algorithms #58590 · FLL 2025–2026 · Connecticut</div>
-  <a href="https://alliedalgos.org" target="_blank" class="font-mono text-[.52rem] text-blue no-underline tracking-[2px] hover:underline">alliedalgos.org ↗</a>
-</footer>
+
 
 <!-- Bottom Nav (mobile only) -->
-<nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-navy/95 backdrop-blur-[16px] border-t border-blue/[.12] z-[150] flex" style="padding: 8px 0 max(8px, env(safe-area-inset-bottom))">
-  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors active:text-blue" href="#overview" data-section="overview">
-    <span class="text-[1.1rem] leading-none">⊞</span>
-    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Overview</span>
-  </a>
-  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#getting-started" data-section="getting-started">
-    <span class="text-[1.1rem] leading-none">▶</span>
-    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Guide</span>
-  </a>
-  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#reference" data-section="reference">
-    <span class="text-[1.1rem] leading-none">📐</span>
-    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Ref</span>
-  </a>
-  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#playback" data-section="playback">
-    <span class="text-[1.1rem] leading-none">⏵</span>
-    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Play</span>
-  </a>
-  <a class="bnav-item flex-1 flex flex-col items-center justify-center gap-[3px] no-underline text-gray py-1 transition-colors" href="#team" data-section="team">
-    <span class="text-[1.1rem] leading-none">🏆</span>
-    <span class="font-mono text-[.42rem] tracking-[1.5px] uppercase">Team</span>
-  </a>
-</nav>
+<Footer />
 
 <script>
 // ── HERO CANVAS ──────────────────────────────────────────────────────────────

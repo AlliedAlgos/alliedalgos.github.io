@@ -6,9 +6,29 @@ logo_url = "https://eyxhddkoqotedgucpfbz.supabase.co/storage/v1/object/public/we
 [[sponsors]]
 name = "Russian School of Mathematics"
 website_url = "https://www.mathschool.com/"
-logo_url = "images/sponsors/rsm.jpg"
+logo_url = "https://chambermaster.blob.core.windows.net/images/members/3366/1281/MemMap_rsm_logo_1.png"
 
 [[sponsors]]
 name = "YB World Taekwondo Academy"
 website_url = "https://ybworldtkd.com/"
 logo_url = "https://ybworldtkd.com/wp-content/uploads/2023/08/yb_logo_blk-1.png"
+
+[[sponsors]]
+name = "Wilton Educaiton Fondation"
+website_url = "https://wiltoneducationfoundation.org/"
+logo_url = "https://ybworldtkd.com/wp-content/uploads/2023/08/yb_logo_blk-1.png"
+
+[[sponsors]]
+name = "GOPIO"
+website_url = "https://www.gopio.net/"
+logo_url = "/images/sponsors/Gopio.png"
+
+[[sponsors]]
+name = "Georgetown Orthodontics"
+website_url = "https://georgetownorthodontics.com/"
+logo_url = ""
+
+[[sponsors]]
+name = "Advanced Dentistry of Wilton"
+website_url = "https://www.drjamesaris.com/"
+logo_url = "/images/sponsors/James Aris.png"

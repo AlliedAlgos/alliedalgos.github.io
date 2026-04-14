@@ -1,7 +1,3 @@
----
-// Navbar.astro
----
-
 <style>
   @keyframes shine { to { background-position: 200% center; } }
   .animate-shine { background-size: 200% auto; animation: shine 4s linear infinite; }
@@ -81,13 +77,9 @@
         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"><i class="fa-solid fa-microchip"></i></div>
         <div><div class="text-sm font-bold text-white mb-1">AAC</div><p class="text-xs text-zinc-500 leading-relaxed">PID control & algorithms.</p></div>
       </a>
-      <a href="https://alliedalgos.org/pathing/docs.html" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
+      <a href="./pathing/docs" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-green-500/10 text-green-400 border border-green-500/20 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]"><i class="fa-solid fa-route"></i></div>
         <div><div class="text-sm font-bold text-white mb-1">Pathing</div><p class="text-xs text-zinc-500 leading-relaxed">Advanced planning docs.</p></div>
-      </a>
-      <a href="/docs" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)]"><i class="fa-solid fa-book"></i></div>
-        <div><div class="text-sm font-bold text-white mb-1">Docs</div><p class="text-xs text-zinc-500 leading-relaxed">API guides and reference.</p></div>
       </a>
     </div>
   </div>
@@ -100,7 +92,7 @@
     <a href="/seasons"    class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Seasons</a>
     <a href="/robot"      class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Robot</a>
     <a href="/aac"        class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">AAC</a>
-    <a href="https://alliedalgos.org/pathing/docs.html" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Pathing</a>
+    <a href="https://alliedalgos.org/pathing/docs" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Pathing</a>
     <a href="/contact-us" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Contact</a>
     <div class="h-px bg-white/10 w-24 mx-auto my-2"></div>
     <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate py-5 rounded-2xl text-white font-black uppercase tracking-widest bg-gradient-to-r from-blue-700 to-blue-500 shadow-xl shadow-blue-900/20">
