@@ -23,12 +23,6 @@ bio = "I am a 7th grader who loves to read and do math. I am an extremely curiou
 photo = "/images/members/sarthak.jpg"
 
 [[members]]
-name = "Aarushi Agrawal"
-role = "Mentor, Marketing Lead"
-bio = "I am a Mechanical Engineer studying at Northeastern University. I have done FTC for 5 years, and am marketing director at other organizations."
-photo = "/images/members/aarushi.jpg"
-
-[[members]]
 name = "Amit Agrawal"
 role = "Coach"
 bio = "I have been coaching FLL for 6 years. I have a background in software engineering. Outside of robotics, I enjoy gardening, cooking, and spending time with my family."
@@ -39,3 +33,9 @@ name = "Ganesh Mulki"
 role = "Coach"
 bio = ""
 photo = "https://media.licdn.com/dms/image/v2/D4E03AQHob2SuwuxwKw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1712550243529?e=2147483647&v=beta&t=d6GeEcRUNg8UXoJFRRbtWVJuv_VPjkb9n_1AndF1B40"
+
+[[members]]
+name = "Aarushi Agrawal"
+role = "Mentor, Marketing Lead"
+bio = "I am a Mechanical Engineer studying at Northeastern University. I have done FTC for 5 years, and am marketing director at other organizations."
+photo = "/images/members/aarushi.jpg"
