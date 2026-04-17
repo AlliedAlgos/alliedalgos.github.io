@@ -34,7 +34,7 @@ role = "Coach"
 bio = "I have been coaching FLL for 6 years. Professionally I am a Software Engineer. Outside of robotics, I enjoy Reading, , and spending time with my family."
 photo = "https://media.licdn.com/dms/image/v2/D4E03AQHob2SuwuxwKw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1712550243529?e=2147483647&v=beta&t=d6GeEcRUNg8UXoJFRRbtWVJuv_VPjkb9n_1AndF1B40"
 
-[[members]]
+[[members]]                                                                                                                                                                                     
 name = "Aarushi Agrawal"
 role = "Mentor, Marketing Lead"
 bio = "I am a Mechanical Engineer studying at Northeastern University. I have done FTC for 5 years, and am marketing director at other organizations."
