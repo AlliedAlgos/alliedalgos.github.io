@@ -8,7 +8,7 @@ photo = "/images/members/sid.jpg"
 name = "Aariv Mulki"
 role = "Programming Lead"
 bio = "I have been doing FLL since the pandemic. Outside of FLL, I like math and social studies. I have played the clarinet and currently play the violin. I enjoy acting in the Wilton Children’s Theater and play tennis."
-photo = "blob:https://web.whatsapp.com/82c7561f-6c52-4e01-bd2e-ed2376d351a9"
+photo = "/images/members/aariv.jpg"
 
 [[members]]
 name = "Tanush Narredy"
