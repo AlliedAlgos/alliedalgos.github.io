@@ -55,7 +55,7 @@ cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
 download_path = "/downloads/basebot4-1.pdf"
 
 [[robots.images]]
-src = "/images/robot/mk4/1.jpg"
+src = "/images/robot/mk4/4.jpg"
 alt = "MK4 front view"
 
 [[robots]]

@@ -35,19 +35,28 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
                     <div class="text-left">
                         <span class="block text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-2">Combined Global Reach</span>
                         <span class="text-4xl md:text-5xl font-black italic text-white tracking-tighter">
-                            <span id="view-count" data-target="12186">0</span> <span class="text-blue-500 text-xl md:text-2xl ml-1 uppercase">Views</span>
+                            <span id="view-count" data-target="14891">0</span> <span class="text-blue-500 t ext-xl md:text-2xl ml-1 uppercase">Views</span>
                         </span>
                     </div>
                     <div class="h-12 w-px bg-white/10 hidden md:block"></div>
                     <div class="flex items-center gap-6">
                         <div class="flex -space-x-3">
-                            {['youtube', 'facebook', 'instagram', 'globe'].map((icon) => (
-                                <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400">
-                                    <i class={`fa-brands fa-${icon === 'globe' ? '' : icon} fa-solid fa-${icon === 'globe' ? 'globe' : ''}`}></i>
+                            {['youtube', 'facebook', 'instagram', 'globe'].map((icon) => {
+                            // Determine if it's a brand or a standard solid icon
+                            const isBrand = icon !== 'globe';
+                            const prefix = isBrand ? 'fa-brands' : 'fa-solid';
+
+                            return (
+                                <div 
+                                data-icon={icon}
+                                class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-zinc-950 flex items-center justify-center text-sm text-zinc-400"
+                                >
+                                <i class={`${prefix} fa-${icon}`}></i>
                                 </div>
-                            ))}
+                            );
+                            })}
                         </div>
-                    </div>
+                        </div>
                 </div>
 
                 <div class="fade-up flex flex-wrap gap-8 mb-24">
@@ -97,7 +106,7 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
             </div>
         </section>
 
-        <section class="bg-slate-950 py-24 rounded-[3rem] md:rounded-[5rem] mx-2 md:mx-6 overflow-hidden border border-white/5 order-4">
+        <section class="bg-slate-950 py-12 rounded-[3rem] md:rounded-[5rem] mx-1 md:mx-2 overflow-hidden border border-white/5 order-4">
             <div class="max-w-6xl mx-auto px-6">
                 <div class="text-center mb-16">
                     <span class="text-slate-500 font-black uppercase tracking-[0.4em] text-[10px] mb-4 block">Our Engineering Culture</span>
@@ -115,12 +124,12 @@ const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global
                         { icon: 'cube', title: 'CAD Assets', desc: '3D models shared to assist teams in mastering structural integrity.' },
                         { icon: 'book-open', title: 'Public Logs', desc: 'A full archive of our design iterations and breakthroughs.' }
                     ].map((item) => (
-                        <div class="space-y-4 group p-6 bg-slate-900/40 rounded-[2rem] border border-white/5 hover:border-blue-500/30 transition-all">
-                            <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-blue-400 text-xl group-hover:scale-110 transition-transform">
+                        <div class="space-y-4 group p-6 bg-slate-900/40 rounded-[1rem] border border-white/5 hover:border-blue-500/30 transition-all">
+                            <div class="w-10 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-blue-400 text-xl group-hover:scale-110 transition-transform">
                                 <i class={`fa-solid fa-${item.icon}`}></i>
                             </div>
-                            <h4 class="text-xl font-black italic uppercase text-white">{item.title}</h4>
-                            <p class="font-light text-sm text-slate-400 leading-snug">{item.desc}</p>
+                            <h4 class="text-md font-black italic uppercase text-white">{item.title}</h4>
+                            <p class="font-light text-ms text-slate-400 leading-snug">{item.desc}</p>
                         </div>
                     ))}
                 </div>
