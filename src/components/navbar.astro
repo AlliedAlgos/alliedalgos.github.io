@@ -15,16 +15,8 @@
   }
 </style>
 
-<!-- Promo Banner -->
-<div class="fixed top-0 inset-x-0 z-[10002] h-10 flex items-center justify-center bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900 animate-shine">
-  <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="text-white text-[11px] md:text-xs font-bold tracking-wide flex items-center gap-2 group">
-    <span>Support the AlliedAlgorithms Trip to Worlds!</span>
-    <span class="bg-white text-blue-700 px-2 py-0.5 rounded-full text-[10px] uppercase font-black group-hover:bg-blue-50 transition-colors">Donate →</span>
-  </a>
-</div>
-
 <!-- Nav Wrapper -->
-<div id="navWrapper" class="fixed inset-x-0 z-[9999] flex justify-center pointer-events-none transition-all duration-500" style="top: 52px;">
+<div id="navWrapper" class="fixed inset-x-0 z-[9999] flex justify-center pointer-events-none transition-all duration-500" style="top: 20px;">
   <div id="navContainer" class="pointer-events-auto transition-all duration-500 w-full bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg">
     <div class="flex justify-between items-center h-14 px-6">
 
@@ -169,13 +161,13 @@
     const isMobile = window.innerWidth < 768;
 
     if (isMobile || !scrolled) {
-      navWrapper.style.top = isMobile ? '52px' : '40px';
+      navWrapper.style.top = '0px';
       navContainer.className = 'pointer-events-auto transition-all duration-500 w-full bg-white/5 backdrop-blur-2xl border-b border-white/5 shadow-lg';
       navContainer.style.width = '';
       brandName.classList.remove('max-w-0', 'opacity-0');
     } else {
       // Pill mode
-      navWrapper.style.top = '52px';
+      navWrapper.style.top = '20px';
       navContainer.className = 'pointer-events-auto transition-all duration-500 rounded-full bg-zinc-900/90 backdrop-blur-2xl border border-white/10 shadow-2xl px-5';
       navContainer.style.width = 'fit-content';
       brandName.classList.add('max-w-0', 'opacity-0');
