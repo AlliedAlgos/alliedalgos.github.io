@@ -13,78 +13,86 @@ const description = "Get in touch with Allied Algorithms FLL Team 58590. Reach o
 
 <Layout title={title} description={description}>
 
-    <section class="relative pt-32 pb-16 text-center overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.08),transparent_70%)]"></div>
-        <div class="relative z-10 max-w-4xl mx-auto px-6">
-            <span class="text-blue-500 font-bold tracking-[0.4em] text-xs uppercase mb-6 block">Communication Channel</span>
-            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6">
-                GET IN <br><span class="text-blue-500">TOUCH.</span>
+    <section class="relative pt-32 pb-16 overflow-hidden">
+        <div class="absolute inset-0 bg-blueprint-grid opacity-30" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/0 via-zinc-950/70 to-zinc-950" aria-hidden="true"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <p class="font-mono text-xs uppercase tracking-widest text-blue-400 mb-6">Team 58590 Comms</p>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6 uppercase">
+                GET IN <br /><span class="text-accent">TOUCH.</span>
             </h1>
+            <p class="text-zinc-500 text-lg max-w-md mx-auto leading-relaxed">
+                Questions about our robot, our code, or how to get involved? Here's how to reach the team directly.
+            </p>
         </div>
     </section>
 
     <section class="max-w-6xl mx-auto px-6 mb-32">
         <div class="flex flex-col lg:flex-row gap-12 items-start">
-            
-            <div class="w-full lg:w-1/4 flex flex-col gap-6 sticky top-32">
-                <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-600 mb-2 ml-2">Direct Links</p>
-                
-                <a href="https://github.com/AlliedAlgos" target="_blank" 
-                   class="group flex items-center gap-6 p-8 bg-zinc-900/40 border border-white/5 rounded-3xl hover:border-blue-500/50 hover:bg-blue-500/5 transition-all">
-                    <i class="fa-brands fa-github text-4xl text-zinc-500 group-hover:text-white transition-colors"></i>
+
+            <div class="w-full lg:w-1/4 flex flex-col gap-3 lg:sticky lg:top-32">
+                <p class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-2 ml-1">Direct Channels</p>
+
+                <a href="https://github.com/AlliedAlgos" target="_blank" rel="noopener"
+                   class="group flex items-center gap-4 px-5 py-4 border border-white/10 rounded-xl hover:border-blue-500/40 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
+                    <i class="fa-brands fa-github text-2xl text-zinc-500 group-hover:text-white transition-colors" aria-hidden="true"></i>
                     <div>
-                        <span class="block text-[10px] font-black uppercase tracking-widest text-zinc-500">Code</span>
-                        <span class="text-white font-bold italic tracking-tight">GitHub</span>
+                        <span class="block font-mono text-[10px] uppercase tracking-widest text-zinc-500">Code Repository</span>
+                        <span class="text-white font-medium">github.com/AlliedAlgos</span>
                     </div>
                 </a>
 
-                <a href="https://instagram.com/allied.algorithm" target="_blank" 
-                   class="group flex items-center gap-6 p-8 bg-zinc-900/40 border border-white/5 rounded-3xl hover:border-pink-500/50 hover:bg-pink-500/5 transition-all">
-                    <i class="fa-brands fa-instagram text-4xl text-zinc-500 group-hover:text-pink-500 transition-colors"></i>
+                <a href="https://instagram.com/allied.algorithm" target="_blank" rel="noopener"
+                   class="group flex items-center gap-4 px-5 py-4 border border-white/10 rounded-xl hover:border-blue-500/40 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
+                    <i class="fa-brands fa-instagram text-2xl text-zinc-500 group-hover:text-white transition-colors" aria-hidden="true"></i>
                     <div>
-                        <span class="block text-[10px] font-black uppercase tracking-widest text-zinc-500">Social</span>
-                        <span class="text-white font-bold italic tracking-tight">Instagram</span>
+                        <span class="block font-mono text-[10px] uppercase tracking-widest text-zinc-500">Behind the Build</span>
+                        <span class="text-white font-medium">@allied.algorithm</span>
                     </div>
                 </a>
 
-                <a href="mailto:contact@alliedalgos.org" 
-                   class="group flex items-center gap-6 p-8 bg-zinc-900/40 border border-white/5 rounded-3xl hover:border-blue-400/50 hover:bg-blue-400/5 transition-all">
-                    <i class="fa-solid fa-envelope text-4xl text-zinc-500 group-hover:text-blue-400 transition-colors"></i>
+                <a href="mailto:contact@alliedalgos.org"
+                   class="group flex items-center gap-4 px-5 py-4 border border-white/10 rounded-xl hover:border-blue-500/40 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
+                    <i class="fa-solid fa-envelope text-2xl text-zinc-500 group-hover:text-white transition-colors" aria-hidden="true"></i>
                     <div>
-                        <span class="block text-[10px] font-black uppercase tracking-widest text-zinc-500">Email</span>
-                        <span class="text-white font-bold italic tracking-tight">Email</span>
+                        <span class="block font-mono text-[10px] uppercase tracking-widest text-zinc-500">Direct Line</span>
+                        <span class="text-white font-medium">contact@alliedalgos.org</span>
                     </div>
                 </a>
             </div>
 
             <div class="w-full lg:w-3/4">
-                <div class="bg-zinc-900/40 backdrop-blur-xl border border-white/5 rounded-[3rem] p-8 md:p-16 shadow-2xl">
+                <div class="relative bg-zinc-900/60 border border-white/10 rounded-3xl p-8 md:p-14">
+                    <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-blue-500/40" aria-hidden="true"></span>
+                    <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-blue-500/40" aria-hidden="true"></span>
+
                     <form id="contactForm" class="space-y-10">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label for="name" class="block mb-3 text-[10px] font-bold uppercase tracking-widest text-zinc-600 ml-1">Identity</label>
+                                <label for="name" class="block mb-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500 ml-1">Identity</label>
                                 <input type="text" id="name" name="name" placeholder="Name" required
-                                       class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-800 focus:outline-none focus:border-blue-500 focus:bg-blue-500/[0.03] transition-all" />
+                                       class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all" />
                             </div>
                             <div>
-                                <label for="email" class="block mb-3 text-[10px] font-bold uppercase tracking-widest text-zinc-600 ml-1">E-Mail</label>
+                                <label for="email" class="block mb-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500 ml-1">E-Mail</label>
                                 <input type="email" id="email" name="email" placeholder="email@address.com" required
-                                       class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-800 focus:outline-none focus:border-blue-500 focus:bg-blue-500/[0.03] transition-all" />
+                                       class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all" />
                             </div>
                         </div>
 
                         <div>
-                            <label for="message" class="block mb-3 text-[10px] font-bold uppercase tracking-widest text-zinc-600 ml-1">Message Brief</label>
+                            <label for="message" class="block mb-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500 ml-1">Message Brief</label>
                             <textarea id="message" name="message" rows="8" placeholder="How can we collaborate?" required
-                                      class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-800 focus:outline-none focus:border-blue-500 focus:bg-blue-500/[0.03] transition-all resize-none"></textarea>
+                                      class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all resize-none"></textarea>
                         </div>
 
                         <button type="submit" id="submitBtn"
-                                class="w-full py-6 bg-blue-600 hover:bg-blue-500 hover:-translate-y-1 text-white font-black text-xs uppercase tracking-[0.4em] rounded-2xl transition-all shadow-xl shadow-blue-600/20 active:scale-[0.98]">
+                                class="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs uppercase tracking-[0.3em] rounded-2xl transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300">
                             Submit
                         </button>
                     </form>
-                    <p id="status" class="mt-8 text-center hidden text-[10px] font-bold uppercase tracking-widest"></p>
+                    <p id="status" class="mt-8 text-center hidden font-mono text-[10px] uppercase tracking-widest"></p>
                 </div>
             </div>
 
@@ -100,7 +108,7 @@ const description = "Get in touch with Allied Algorithms FLL Team 58590. Reach o
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         // UI Feedback
         submitBtn.disabled = true;
         submitBtn.innerText = "TRANSMITTING...";

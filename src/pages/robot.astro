@@ -15,12 +15,12 @@ const title = "Our Robots | Allied Algorithms";
 
 <Layout title={title}>
     <section class="relative pt-32 pb-20 flex items-center justify-center text-center overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.08),transparent_70%)]"></div>
-        
+        <div class="absolute inset-0 bg-blueprint-grid opacity-20 [mask-image:radial-gradient(circle_at_50%_20%,black,transparent_70%)] pointer-events-none"></div>
+
         <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
-            <span class="text-purple-500 font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">Build History</span>
+            <span class="font-mono text-blue-400 uppercase tracking-widest text-xs mb-4 block">Build Log &middot; MK1&ndash;MK5</span>
             <h1 class="text-7xl md:text-9xl font-black tracking-tighter italic text-white leading-[0.8] mb-8 uppercase">
-                Robot <br><span class="text-purple-500">Evolution.</span>
+                Robot <br><span class="text-accent">Evolution.</span>
             </h1>
             <p class="text-zinc-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed">
                 A look at our engineering journey—from our early prototypes to the modular, high-precision systems we use today.
@@ -33,15 +33,15 @@ const title = "Our Robots | Allied Algorithms";
             {chronologicalRobots.map((robot, index) => (
                 <div class="relative">
                     {index !== chronologicalRobots.length - 1 && (
-                        <div class="absolute left-1/2 top-full w-px h-24 bg-gradient-to-b from-purple-500/30 to-transparent -translate-x-1/2 hidden md:block"></div>
+                        <div class="absolute left-1/2 top-full w-px h-24 bg-white/10 -translate-x-1/2 hidden md:block"></div>
                     )}
-                    
-                    <div class="group relative bg-zinc-900/30 border border-white/5 rounded-[3rem] p-4 backdrop-blur-sm transition-all hover:border-purple-500/40 hover:bg-purple-500/[0.02] shadow-2xl hover:shadow-purple-500/10">
-                        
-                        <div class="absolute -top-4 -left-4 bg-purple-600 text-white font-black italic px-6 py-2 rounded-xl text-xl shadow-[0_0_20px_rgba(168,85,247,0.4)] z-20">
-                            V{chronologicalRobots.length - index}
+
+                    <div class="relative bg-zinc-900/30 border border-white/5 rounded-2xl p-4 transition-colors hover:border-blue-500/40">
+
+                        <div class="absolute -top-3 left-8 z-20 bg-zinc-950 border border-white/10 px-3 py-1 font-mono text-xs text-blue-400 uppercase tracking-widest">
+                            MK{chronologicalRobots.length - index} <span class="text-slate-600">/</span> {String(chronologicalRobots.length - index).padStart(2, '0')} of {String(chronologicalRobots.length).padStart(2, '0')}
                         </div>
-                        
+
                         <RobotCard {...robot} />
                     </div>
                 </div>
@@ -49,16 +49,3 @@ const title = "Our Robots | Allied Algorithms";
         </div>
     </section>
 </Layout>
-
-<style>
-    /* Focus on sleekness and impact */
-    h1 {
-        letter-spacing: -0.05em;
-    }
-
-    /* Ensuring the images/content inside RobotCard feel part of the theme */
-    :global(.robot-image-container) {
-        border-radius: 2rem;
-        overflow: hidden;
-    }
-</style>

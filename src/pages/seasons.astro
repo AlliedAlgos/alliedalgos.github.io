@@ -62,56 +62,64 @@ robot_description: "During 2024 season, we stood 2nd in Regionals. We created a 
 const currentSeason = seasons.find(s => s.is_current);
 const otherSeasons = seasons.filter(s => !s.is_current);
 
+// Real chronological index (season 01 = our first year, oldest-first).
+const seasonNumber = (season) => seasons.length - seasons.indexOf(season);
+
 const title = "Seasons | Allied Algorithms";
 ---
 
 <Layout title={title}>
   <main class="relative min-h-screen bg-[#030712] pt-32 pb-40 overflow-hidden">
-    
-    <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[160px] pointer-events-none"></div>
-    <div class="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="absolute inset-0 bg-blueprint-grid opacity-20 [mask-image:linear-gradient(to_bottom,black,transparent_70%)] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
-      
-      <header class="mb-32">
-        <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
-            <span class="text-blue-400 text-[10px] font-black uppercase tracking-[0.5em]">Timeline Overview</span>
-        </div>
+
+      <header class="mb-32 max-w-3xl">
+        <p class="font-mono text-xs text-blue-400 uppercase tracking-widest mb-6">Competition Log &middot; 2020&ndash;2026</p>
         <h1 class="text-7xl md:text-[10rem] font-black italic text-white uppercase tracking-tighter leading-[0.75]">
             Our <span class="text-white/10">Journey.</span>
         </h1>
+        <p class="mt-8 font-mono text-sm text-slate-500 leading-relaxed max-w-xl">
+          Six seasons of builds, missions, and competition results &mdash; made possible in part by
+          <a href="https://robotics-catalyst.org" class="text-blue-400 hover:text-accent underline underline-offset-4 transition-colors">a robotics-education nonprofit that supports teams like ours</a>,
+          as we advanced from our first Explorer season to the World Championship.
+        </p>
       </header>
 
       {currentSeason && (
         <section class="mb-48">
-          <div class="group relative">
-            <div class="relative z-20 aspect-[16/8] rounded-[3.5rem] overflow-hidden border border-white/20 shadow-2xl shadow-blue-500/10">
-                <img src={currentSeason.cover_photo} alt={currentSeason.theme} class="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" />
+          <div class="relative">
+            <div class="relative z-10 aspect-[16/8] rounded-3xl overflow-hidden border border-white/20 shadow-xl">
+                <img src={currentSeason.cover_photo} alt={currentSeason.theme} class="w-full h-full object-cover" />
                 <div class="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent"></div>
             </div>
 
-            <div class="relative z-30 -mt-32 ml-auto max-w-2xl p-12 lg:p-16 bg-white/[0.03] border border-white/10 backdrop-blur-3xl rounded-[3rem] shadow-2xl mr-8 lg:mr-16">
-                <div class="flex items-center gap-4 mb-6">
-                    <span class="px-3 py-1 bg-blue-500 text-white text-[9px] font-black uppercase tracking-widest rounded-lg">Current Season</span>
-                    <span class="text-white/40 font-bold text-xs uppercase tracking-widest">{currentSeason.year}</span>
+            <div class="relative z-20 -mt-32 ml-auto max-w-2xl p-12 lg:p-16 bg-[#0a0f1a] border border-white/10 rounded-3xl mr-8 lg:mr-16">
+                <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-blue-500/40"></span>
+                <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-blue-500/40"></span>
+
+                <div class="flex flex-wrap items-center gap-4 mb-6 font-mono text-xs uppercase tracking-widest">
+                    <span class="text-accent">// Current Season</span>
+                    <span class="text-white/40">{currentSeason.year}</span>
+                    <span class="text-white/20">Season {String(seasonNumber(currentSeason)).padStart(2, '0')}</span>
                 </div>
-                
-                <h2 class="text-5xl lg:text-7xl font-black italic text-white uppercase tracking-tighter mb-6 leading-none">
+
+                <h2 class="text-5xl lg:text-7xl font-bold text-white uppercase tracking-tight mb-6 leading-none">
                   {currentSeason.theme}
                 </h2>
-                
+
                 <p class="text-slate-300 text-xl font-light leading-relaxed mb-10">
                     {currentSeason.robot_description}
                 </p>
-                
-                <div class="flex flex-wrap gap-3">
-                  {currentSeason.awards.map(award => (
-                    <div class="flex items-center gap-3 px-5 py-2.5 bg-white/5 border border-white/10 rounded-2xl">
-                      <span class="text-blue-400 text-xs">◆</span>
-                      <span class="text-white text-[10px] font-black uppercase tracking-widest">{award}</span>
-                    </div>
-                  ))}
-                </div>
+
+                {currentSeason.awards.length > 0 && (
+                  <div class="flex flex-wrap gap-x-6 gap-y-2 pt-8 border-t border-white/10 font-mono text-xs text-blue-300 uppercase tracking-wide">
+                    {currentSeason.awards.map(award => (
+                      <span class="flex items-center gap-2"><span class="text-blue-500">&mdash;</span>{award}</span>
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
         </section>
@@ -119,39 +127,37 @@ const title = "Seasons | Allied Algorithms";
 
       <section>
         <div class="flex items-center gap-6 mb-16 px-4">
-            <h3 class="text-3xl font-black italic text-white uppercase tracking-tighter">Technical Lineage</h3>
-            <div class="h-px flex-1 bg-white/5"></div>
+            <h3 class="font-mono text-xs text-blue-400 uppercase tracking-widest">Technical Lineage</h3>
+            <div class="h-px flex-1 bg-white/10"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           {otherSeasons.map((season) => (
-            <div class="group relative flex flex-col bg-white/[0.02] border border-white/5 rounded-[4rem] backdrop-blur-xl transition-all duration-700 hover:bg-white/[0.05] hover:border-white/20">
-              
-              <div class="aspect-[16/10] overflow-hidden rounded-[3.8rem] m-3 relative">
-                 <img src={season.cover_photo} alt={season.theme} class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+            <div class="relative flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl transition-colors duration-300 hover:border-white/20">
+
+              <div class="aspect-[16/10] overflow-hidden rounded-t-2xl relative">
+                 <img src={season.cover_photo} alt={season.theme} class="w-full h-full object-cover" />
                  <div class="absolute inset-0 bg-gradient-to-t from-[#030712]/60 to-transparent"></div>
               </div>
 
-              <div class="p-12 lg:p-16">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-slate-500 font-bold text-xs uppercase tracking-[0.4em]">{season.year}</span>
-                    <div class="h-px w-12 bg-white/10"></div>
+              <div class="p-10 lg:p-12">
+                <div class="flex justify-between items-center mb-6 font-mono text-xs text-slate-500 uppercase tracking-widest">
+                    <span>Season {String(seasonNumber(season)).padStart(2, '0')}</span>
+                    <span>{season.year}</span>
                 </div>
-                
-                <h4 class="text-4xl lg:text-5xl font-black italic text-white uppercase tracking-tighter mb-6 leading-none">
+
+                <h4 class="text-3xl lg:text-4xl font-bold text-white uppercase tracking-tight mb-6 leading-none">
                   {season.theme}
                 </h4>
-                
+
                 <p class="text-slate-400 text-lg font-light leading-relaxed mb-10">
                   {season.robot_description}
                 </p>
 
                 {season.awards.length > 0 && (
-                  <div class="flex flex-wrap gap-2 pt-8 border-t border-white/5">
+                  <div class="flex flex-wrap gap-x-6 gap-y-2 pt-8 border-t border-white/5 font-mono text-xs text-blue-300 uppercase tracking-wide">
                     {season.awards.map(award => (
-                      <span class="text-[9px] font-black uppercase tracking-widest text-blue-400 bg-blue-400/5 px-4 py-2 rounded-xl border border-blue-400/20">
-                         {award}
-                      </span>
+                      <span class="flex items-center gap-2"><span class="text-blue-500">&mdash;</span>{award}</span>
                     ))}
                   </div>
                 )}
@@ -164,15 +170,3 @@ const title = "Seasons | Allied Algorithms";
     </div>
   </main>
 </Layout>
-
-<style>
-  /* Removes AI feel by avoiding generic rounded corners and using intentional hierarchy */
-  h1, h2, h4 {
-    letter-spacing: -0.04em;
-  }
-  
-  /* Smooth scroll interaction */
-  .transition-transform {
-    will-change: transform;
-  }
-</style>

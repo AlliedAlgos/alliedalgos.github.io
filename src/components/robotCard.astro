@@ -21,34 +21,38 @@ const { heading, slug, description, cad_link, download_path, images } = Astro.pr
 const mainImage = images[0]?.src || "/images/placeholder.jpg";
 ---
 
-<div class="group relative h-[85vh] min-h-[600px] w-full rounded-[3rem] overflow-hidden bg-zinc-900 border border-white/10 transition-all duration-700 hover:border-blue-500 shadow-2xl">
-    
+<div class="group relative h-[85vh] min-h-[600px] w-full rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 transition-colors duration-500 hover:border-blue-500 shadow-xl">
+
+    <span class="absolute top-3 left-3 z-20 w-5 h-5 border-t border-l border-blue-500/50 pointer-events-none"></span>
+    <span class="absolute bottom-3 right-3 z-20 w-5 h-5 border-b border-r border-blue-500/50 pointer-events-none"></span>
+
     <div class="absolute inset-0">
-        <img src={mainImage} alt={heading} class="w-full h-full object-cover transition-all duration-[1.5s] group-hover:scale-110" />
+        <img src={mainImage} alt={heading} class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-95"></div>
     </div>
 
     <div class="absolute inset-x-0 bottom-0 p-8 md:p-16 z-10">
         <div class="max-w-5xl">
-            <h2 class="text-white font-black text-6xl md:text-9xl tracking-tighter italic leading-[0.75] mb-8 uppercase drop-shadow-2xl">
+            <span class="font-mono text-xs text-blue-400 uppercase tracking-widest mb-3 block">{slug.toUpperCase()} &mdash; Build Spec</span>
+            <h2 class="text-white font-bold text-5xl md:text-7xl tracking-tight leading-[0.95] mb-8 uppercase">
                 {heading}
             </h2>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
                 <p class="text-zinc-300 text-lg leading-relaxed border-l-4 border-blue-600 pl-6 py-2">
                     {description}
                 </p>
 
                 <div class="flex flex-col gap-4">
-                    <button 
+                    <button
                         onclick={`document.getElementById('modal-${slug}').showModal()`}
-                        class="group/btn flex items-center justify-center gap-4 py-6 bg-blue-600 hover:bg-white text-white hover:text-black text-xs font-black uppercase tracking-[0.3em] rounded-2xl transition-all duration-300 shadow-xl shadow-blue-600/40"
+                        class="group/btn flex items-center justify-center gap-4 py-6 bg-blue-600 hover:bg-white text-white hover:text-black text-xs font-bold uppercase tracking-[0.3em] rounded-xl transition-colors duration-300"
                     >
                         Download Guide
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                     </button>
-                    
-                    <a href={cad_link} target="_blank" class="py-5 bg-white/5 hover:bg-white/10 text-white text-xs font-black uppercase tracking-[0.3em] rounded-2xl text-center backdrop-blur-md transition-all border border-white/10">
+
+                    <a href={cad_link} target="_blank" class="py-5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-[0.3em] rounded-xl text-center transition-colors border border-white/10">
                         View CAD Files
                     </a>
                 </div>
@@ -56,40 +60,38 @@ const mainImage = images[0]?.src || "/images/placeholder.jpg";
         </div>
     </div>
 
-    <dialog 
-        id={`modal-${slug}`} 
-        class="fixed inset-0 m-auto bg-zinc-950 border-2 border-blue-600/30 p-10 rounded-[2.5rem] shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop:backdrop-blur-xl max-w-md w-[90%] text-white outline-none overflow-hidden"
+    <dialog
+        id={`modal-${slug}`}
+        class="fixed inset-0 m-auto bg-zinc-950 border-2 border-blue-600/30 p-10 rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.8)] backdrop:backdrop-blur-xl max-w-md w-[90%] text-white outline-none overflow-hidden"
     >
         <div class="text-center">
-            <div class="inline-block bg-blue-600/10 border border-blue-500/20 px-3 py-1 rounded-full mb-4">
-                <span class="text-[10px] font-black tracking-[0.3em] text-blue-500 uppercase italic">AlliedAlgo</span>
-            </div>
-            
-            <h3 class="text-4xl font-black italic tracking-tighter mb-2 uppercase">Team Number</h3>
-            <p class="text-zinc-500 text-xs font-bold tracking-widest uppercase mb-8">Helps us Keep Track</p>
-            
-            <form 
-              class="space-y-6 text-left download-form" 
-              data-webhook={webhook_url} 
-              data-robot={heading} 
+            <span class="font-mono text-xs text-blue-400 uppercase tracking-widest mb-4 block">Allied Algorithms // Archive Access</span>
+
+            <h3 class="text-4xl font-bold tracking-tight mb-2 uppercase">Team Number</h3>
+            <p class="text-zinc-500 text-xs font-medium tracking-widest uppercase mb-8">Helps us keep track</p>
+
+            <form
+              class="space-y-6 text-left download-form"
+              data-webhook={webhook_url}
+              data-robot={heading}
               data-file={download_path}
             >
                 <div>
-                    <label class="block text-[10px] font-black uppercase tracking-widest text-blue-500 mb-2">FLL Team Name / Number</label>
-                    <input 
-                        type="text" 
-                        name="team" 
-                        required 
-                        class="w-full bg-zinc-900 border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500 transition-all text-white placeholder:text-zinc-700" 
-                        placeholder="e.g. 58590 Allied Algorithms" 
+                    <label class="block font-mono text-[10px] uppercase tracking-widest text-blue-400 mb-2">FLL Team Name / Number</label>
+                    <input
+                        type="text"
+                        name="team"
+                        required
+                        class="w-full bg-zinc-900 border border-white/10 rounded-xl px-5 py-4 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all text-white placeholder:text-zinc-700"
+                        placeholder="e.g. 58590 Allied Algorithms"
                     />
                 </div>
-                
+
                 <div class="flex flex-col gap-3 pt-2">
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-xl text-xs font-black uppercase tracking-[0.2em] transition-all shadow-lg shadow-blue-600/20 active:scale-95">
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-colors active:scale-95">
                         Confirm & Download
                     </button>
-                    <button type="button" onclick={`document.getElementById('modal-${slug}').close()`} class="w-full py-2 text-[10px] font-black uppercase tracking-widest text-zinc-600 hover:text-white transition-colors">
+                    <button type="button" onclick={`document.getElementById('modal-${slug}').close()`} class="w-full py-2 text-[10px] font-bold uppercase tracking-widest text-zinc-600 hover:text-white transition-colors">
                         Cancel
                     </button>
                 </div>
@@ -106,7 +108,7 @@ const mainImage = images[0]?.src || "/images/placeholder.jpg";
             e.preventDefault();
             const btn = (e.target as HTMLFormElement).querySelector('button[type="submit"]');
             const originalText = btn.textContent;
-            
+
             const formData = new FormData(e.target as HTMLFormElement);
             const webhookUrl = form.getAttribute('data-webhook');
             const robotName = form.getAttribute('data-robot');

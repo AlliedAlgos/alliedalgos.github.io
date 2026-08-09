@@ -1,9 +1,4 @@
 <style>
-  @keyframes shine { to { background-position: 200% center; } }
-  .animate-shine { background-size: 200% auto; animation: shine 4s linear infinite; }
-  .animate-donate { background-size: 300% auto; transition: background-position 0.5s ease; }
-  .animate-donate:hover { background-position: right center; }
-
   #mobileMenu {
     clip-path: circle(0% at 90% 5%);
     transition: clip-path 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -23,13 +18,11 @@
       <!-- Logo -->
       <a href="/" class="flex items-center gap-3 group shrink-0 z-[10001]">
         <img class="w-8 h-8 transition-transform duration-300 group-hover:scale-110" src="/images/Allied-Algorithms_logo.svg" alt="Logo">
-        <span id="brandName" class="text-lg font-bold tracking-tighter italic text-white transition-all duration-500 overflow-hidden whitespace-nowrap">
-          Allied Algorithms
-        </span>
+        <span id="brandName" class="flex items-baseline gap-2 text-lg font-bold text-white transition-all duration-500 overflow-hidden whitespace-nowrap">Allied Algorithms<span class="font-mono text-[10px] font-medium text-accent/90">58590</span></span>
       </a>
 
       <!-- Hamburger (mobile) -->
-      <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-[5px] items-end p-2 z-[10001] outline-none">
+      <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-[5px] items-end p-2 z-[10001] outline-none rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">
         <span id="ham1" class="w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
         <span id="ham2" class="w-6 h-0.5 bg-white rounded-full transition-all duration-300"></span>
         <span id="ham3" class="w-4 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
@@ -40,12 +33,12 @@
         <li><a href="/about-us" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">About Us</a></li>
         <li><a href="/seasons"  class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-2 transition-colors">Seasons</a></li>
         <li class="relative" id="projectsMenuItem">
-          <button id="projectsBtn" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-5 flex items-center gap-1.5 outline-none transition-colors">
+          <button id="projectsBtn" class="text-zinc-400 hover:text-white text-sm font-medium px-3 py-5 flex items-center gap-1.5 outline-none rounded transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">
             Projects <i id="projectsChevron" class="fa-solid fa-chevron-down text-[9px] opacity-60 transition-transform duration-300"></i>
           </button>
         </li>
         <li class="ml-3">
-          <a href="/contact-us" class="animate-donate px-5 py-2 text-white text-[11px] uppercase font-black rounded-full tracking-wide bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 hover:shadow-[0_0_24px_rgba(59,130,246,0.45)] active:translate-y-0.5 transition-all">
+          <a href="/contact-us" class="px-5 py-2 text-white text-[11px] font-mono font-semibold uppercase tracking-wider rounded-md bg-blue-600 hover:bg-blue-500 active:translate-y-px transition-colors">
             Contact
           </a>
         </li>
@@ -56,29 +49,31 @@
 </div>
 
 <!-- Projects Dropdown -->
-<div id="projectDropdown" class="fixed opacity-0 invisible translate-y-2 z-[9998] bg-zinc-950/98 backdrop-blur-3xl border border-white/10 shadow-2xl transition-all duration-300 rounded-2xl overflow-hidden">
+<div id="projectDropdown" class="fixed opacity-0 invisible translate-y-2 z-[9998] bg-zinc-950/98 backdrop-blur-3xl border border-white/10 shadow-2xl transition-all duration-300 rounded-xl overflow-hidden">
+  <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-blue-500/40 pointer-events-none"></span>
+  <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-blue-500/40 pointer-events-none"></span>
   <div class="px-6 py-6">
-    <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-4">Projects</p>
-    <div class="grid grid-cols-2 gap-3">
-      <a href="/robot" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-blue-500/10 text-blue-400 border border-blue-500/20 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"><i class="fa-solid fa-robot"></i></div>
-        <div><div class="text-sm font-bold text-white mb-1">Robot Designs</div><p class="text-xs text-zinc-500 leading-relaxed">CAD designs and build Instructions</p></div>
+    <p class="font-mono text-[10px] uppercase tracking-widest text-zinc-600 mb-4">// Projects</p>
+    <div class="grid grid-cols-2 gap-1">
+      <a href="/robot" class="group flex items-start gap-3 p-4 rounded-lg border border-transparent hover:bg-white/5 hover:border-white/10 transition-colors">
+        <i class="fa-solid fa-robot text-blue-400/70 group-hover:text-blue-300 text-sm mt-0.5 w-4 text-center transition-colors"></i>
+        <div><div class="text-sm font-semibold text-white mb-0.5">Robot Designs</div><p class="text-xs text-zinc-500 leading-relaxed">CAD designs and build instructions</p></div>
       </a>
-      <a href="/ag" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"><i class="fa-solid fa-microchip"></i></div>
-        <div><div class="text-sm font-bold text-white mb-1">Allied Grid</div><p class="text-xs text-zinc-500 leading-relaxed">CODE FRAMEWORK.</p></div>
+      <a href="/ag" class="group flex items-start gap-3 p-4 rounded-lg border border-transparent hover:bg-white/5 hover:border-white/10 transition-colors">
+        <i class="fa-solid fa-microchip text-blue-400/70 group-hover:text-blue-300 text-sm mt-0.5 w-4 text-center transition-colors"></i>
+        <div><div class="text-sm font-semibold text-white mb-0.5">Allied Grid</div><p class="text-xs text-zinc-500 leading-relaxed">Code framework</p></div>
       </a>
-      <a href="/path/docs" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-green-500/10 text-green-400 border border-green-500/20 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]"><i class="fa-solid fa-route"></i></div>
-        <div><div class="text-sm font-bold text-white mb-1">Pathing</div><p class="text-xs text-zinc-500 leading-relaxed">Advanced planning software.</p></div>
+      <a href="/path/docs" class="group flex items-start gap-3 p-4 rounded-lg border border-transparent hover:bg-white/5 hover:border-white/10 transition-colors">
+        <i class="fa-solid fa-route text-blue-400/70 group-hover:text-blue-300 text-sm mt-0.5 w-4 text-center transition-colors"></i>
+        <div><div class="text-sm font-semibold text-white mb-0.5">Pathing</div><p class="text-xs text-zinc-500 leading-relaxed">Advanced planning software</p></div>
       </a>
-        <a href="https://work.alliedalgos.org" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-red-500/10 text-red-400 border border-red-500/20 group-hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]"><i class="fa-solid fa-computer"></i></div>
-        <div><div class="text-sm font-bold text-white mb-1">Work</div><p class="text-xs text-zinc-500 leading-relaxed">Code your python basic commands</p></div>
+      <a href="https://work.alliedalgos.org" class="group flex items-start gap-3 p-4 rounded-lg border border-transparent hover:bg-white/5 hover:border-white/10 transition-colors">
+        <i class="fa-solid fa-computer text-blue-400/70 group-hover:text-blue-300 text-sm mt-0.5 w-4 text-center transition-colors"></i>
+        <div><div class="text-sm font-semibold text-white mb-0.5">Work</div><p class="text-xs text-zinc-500 leading-relaxed">Code your python basic commands</p></div>
       </a>
-         <a href="https://ark.alliedalgos.org" class="flex items-start gap-4 p-5 rounded-2xl border border-transparent hover:bg-white/5 hover:border-white/10 hover:-translate-y-1 transition-all group">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-orange-500/10 text-orange-400 border border-orange-500/20 group-hover:shadow-[0_0_20px_rgba(197,34,94,0.3)]"><i class="fa-solid fa-flask"></i></div>
-        <div><div class="text-sm font-bold text-white mb-1">Innovation</div><p class="text-xs text-zinc-500 leading-relaxed">See our webapp for our Innovation Project</p></div>
+      <a href="https://ark.alliedalgos.org" class="group flex items-start gap-3 p-4 rounded-lg border border-transparent hover:bg-white/5 hover:border-white/10 transition-colors">
+        <i class="fa-solid fa-flask text-blue-400/70 group-hover:text-blue-300 text-sm mt-0.5 w-4 text-center transition-colors"></i>
+        <div><div class="text-sm font-semibold text-white mb-0.5">Innovation</div><p class="text-xs text-zinc-500 leading-relaxed">See our webapp for our Innovation Project</p></div>
       </a>
     </div>
   </div>
@@ -86,15 +81,15 @@
 
 <!-- Mobile Menu -->
 <div id="mobileMenu" class="fixed inset-0 z-[10000] bg-zinc-950 flex flex-col p-8 pt-32 md:hidden shadow-2xl">
-  <nav class="flex flex-col gap-8 text-center">
-    <a href="/about-us"   class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">About Us</a>
-    <a href="/seasons"    class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Seasons</a>
-    <a href="/robot"      class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Robot</a>
-    <a href="/aac"        class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">AAC</a>
-    <a href="https://alliedalgos.org/pathing/docs" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Pathing</a>
-    <a href="/contact-us" class="text-4xl font-black tracking-tighter text-white hover:text-blue-400 transition-colors">Contact</a>
+  <nav class="flex flex-col gap-7 text-center">
+    <a href="/about-us" class="group flex items-center justify-center gap-3 text-4xl font-bold tracking-tight text-white hover:text-blue-400 transition-colors"><span class="font-mono text-xs text-zinc-600 group-hover:text-accent transition-colors">01</span>About Us</a>
+    <a href="/seasons" class="group flex items-center justify-center gap-3 text-4xl font-bold tracking-tight text-white hover:text-blue-400 transition-colors"><span class="font-mono text-xs text-zinc-600 group-hover:text-accent transition-colors">02</span>Seasons</a>
+    <a href="/robot" class="group flex items-center justify-center gap-3 text-4xl font-bold tracking-tight text-white hover:text-blue-400 transition-colors"><span class="font-mono text-xs text-zinc-600 group-hover:text-accent transition-colors">03</span>Robot</a>
+    <a href="/aac" class="group flex items-center justify-center gap-3 text-4xl font-bold tracking-tight text-white hover:text-blue-400 transition-colors"><span class="font-mono text-xs text-zinc-600 group-hover:text-accent transition-colors">04</span>AAC</a>
+    <a href="https://alliedalgos.org/pathing/docs" class="group flex items-center justify-center gap-3 text-4xl font-bold tracking-tight text-white hover:text-blue-400 transition-colors"><span class="font-mono text-xs text-zinc-600 group-hover:text-accent transition-colors">05</span>Pathing</a>
+    <a href="/contact-us" class="group flex items-center justify-center gap-3 text-4xl font-bold tracking-tight text-white hover:text-blue-400 transition-colors"><span class="font-mono text-xs text-zinc-600 group-hover:text-accent transition-colors">06</span>Contact</a>
     <div class="h-px bg-white/10 w-24 mx-auto my-2"></div>
-    <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="animate-donate py-5 rounded-2xl text-white font-black uppercase tracking-widest bg-gradient-to-r from-blue-700 to-blue-500 shadow-xl shadow-blue-900/20">
+    <a href="https://robotics-catalyst.org/donate/allied-algorithms" class="py-4 rounded-md text-white font-mono font-semibold uppercase tracking-widest text-sm bg-blue-600 hover:bg-blue-500 transition-colors">
       Donate Now
     </a>
   </nav>
