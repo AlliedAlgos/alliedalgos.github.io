@@ -6,7 +6,7 @@ const { sponsors = [] } = Astro.props;
 const displaySponsors = [...sponsors, ...sponsors, ...sponsors];
 ---
 
-<div class="relative w-full overflow-hidden bg-zinc-900/10 py-12 group border-y border-white/5">
+<div class="relative w-full overflow-hidden bg-blue-500 py-12 group border-y border-white/5">
     <div class="max-w-7xl mx-auto px-6 mb-10 text-center">
         <h3 class="font-mono text-zinc-500 uppercase tracking-[0.3em] text-[10px] mb-2">// Mission Partners</h3>
         <p class="text-white font-bold text-2xl">
@@ -14,8 +14,8 @@ const displaySponsors = [...sponsors, ...sponsors, ...sponsors];
         </p>
     </div>
 
-    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent z-20 pointer-events-none"></div>
-    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-20 pointer-events-none"></div>
+    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-cyan-900/30 to-transparent z-20 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white/10 to-transparent z-20 pointer-events-none"></div>
 
     <div class="flex animate-marquee-fast whitespace-nowrap items-center">
         {displaySponsors.map((sponsor) => (

@@ -1,11 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { parse } from 'smol-toml';
-import { readFileSync } from 'fs';
-
-// Data fetching
-const raw = readFileSync('./src/data/discord.toml', 'utf-8');
-const { webhook_url } = parse(raw);
 
 const title = "Contact | Allied Algorithms Robotics";
 const description = "Get in touch with Allied Algorithms FLL Team 600757. Reach out for technical collaborations, sponsorships, or general robotics inquiries.";
@@ -15,7 +9,7 @@ const description = "Get in touch with Allied Algorithms FLL Team 600757. Reach 
 
     <section class="relative pt-32 pb-16 overflow-hidden">
         <div class="absolute inset-0 bg-blueprint-grid opacity-30" aria-hidden="true"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/0 via-zinc-950/70 to-zinc-950" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/0 via-blue-950/70 to-cyan-950/30" aria-hidden="true"></div>
 
         <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
             <p class="font-mono text-xs uppercase tracking-widest text-blue-400 mb-6">Team 600757 Comms</p>
@@ -52,47 +46,26 @@ const description = "Get in touch with Allied Algorithms FLL Team 600757. Reach 
                     </div>
                 </a>
 
-                <a href="mailto:contact@alliedalgos.org"
+                <a href="mailto:alliedalgos@robolyst.org"
                    class="group flex items-center gap-4 px-5 py-4 border border-white/10 rounded-xl hover:border-blue-500/40 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
                     <i class="fa-solid fa-envelope text-2xl text-zinc-500 group-hover:text-white transition-colors" aria-hidden="true"></i>
                     <div>
                         <span class="block font-mono text-[10px] uppercase tracking-widest text-zinc-500">Direct Line</span>
-                        <span class="text-white font-medium">contact@alliedalgos.org</span>
+                        <span class="text-white font-medium">alliedalgos@robolyst.org</span>
                     </div>
                 </a>
             </div>
 
             <div class="w-full lg:w-3/4">
-                <div class="relative bg-zinc-900/60 border border-white/10 rounded-3xl p-8 md:p-14">
+                <div class="relative bg-blue-400/60 border border-white/10 rounded-3xl p-4 md:p-8 overflow-hidden">
                     <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-blue-500/40" aria-hidden="true"></span>
                     <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-blue-500/40" aria-hidden="true"></span>
 
-                    <form id="contactForm" class="space-y-10">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <label for="name" class="block mb-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500 ml-1">Identity</label>
-                                <input type="text" id="name" name="name" placeholder="Name" required
-                                       class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all" />
-                            </div>
-                            <div>
-                                <label for="email" class="block mb-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500 ml-1">E-Mail</label>
-                                <input type="email" id="email" name="email" placeholder="email@address.com" required
-                                       class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="message" class="block mb-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500 ml-1">Message Brief</label>
-                            <textarea id="message" name="message" rows="8" placeholder="How can we collaborate?" required
-                                      class="w-full p-5 bg-white/[0.02] border border-white/8 rounded-2xl text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all resize-none"></textarea>
-                        </div>
-
-                        <button type="submit" id="submitBtn"
-                                class="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs uppercase tracking-[0.3em] rounded-2xl transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300">
-                            Submit
-                        </button>
-                    </form>
-                    <p id="status" class="mt-8 text-center hidden font-mono text-[10px] uppercase tracking-widest"></p>
+                    <iframe
+                        src="https://robolyst.org/embed/form/form_d4hq0d28etvtp6e8ht7z?bg=transparent"
+                        title="Contact"
+                        style="width:100%;height:550px;border:0"
+                    ></iframe>
                 </div>
             </div>
 
@@ -100,66 +73,3 @@ const description = "Get in touch with Allied Algorithms FLL Team 600757. Reach 
     </section>
 
 </Layout>
-
-<script define:vars={{ webhookUrl: webhook_url }}>
-    const form = document.getElementById('contactForm');
-    const status = document.getElementById('status');
-    const submitBtn = document.getElementById('submitBtn');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // UI Feedback
-        submitBtn.disabled = true;
-        submitBtn.innerText = "TRANSMITTING...";
-        status.classList.remove('hidden', 'text-red-500', 'text-blue-500');
-        status.classList.add('text-zinc-500');
-        status.innerText = "UPLOADING TO SECURE CHANNEL...";
-
-        const formData = new FormData(form);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            message: formData.get('message')
-        };
-
-        // Construct Discord Embed Payload
-        const payload = {
-            username: "Allied Algorithms Comms",
-            avatar_url: "https://alliedalgorithms.org/logo.png", // Optional: link to your logo
-            embeds: [{
-                title: "📩 New Contact Submission",
-                color: 3447003, // Allied Blue
-                fields: [
-                    { name: "Identity", value: data.name, inline: true },
-                    { name: "Digital Mail", value: data.email, inline: true },
-                    { name: "Message Brief", value: data.message }
-                ],
-                footer: { text: "Protocol: AlliedAlgos-Contact-v1" },
-                timestamp: new Date().toISOString()
-            }]
-        };
-
-        try {
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (response.ok) {
-                status.classList.replace('text-zinc-500', 'text-blue-500');
-                status.innerText = "CONTACT SUCCESSFUL. WE WILL RESPOND SHORTLY.";
-                form.reset();
-            } else {
-                throw new Error();
-            }
-        } catch (err) {
-            status.classList.replace('text-zinc-500', 'text-red-500');
-            status.innerText = "TRANSMISSION FAILED. PLEASE USE EMAIL DIRECTLY.";
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerText = "CONTACT DATA";
-        }
-    });
-</script>

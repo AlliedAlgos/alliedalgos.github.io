@@ -1,0 +1,226 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { parse } from 'smol-toml';
+import { readFileSync } from 'fs';
+
+export async function getStaticPaths() {
+  const seasonsPath = new URL('../../data/seasons.toml', import.meta.url);
+  const seasonsRaw = readFileSync(seasonsPath, 'utf-8');
+  const { seasons } = parse(seasonsRaw) as { seasons: any[] };
+
+  return seasons.map((season) => ({
+    params: { slug: season.slug },
+    props: { season },
+  }));
+}
+
+const { season } = Astro.props;
+const title = `${season.theme} (${season.year}) | Allied Algorithms`;
+---
+
+<Layout title={title}>
+  <main class="font-mono relative min-h-screen pt-28 pb-40 text-white overflow-hidden">
+    <!-- Blueprint Grid Background Texture -->
+    <div class="absolute inset-0 bg-blueprint-grid opacity-20 [mask-image:linear-gradient(to_bottom,black,transparent_70%)] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10 font-mono">
+
+      <!-- Technical Breadcrumb Trail -->
+      <nav aria-label="Breadcrumb" class="mb-12 font-mono text-xs uppercase tracking-widest text-zinc-500 flex items-center gap-2.5 flex-wrap">
+        <a href="/" class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-house text-[10px]"></i>
+          <span>Home</span>
+        </a>
+        <span class="text-white/20">/</span>
+        <a href="/seasons" class="hover:text-blue-400 transition-colors">
+          Seasons
+        </a>
+        <span class="text-white/20">/</span>
+        <span class="text-blue-400 font-semibold px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
+          {season.theme} ({season.year})
+        </span>
+      </nav>
+
+      <!-- Hero Header -->
+      <header class="mb-16 max-w-4xl">
+        <div class="flex flex-wrap items-center gap-4 mb-6 text-xs font-mono uppercase tracking-widest">
+          {season.is_current ? (
+            <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Active Season
+            </span>
+          ) : (
+            <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400">
+              Archived Season
+            </span>
+          )}
+          <span class="text-white/40">{season.year}</span>
+          <span class="text-white/20">&middot;</span>
+          <span class="text-zinc-500">Slug: /{season.slug}</span>
+        </div>
+
+        <h1 class="font-mono text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black italic uppercase tracking-tighter leading-none mb-6">
+          {season.theme}
+        </h1>
+
+        <p class="font-mono text-base md:text-xl text-blue-300 uppercase tracking-wide">
+          "{season.tagline}"
+        </p>
+      </header>
+
+      <!-- Season Cover Photo Banner -->
+      {season.cover_photo && (
+        <div class="relative aspect-[21/9] rounded-3xl overflow-hidden border border-white/10 mb-16 shadow-2xl">
+          <img src={season.cover_photo} alt={`${season.theme} Cover`} class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 left-6 font-mono text-xs uppercase tracking-widest text-zinc-400 bg-black/60 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
+            // Season Field Media
+          </div>
+        </div>
+      )}
+
+      <!-- Primary Content Grid: Specs, Robot & Stats -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
+
+        <!-- Left 2-Cols: Robot Briefing & Photo -->
+        <div class="lg:col-span-2 space-y-8">
+
+          <!-- Robot Build & Overview -->
+          <div class="p-8 md:p-10 bg-white/[0.02] border border-white/10 rounded-3xl relative">
+            <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-blue-500/40"></span>
+            <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-blue-500/40"></span>
+
+            <h2 class="text-xs uppercase font-mono tracking-widest text-blue-400 mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-microchip"></i>
+              // Engineering & Robot Overview
+            </h2>
+
+            <p class="font-mono text-zinc-300 text-sm md:text-base leading-relaxed mb-8">
+              {season.robot_description}
+            </p>
+
+            <!-- Dedicated Robot Photo Showcase -->
+            {season.robot_photo && (
+              <div class="relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 mt-6 group">
+                <img src={season.robot_photo} alt={`${season.theme} Robot Build`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div class="absolute bottom-4 left-4 font-mono text-[11px] uppercase tracking-wider text-white bg-zinc-950/80 backdrop-blur-md px-3 py-1.5 rounded-md border border-white/10">
+                  <i class="fa-solid fa-robot text-blue-400 mr-2"></i> Chassis Build / CAD Spec Photo
+                </div>
+              </div>
+            )}
+          </div>
+
+          <!-- Awards & Honors -->
+          {season.awards && season.awards.length > 0 && (
+            <div class="p-8 bg-white/[0.02] border border-white/5 rounded-3xl">
+              <h3 class="text-xs uppercase font-mono tracking-widest text-zinc-400 mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-trophy text-amber-400"></i>
+                // Awards & Recognition
+              </h3>
+              <div class="flex flex-wrap gap-3">
+                {season.awards.map((award: string) => (
+                  <span class="px-4 py-2.5 bg-blue-600/10 border border-blue-500/30 text-blue-300 rounded-xl text-xs uppercase tracking-wider font-mono flex items-center gap-2">
+                    <span class="text-blue-500">&mdash;</span>
+                    {award}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <!-- Right 1-Col: Telemetry Stats Sidebar -->
+        <div class="space-y-6">
+          {season.stats ? (
+            <div class="p-8 bg-[#0a0f1a] border border-white/10 rounded-3xl space-y-6 relative">
+              <span class="absolute -top-px -right-px w-4 h-4 border-t border-r border-blue-500/40"></span>
+
+              <h3 class="text-xs uppercase font-mono tracking-widest text-blue-400 flex items-center gap-2">
+                <i class="fa-solid fa-chart-simple"></i>
+                // Telemetry & Stats
+              </h3>
+
+              <div class="space-y-4 font-mono">
+                {season.stats.missions_completed !== undefined && (
+                  <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+                    <span class="text-xs text-zinc-400 uppercase">Missions Cleared</span>
+                    <span class="text-2xl font-bold text-white tabular-nums">{season.stats.missions_completed}</span>
+                  </div>
+                )}
+
+                {season.stats.score !== undefined && (
+                  <div class="flex justify-between items-baseline border-b border-white/5 pb-3">
+                    <span class="text-xs text-zinc-400 uppercase">High Score</span>
+                    <span class="text-2xl font-bold text-blue-400 tabular-nums">{season.stats.score}</span>
+                  </div>
+                )}
+
+                {season.stats.events_attended !== undefined && (
+                  <div class="flex justify-between items-baseline">
+                    <span class="text-xs text-zinc-400 uppercase">Events Attended</span>
+                    <span class="text-2xl font-bold text-white tabular-nums">{season.stats.events_attended}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div class="p-8 bg-white/[0.01] border border-white/5 rounded-3xl font-mono text-xs text-zinc-500 uppercase tracking-widest text-center">
+
+            </div>
+          )}
+        </div>
+      </div>
+
+      <!-- Timeline Log Section -->
+      {season.timeline && season.timeline.length > 0 && (
+        <section class="mb-20">
+          <div class="flex items-center gap-6 mb-10">
+            <h2 class="text-xs uppercase font-mono tracking-widest text-blue-400 flex items-center gap-2">
+              <i class="fa-solid fa-timeline"></i>
+              // Season Chronology Log
+            </h2>
+            <div class="h-px flex-1 bg-white/10"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {season.timeline.map((item: any) => (
+              <div class="p-6 bg-white/[0.02] border border-white/5 rounded-2xl relative hover:border-blue-500/30 transition-colors">
+                <span class="text-xs font-mono text-blue-400 uppercase tracking-widest block mb-2">{item.date}</span>
+                <h3 class="text-base font-bold text-white mb-2">{item.event}</h3>
+                <p class="text-xs text-zinc-400 leading-relaxed font-mono">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Media Gallery Section -->
+      {season.gallery && season.gallery.length > 0 && (
+        <section class="mb-12">
+          <div class="flex items-center gap-6 mb-10">
+            <h2 class="text-xs uppercase font-mono tracking-widest text-blue-400 flex items-center gap-2">
+              <i class="fa-solid fa-images"></i>
+              // Field & Build Gallery
+            </h2>
+            <div class="h-px flex-1 bg-white/10"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {season.gallery.map((item: any) => (
+              <div class="group relative aspect-video rounded-2xl overflow-hidden border border-white/10 bg-zinc-900">
+                <img src={item.photo} alt={item.caption} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex items-end">
+                  <span class="text-xs font-mono text-white uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-camera text-blue-400"></i>
+                    {item.caption}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+    </div>
+  </main>
+</Layout>

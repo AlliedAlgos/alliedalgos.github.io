@@ -2,7 +2,7 @@
 slug = "v1"
 heading = "Robot Design #1"
 description = "Our first open-source chassis designed for maximum stability and modularity. Built for FLL competition tables."
-cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=694818"
 download_path = "/downloads/basebot-1.pdf"
 
 [[robots.images]]
@@ -17,7 +17,7 @@ alt = "MK1 side view"
 slug = "mk2"
 heading = "Robot Design #2"
 description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
-cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=694816"
 download_path = "/downloads/basebot2.pdf"
 
 [[robots.images]]
@@ -40,7 +40,7 @@ alt = "MK2 back view"
 slug = "mk3"
 heading = "Robot Design #3"
 description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
-cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=75540"
 download_path = "/downloads/Basebot3.pdf"
 
 [[robots.images]]
@@ -51,7 +51,7 @@ alt = "MK3 side view"
 slug = "mk4"
 heading = "Robot Design #4"
 description = "Refined and faster than MK1. Features a lower center of gravity and improved attachment mounting system."
-cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=YOUR_ID"
+cad_link = "https://www.bricklink.com/v3/studio/design.page?idModel=755398"
 download_path = "/downloads/basebot4-1.pdf"
 
 [[robots.images]]

@@ -3,7 +3,7 @@ url: "https://alliedalgos.org" # Your custom domain
 title: "Allied Algorithms 600757"
 description: "FLL Team 600757's website."
 author: "AlliedAlgos"
-email: "alliedalgorithms@gmail.com"
+email: "alliedalgos@robolyst.org"
 theme: minima
 plugins:
   - jekyll-feed

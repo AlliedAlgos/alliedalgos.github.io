@@ -9,163 +9,226 @@ const { sponsors } = parse(sponsorsRaw);
 
 const title = "Allied Algorithms | Wilton's FLL Robotics Team 600757";
 const description = "Representing Wilton, CT in FIRST LEGO League. 7,700+ global views. We combine competitive excellence with an open-source philosophy.";
+
+const socialLinks = [
+  { name: 'YouTube', icon: 'youtube', isBrand: true, href: 'https://youtube.com/@alliedalgorithms' },
+  { name: 'Facebook', icon: 'facebook', isBrand: true, href: 'https://facebook.com' },
+  { name: 'Instagram', icon: 'instagram', isBrand: true, href: 'https://instagram.com/allied.aloriths' },
+  { name: 'GitHub', icon: 'github', isBrand: true, href: 'https://github.com/alliedalgos' },
+  { name: 'Website', icon: 'globe', isBrand: false, href: '/' }
+];
 ---
 
 <Layout title={title} description={description}>
-    <div class="flex flex-col">
+  <div class="w-full text-white">
 
-        <section class="relative min-h-screen flex items-center pt-32 overflow-hidden order-1">
-            <div class="absolute inset-0 bg-blueprint-grid opacity-40 [-webkit-mask-image:radial-gradient(ellipse_65%_55%_at_50%_20%,black,transparent_75%)] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_20%,black,transparent_75%)]"></div>
+    <!-- Hero Sticky Scroll Runway -->
+    <div id="hero-trigger" class="relative h-[160vh] w-full">
+      <div class="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden p-2 sm:p-4 md:p-6 z-10">
 
-            <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
-                <p class="fade-up font-mono text-xs md:text-sm uppercase tracking-widest text-zinc-500 mb-8">
-                    Wilton, CT &middot; Team 600757
-                </p>
+        <!-- Expanding Hero Card -->
+        <section
+          id="hero-card"
+          class="relative w-full max-w-[88%] h-[82vh] rounded-[2rem] md:rounded-[3rem] bg-blue-400 border border-white/10 shadow-2xl flex flex-col justify-center overflow-hidden transition-all duration-75 ease-out will-change-[border-radius,max-width,height]"
+        >
+          <!-- Blueprint Grid Background from global.css -->
+          <div class="absolute inset-0 bg-blueprint-grid opacity-40 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent_80%)] -webkit-[mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent_80%)] pointer-events-none"></div>
 
-                <h1 class="fade-up text-6xl md:text-[10rem] font-black italic tracking-tighter leading-[0.85] uppercase mb-10 text-white break-words">
-                    Allied <br />
-                    <span class="text-blue-500">Algorithms.</span>
-                </h1>
-                <p class="fade-up text-xl md:text-2xl text-zinc-400 font-light max-w-2xl mb-14">
-                    Where Engineering Meets Creativity
-                </p>
+          <!-- Hero Content -->
+          <div class="max-w-6xl mx-auto px-6 md:px-12 w-full relative z-10 py-8">
+            <p class="fade-up font-mono text-xs md:text-sm uppercase tracking-widest text-zinc-100 mb-6">
+              Wilton, CT &middot; Team 600757
+            </p>
 
-                <div class="fade-up relative inline-flex flex-wrap items-stretch gap-8 md:gap-12 px-8 md:px-10 py-7 md:py-8 border border-white/10 rounded-lg mb-16">
-                    <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-accent/50"></span>
-                    <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-accent/50"></span>
+            <h1 class="fade-up text-5xl sm:text-7xl md:text-[8.5rem] lg:text-[10rem] font-black italic tracking-tighter leading-[0.85] uppercase mb-8 text-white break-words">
+              Allied <br />
+              <span class="text-blue-500">Algorithms</span>
+            </h1>
 
-                    <div class="text-left">
-                        <span class="block font-mono text-[11px] uppercase tracking-widest text-zinc-500 mb-3">Combined Global Reach</span>
-                        <span class="flex items-baseline gap-2">
-                            <span id="view-count" data-target="14891" class="font-mono text-4xl md:text-5xl text-white tabular-nums">0</span>
-                            <span class="font-mono text-sm text-zinc-500 uppercase">Views</span>
-                        </span>
-                    </div>
-                    <div class="w-px bg-white/10 hidden md:block"></div>
-                    <div class="flex items-center gap-4">
-                        {['youtube', 'facebook', 'instagram', 'globe'].map((icon) => {
-                        // Determine if it's a brand or a standard solid icon
-                        const isBrand = icon !== 'globe';
-                        const prefix = isBrand ? 'fa-brands' : 'fa-solid';
+            <p class="fade-up text-lg md:text-4xl text-white font-bold max-w-2xl mb-10 md:mb-12">
+              Where Engineering Meets Creativity
+            </p>
 
-                        return (
-                            <div
-                            data-icon={icon}
-                            class="w-9 h-9 rounded border border-white/10 flex items-center justify-center text-sm text-zinc-500"
-                            >
-                            <i class={`${prefix} fa-${icon}`}></i>
-                            </div>
-                        );
-                        })}
-                    </div>
-                </div>
+            <!-- Stats & Social Media Links -->
+            <div class="fade-up relative inline-flex flex-wrap items-center gap-6 md:gap-10 px-6 md:px-10 py-5 md:py-7 border border-white/10 bg-zinc-900/60 backdrop-blur-md rounded-2xl mb-10">
+              <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-accent/50"></span>
+              <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-accent/50"></span>
 
-                <div class="fade-up flex flex-wrap gap-8 mb-24">
-                    <a href="/seasons/" class="group inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-semibold text-sm tracking-wide rounded-lg hover:bg-blue-500 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
-                        Explore Journey
-                        <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+              <div class="text-left">
+                <span class="block font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-500 mb-1 md:mb-2">Combined Global Reach</span>
+                <span class="flex items-baseline gap-2">
+                  <span id="view-count" data-target="21891" class="font-mono text-3xl md:text-5xl text-white tabular-nums font-bold">0</span>
+                  <span class="font-mono text-xs md:text-sm text-zinc-500 uppercase">Views</span>
+                </span>
+              </div>
+
+              <div class="h-10 w-px bg-white/10 hidden sm:block"></div>
+
+              <!-- Social Media Icon Links -->
+              <div class="flex items-center gap-2 sm:gap-3">
+                {socialLinks.map((item) => {
+                  const prefix = item.isBrand ? 'fa-brands' : 'fa-solid';
+                  return (
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith('http') ? "_blank" : "_self"}
+                      rel="noopener noreferrer"
+                      aria-label={item.name}
+                      class="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-600/10 hover:scale-105 transition-all duration-200"
+                    >
+                      <i class={`${prefix} fa-${item.icon} text-sm`}></i>
                     </a>
-                </div>
+                  );
+                })}
+              </div>
             </div>
-        </section>
 
-        <section class="py-20 bg-zinc-950 order-2">
-            <SponsorReel sponsors={sponsors} />
-        </section>
-
-        <section class="max-w-7xl mx-auto px-6 py-24 md:py-40 order-3 lg:order-5">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                <div class="fade-up">
-                    <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 block">The Competition</span>
-                    <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-8">
-                        FIRST LEGO <br><span class="text-zinc-500">League.</span>
-                    </h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed font-light mb-10 max-w-lg">
-                        FIRST® LEGO® League (FLL) is a global STEM program that introduces science, technology, engineering, and math through hands-on learning.
-                    </p>
-                    <div class="grid grid-cols-2 gap-8 border-t border-white/10 pt-10">
-                        <div>
-                            <span class="block text-white font-semibold text-xl mb-2">Innovation</span>
-                            <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">Project Research</p>
-                        </div>
-                        <div>
-                            <span class="block text-white font-semibold text-xl mb-2">Robotics</span>
-                            <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">Autonomous Systems</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="fade-up relative aspect-square rounded-2xl overflow-hidden bg-zinc-900/60 border border-white/10 p-10 md:p-14 flex flex-col justify-end">
-                    <span class="absolute top-5 left-5 w-4 h-4 border-t border-l border-blue-500/40"></span>
-                    <span class="absolute bottom-5 right-5 w-4 h-4 border-b border-r border-blue-500/40"></span>
-                    <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3">Seasons Archived</span>
-                    <span class="font-mono text-6xl md:text-7xl text-white tabular-nums leading-none mb-6">06</span>
-                    <h3 class="text-2xl font-semibold text-white mb-3">6 Seasons of Excellence</h3>
-                    <p class="text-zinc-400 font-light">From Masterpiece to Submerged, we've built a legacy of technical documentation.</p>
-                </div>
+            <!-- CTA -->
+            <div class="fade-up flex flex-wrap gap-6">
+              <a href="/seasons/" class="group inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-semibold text-sm tracking-wide rounded-xl hover:bg-blue-500 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 shadow-lg shadow-blue-600/20">
+                Explore Journey
+                <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+              </a>
             </div>
+          </div>
         </section>
-
-        <section class="bg-slate-950 py-20 md:py-28 rounded-3xl mx-1 md:mx-2 overflow-hidden border border-white/5 order-4">
-            <div class="max-w-6xl mx-auto px-6">
-                <div class="text-center mb-16">
-                    <span class="font-mono text-xs uppercase tracking-widest text-slate-500 mb-4 block">Our Engineering Culture</span>
-                    <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-6">
-                        Open Source.
-                    </h2>
-                    <p class="text-slate-400 text-lg max-w-xl mx-auto font-light leading-relaxed">
-                        We believe in the "Allied" part of our name. We publish our technical logs and CAD to elevate the entire FLL community.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                    {[
-                        { icon: 'code-branch', tag: 'GitHub Repositories', title: 'Frameworks', desc: 'Reusable code architectures for precision and reliability.' },
-                        { icon: 'cube', tag: '3D / CAD Files', title: 'CAD Assets', desc: '3D models shared to assist teams in mastering structural integrity.' },
-                        { icon: 'book-open', tag: 'Engineering Notebook', title: 'Public Logs', desc: 'A full archive of our design iterations and breakthroughs.' }
-                    ].map((item) => (
-                        <div class="p-6 md:p-8 border border-white/5 rounded-xl hover:border-blue-500/30 transition-colors">
-                            <div class="flex items-center gap-2.5 mb-5">
-                                <i class={`fa-solid fa-${item.icon} text-blue-500/70 text-sm`}></i>
-                                <span class="font-mono text-[10px] uppercase tracking-widest text-slate-500">{item.tag}</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-white mb-2">{item.title}</h4>
-                            <p class="font-light text-sm text-slate-400 leading-relaxed">{item.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-
+      </div>
     </div>
+
+    <!-- Sponsor Reel -->
+    <section class="py-20 bg-blue-500 border-t border-white/10 relative z-20">
+      <SponsorReel sponsors={sponsors} />
+    </section>
+
+    <!-- Competition Section -->
+    <section class="max-w-7xl mx-auto px-6 py-24 md:py-40 relative z-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div class="fade-up">
+          <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 block">The Competition</span>
+          <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-8">
+            FIRST LEGO <br><span class="text-zinc-500">League.</span>
+          </h2>
+          <p class="text-zinc-400 text-lg leading-relaxed font-light mb-10 max-w-lg">
+            FIRST® LEGO® League (FLL) is a global STEM program that introduces science, technology, engineering, and math through hands-on learning.
+          </p>
+          <div class="grid grid-cols-2 gap-8 border-t border-white/10 pt-10">
+            <div>
+              <span class="block text-white font-semibold text-xl mb-2">Innovation</span>
+              <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">Project Research</p>
+            </div>
+            <div>
+              <span class="block text-white font-semibold text-xl mb-2">Robotics</span>
+              <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">Autonomous Systems</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up relative aspect-square rounded-3xl overflow-hidden bg-zinc-900/60 border border-white/10 p-10 md:p-14 flex flex-col justify-end shadow-2xl">
+          <span class="absolute top-5 left-5 w-4 h-4 border-t border-l border-blue-500/40"></span>
+          <span class="absolute bottom-5 right-5 w-4 h-4 border-b border-r border-blue-500/40"></span>
+          <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3">Seasons Archived</span>
+          <span class="font-mono text-6xl md:text-7xl text-white tabular-nums leading-none mb-6">06</span>
+          <h3 class="text-2xl font-semibold text-white mb-3">6 Seasons of Excellence</h3>
+          <p class="text-zinc-400 font-light">From Masterpiece to Submerged, we've built a legacy of technical documentation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Source Culture Section -->
+    <section class="bg-slate-950 py-20 md:py-28 rounded-3xl mx-3 md:mx-6 overflow-hidden border border-white/5 mb-24 relative z-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <span class="font-mono text-xs uppercase tracking-widest text-slate-500 mb-4 block">Our Engineering Culture</span>
+          <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-6">
+            Open Source.
+          </h2>
+          <p class="text-slate-400 text-lg max-w-xl mx-auto font-light leading-relaxed">
+            We believe in the "Allied" part of our name. We publish our technical logs and CAD to elevate the entire FLL community.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {[
+            { icon: 'code-branch', tag: 'GitHub Repositories', title: 'Frameworks', desc: 'Reusable code architectures for precision and reliability.' },
+            { icon: 'cube', tag: '3D / CAD Files', title: 'CAD Assets', desc: '3D models shared to assist teams in mastering structural integrity.' },
+            { icon: 'book-open', tag: 'Engineering Notebook', title: 'Public Logs', desc: 'A full archive of our design iterations and breakthroughs.' }
+          ].map((item) => (
+            <div class="p-6 md:p-8 border border-white/5 bg-white/[0.02] rounded-2xl hover:border-blue-500/30 transition-all duration-300">
+              <div class="flex items-center gap-2.5 mb-5">
+                <i class={`fa-solid fa-${item.icon} text-blue-500/70 text-sm`}></i>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-slate-500">{item.tag}</span>
+              </div>
+              <h4 class="text-lg font-semibold text-white mb-2">{item.title}</h4>
+              <p class="font-light text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </div>
 </Layout>
 
 <script is:inline>
-    function animateValue(obj, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
-            if (progress < 1) window.requestAnimationFrame(step);
-        };
-        window.requestAnimationFrame(step);
-    }
+  // Hero Scroll-Expansion Logic
+  const heroTrigger = document.getElementById('hero-trigger');
+  const heroCard = document.getElementById('hero-card');
 
-    const observerOptions = { threshold: 0.1 };
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                if (entry.target.contains(document.getElementById('view-count'))) {
-                    const counter = document.getElementById('view-count');
-                    if (counter && counter.innerText === "0") {
-                        const target = parseInt(counter.getAttribute('data-target'));
-                        animateValue(counter, 0, target, 2000);
-                    }
-                }
-            }
-        });
-    }, observerOptions);
+  function handleHeroExpand() {
+    if (!heroTrigger || !heroCard) return;
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    const rect = heroTrigger.getBoundingClientRect();
+    const scrollableDistance = heroTrigger.offsetHeight - window.innerHeight;
+
+    if (scrollableDistance <= 0) return;
+
+    // Progress percentage between 0 and 1
+    const progress = Math.min(Math.max(-rect.top / scrollableDistance, 0), 1);
+
+    const isMobile = window.innerWidth < 768;
+    const initialRadius = isMobile ? 32 : 48; // px
+    const targetRadius = 0;
+
+    const currentRadius = initialRadius * (1 - progress);
+    const heightPercent = 82 + (18 * progress); // Grows from 82vh to 100vh
+    const widthPercent = 88 + (12 * progress);  // Grows from 88% to 100%
+
+    heroCard.style.borderRadius = `${currentRadius}px`;
+    heroCard.style.height = `${heightPercent}vh`;
+    heroCard.style.maxWidth = `${widthPercent}%`;
+  }
+
+  window.addEventListener('scroll', () => requestAnimationFrame(handleHeroExpand), { passive: true });
+  window.addEventListener('resize', handleHeroExpand);
+
+  // Counter animation logic
+  function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+      if (progress < 1) window.requestAnimationFrame(step);
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  // Intersection Observer for fade-up elements & counter
+  const observerOptions = { threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if (entry.target.contains(document.getElementById('view-count'))) {
+          const counter = document.getElementById('view-count');
+          if (counter && counter.innerText === "0") {
+            const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+            animateValue(counter, 0, target, 2000);
+          }
+        }
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
