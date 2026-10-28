@@ -1,11 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { parse } from 'smol-toml';
-import { readFileSync } from 'fs';
+import seasonsRaw from '../../data/seasons.toml?raw';
 
 export async function getStaticPaths() {
-  const seasonsPath = new URL('../../data/seasons.toml', import.meta.url);
-  const seasonsRaw = readFileSync(seasonsPath, 'utf-8');
   const { seasons } = parse(seasonsRaw) as { seasons: any[] };
 
   return seasons.map((season) => ({
