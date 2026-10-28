@@ -1,11 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { parse } from 'smol-toml';
-import { readFileSync } from 'fs';
+import seasonsRaw from '../../data/seasons.toml?raw';
 
-// Read and parse TOML data from ../../data/seasons.toml
-const seasonsPath = new URL('../../data/seasons.toml', import.meta.url);
-const seasonsRaw = readFileSync(seasonsPath, 'utf-8');
+// Parse TOML data directly from raw import
 const { seasons } = parse(seasonsRaw) as { seasons: any[] };
 
 const currentSeason = seasons.find((s) => s.is_current);
@@ -16,7 +14,6 @@ const seasonNumber = (season: any) => seasons.length - seasons.indexOf(season);
 
 const title = "Seasons | Allied Algorithms";
 ---
-
 <Layout title={title}>
   <main class="font-mono relative min-h-screen pt-32 pb-40 overflow-hidden">
 
