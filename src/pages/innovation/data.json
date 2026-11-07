@@ -1,0 +1,49 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.4082, 41.1866]
+      },
+      "properties": {
+        "title": "Team Headquarters",
+        "description": "Allied Algorithms Lab — Wilton, CT. Where the build and programming magic happens."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-72.6774, 41.7658]
+      },
+      "properties": {
+        "title": "State Championship",
+        "description": "Connecticut FLL State Tournament venue hosting top regional qualifiers."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-95.3698, 29.7604]
+      },
+      "properties": {
+        "title": "FIRST World Festival",
+        "description": "George R. Brown Convention Center — Houston, TX. International championship event."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.0589, 42.3601]
+      },
+      "properties": {
+        "title": "New England Regional",
+        "description": "Exhibition and collaborative scrimmage venue."
+      }
+    }
+  ]
+}
