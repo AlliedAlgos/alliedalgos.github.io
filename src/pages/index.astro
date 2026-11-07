@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import { parse } from 'smol-toml';
 import { readFileSync } from 'fs';
-import SponsorReel from '../components/SponsorReel.astro';
 
 const sponsorsRaw = readFileSync('./src/data/sponsors.toml', 'utf-8');
 const { sponsors } = parse(sponsorsRaw);
@@ -20,49 +19,58 @@ const socialLinks = [
 ---
 
 <Layout title={title} description={description}>
-  <div class="w-full text-white">
+  <div class="w-full text-white font-mono bg-[#60a5fa]">
 
     <!-- Hero Sticky Scroll Runway -->
     <div id="hero-trigger" class="relative h-[160vh] w-full">
-      <div class="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden p-2 sm:p-4 md:p-6 z-10">
+      <div class="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden p-0 z-10">
 
         <!-- Expanding Hero Card -->
         <section
           id="hero-card"
-          class="relative w-full max-w-[88%] h-[82vh] rounded-[2rem] md:rounded-[3rem] bg-blue-400 border border-white/10 shadow-2xl flex flex-col justify-center overflow-hidden transition-all duration-75 ease-out will-change-[border-radius,max-width,height]"
+          class="relative w-full max-w-[92%] sm:max-w-[88%] h-[85vh] sm:h-[82vh] rounded-[2rem] md:rounded-[3rem] bg-blue-500/90 border border-white/20 shadow-2xl flex flex-col justify-center overflow-hidden transition-all duration-75 ease-out backdrop-blur-md will-change-[border-radius,max-width,width,height]"
         >
-          <!-- Blueprint Grid Background from global.css -->
-          <div class="absolute inset-0 bg-blueprint-grid opacity-40 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent_80%)] -webkit-[mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent_80%)] pointer-events-none"></div>
+          <!-- Blueprint Grid Background -->
+          <div class="absolute inset-0 bg-blueprint-grid opacity-20 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent_80%)] -webkit-[mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent_80%)] pointer-events-none"></div>
 
           <!-- Hero Content -->
-          <div class="max-w-6xl mx-auto px-6 md:px-12 w-full relative z-10 py-8">
-            <p class="fade-up font-mono text-xs md:text-sm uppercase tracking-widest text-zinc-100 mb-6">
+          <div class="max-w-6xl mx-auto px-5 sm:px-8 md:px-12 w-full relative z-10 py-4 sm:py-6 md:py-8 flex flex-col justify-center h-full">
+            <p class="fade-up text-xs md:text-sm uppercase tracking-widest text-blue-100 mb-2 sm:mb-4">
               Wilton, CT &middot; Team 600757
             </p>
 
-            <h1 class="fade-up text-5xl sm:text-7xl md:text-[8.5rem] lg:text-[10rem] font-black italic tracking-tighter leading-[0.85] uppercase mb-8 text-white break-words">
-              Allied <br />
-              <span class="text-blue-500">Algorithms</span>
+            <!-- Shortened Team Name on Mobile (Bigger Font Size) -->
+            <h1 class="fade-up font-black italic tracking-tighter uppercase leading-[0.88] sm:leading-[0.85] mb-4 sm:mb-6 text-white break-words">
+              <!-- Mobile view (Larger text) -->
+              <span class="block sm:hidden text-5xl sm:text-6xl">
+                Allied <br />
+                <span class="text-blue-100">Algos</span>
+              </span>
+              <!-- Desktop view -->
+              <span class="hidden sm:block text-5xl sm:text-7xl md:text-[7.5rem] lg:text-[9.5rem]">
+                Allied <br />
+                <span class="text-blue-100">Algorithms</span>
+              </span>
             </h1>
 
-            <p class="fade-up text-lg md:text-4xl text-white font-bold max-w-2xl mb-10 md:mb-12">
+            <p class="fade-up text-base sm:text-xl md:text-3xl text-white font-bold max-w-2xl mb-6 md:mb-8">
               Where Engineering Meets Creativity
             </p>
 
-            <!-- Stats & Social Media Links -->
-            <div class="fade-up relative inline-flex flex-wrap items-center gap-6 md:gap-10 px-6 md:px-10 py-5 md:py-7 border border-white/10 bg-zinc-900/60 backdrop-blur-md rounded-2xl mb-10">
-              <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-accent/50"></span>
-              <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-accent/50"></span>
+            <!-- Stats & Social Links -->
+            <div class="fade-up relative inline-flex flex-wrap items-center gap-4 sm:gap-6 md:gap-10 px-4 sm:px-6 md:px-8 py-3 sm:py-5 border border-white/20 bg-blue-600/50 backdrop-blur-md rounded-2xl mb-6 max-w-fit shadow-lg">
+              <span class="absolute -top-px -left-px w-3 h-3 sm:w-4 sm:h-4 border-t border-l border-white/40"></span>
+              <span class="absolute -bottom-px -right-px w-3 h-3 sm:w-4 sm:h-4 border-b border-r border-white/40"></span>
 
               <div class="text-left">
-                <span class="block font-mono text-[10px] md:text-[11px] uppercase tracking-widest text-zinc-500 mb-1 md:mb-2">Combined Global Reach</span>
+                <span class="block text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-widest text-blue-100 mb-1">Combined Global Reach</span>
                 <span class="flex items-baseline gap-2">
-                  <span id="view-count" data-target="21891" class="font-mono text-3xl md:text-5xl text-white tabular-nums font-bold">0</span>
-                  <span class="font-mono text-xs md:text-sm text-zinc-500 uppercase">Views</span>
+                  <span id="view-count" data-target="21891" class="text-2xl sm:text-4xl md:text-5xl text-white tabular-nums font-bold">0</span>
+                  <span class="text-[10px] sm:text-xs md:text-sm text-blue-100 uppercase">Views</span>
                 </span>
               </div>
 
-              <div class="h-10 w-px bg-white/10 hidden sm:block"></div>
+              <div class="h-8 sm:h-10 w-px bg-white/20 hidden sm:block"></div>
 
               <!-- Social Media Icon Links -->
               <div class="flex items-center gap-2 sm:gap-3">
@@ -74,9 +82,9 @@ const socialLinks = [
                       target={item.href.startsWith('http') ? "_blank" : "_self"}
                       rel="noopener noreferrer"
                       aria-label={item.name}
-                      class="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-600/10 hover:scale-105 transition-all duration-200"
+                      class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl border border-white/20 bg-white/10 flex items-center justify-center text-white hover:border-white/50 hover:bg-white/20 hover:scale-105 transition-all duration-200"
                     >
-                      <i class={`${prefix} fa-${item.icon} text-sm`}></i>
+                      <i class={`${prefix} fa-${item.icon} text-xs sm:text-sm`}></i>
                     </a>
                   );
                 })}
@@ -84,8 +92,8 @@ const socialLinks = [
             </div>
 
             <!-- CTA -->
-            <div class="fade-up flex flex-wrap gap-6">
-              <a href="/seasons/" class="group inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-semibold text-sm tracking-wide rounded-xl hover:bg-blue-500 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 shadow-lg shadow-blue-600/20">
+            <div class="fade-up flex flex-wrap gap-4 sm:gap-6">
+              <a href="/seasons/" class="group inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-blue-700 text-white font-semibold text-xs sm:text-sm tracking-wide rounded-xl hover:bg-blue-800 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-200 shadow-xl border border-white/20">
                 Explore Journey
                 <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
               </a>
@@ -95,73 +103,72 @@ const socialLinks = [
       </div>
     </div>
 
-    <!-- Sponsor Reel -->
-    <section class="py-20 bg-blue-500 border-t border-white/10 relative z-20">
-      <SponsorReel sponsors={sponsors} />
-    </section>
-
-    <!-- Competition Section -->
-    <section class="max-w-7xl mx-auto px-6 py-24 md:py-40 relative z-20">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        <div class="fade-up">
-          <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-4 block">The Competition</span>
-          <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-8">
-            FIRST LEGO <br><span class="text-zinc-500">League.</span>
-          </h2>
-          <p class="text-zinc-400 text-lg leading-relaxed font-light mb-10 max-w-lg">
-            FIRST® LEGO® League (FLL) is a global STEM program that introduces science, technology, engineering, and math through hands-on learning.
-          </p>
-          <div class="grid grid-cols-2 gap-8 border-t border-white/10 pt-10">
-            <div>
-              <span class="block text-white font-semibold text-xl mb-2">Innovation</span>
-              <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">Project Research</p>
-            </div>
-            <div>
-              <span class="block text-white font-semibold text-xl mb-2">Robotics</span>
-              <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">Autonomous Systems</p>
+    <!-- Team Photo Section -->
+    <section class="py-20 bg-blue-500 border-t border-white/20 relative z-25">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7 fade-up relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-blue-600/40 group">
+            <img
+              src="/images/team-photo.jpg"
+              alt="Allied Algorithms Team Photo"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+            />
+            <!-- Fallback container -->
+            <div class="hidden absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-blue-700/80 backdrop-blur-md">
+              <i class="fa-solid fa-users text-4xl text-white mb-4"></i>
+              <p class="text-xs uppercase tracking-widest text-blue-100">Team Photo Placeholder</p>
+              <p class="text-xs text-blue-200 mt-2">Add your image to <code class="text-white">/public/images/team-photo.jpg</code></p>
             </div>
           </div>
-        </div>
-
-        <div class="fade-up relative aspect-square rounded-3xl overflow-hidden bg-zinc-900/60 border border-white/10 p-10 md:p-14 flex flex-col justify-end shadow-2xl">
-          <span class="absolute top-5 left-5 w-4 h-4 border-t border-l border-blue-500/40"></span>
-          <span class="absolute bottom-5 right-5 w-4 h-4 border-b border-r border-blue-500/40"></span>
-          <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 mb-3">Seasons Archived</span>
-          <span class="font-mono text-6xl md:text-7xl text-white tabular-nums leading-none mb-6">06</span>
-          <h3 class="text-2xl font-semibold text-white mb-3">6 Seasons of Excellence</h3>
-          <p class="text-zinc-400 font-light">From Masterpiece to Submerged, we've built a legacy of technical documentation.</p>
+          <div class="lg:col-span-5 fade-up">
+            <span class="text-xs uppercase tracking-widest text-blue-100 mb-3 block">Meet The Innovators</span>
+            <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">
+              Driven by Passion, Built on Teamwork.
+            </h2>
+            <p class="text-blue-50 text-base md:text-lg leading-relaxed font-light mb-6">
+              Allied Algorithms brings together young engineers, coders, and creators from Wilton, CT. Guided by FIRST LEGO League values, our team pushes the boundaries of autonomous robotics and creative problem solving every season.
+            </p>
+            <div class="flex items-center gap-4 text-xs text-blue-100 uppercase tracking-wider border-t border-white/20 pt-4">
+              <span>Wilton, CT</span>
+              <span>&bull;</span>
+              <span>FLL Team #600757</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Open Source Culture Section -->
-    <section class="bg-slate-950 py-20 md:py-28 rounded-3xl mx-3 md:mx-6 overflow-hidden border border-white/5 mb-24 relative z-20">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-16">
-          <span class="font-mono text-xs uppercase tracking-widest text-slate-500 mb-4 block">Our Engineering Culture</span>
-          <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-6">
-            Open Source.
+    <!-- Competition Section -->
+    <section class="max-w-7xl mx-auto px-6 py-24 md:py-40 relative z-25">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div class="fade-up">
+          <span class="text-xs uppercase tracking-widest text-blue-900 mb-4 block font-bold">The Competition</span>
+          <h2 class="text-4xl md:text-6xl font-semibold text-white leading-tight tracking-tight mb-8">
+            FIRST LEGO <br><span class="text-blue-900">League.</span>
           </h2>
-          <p class="text-slate-400 text-lg max-w-xl mx-auto font-light leading-relaxed">
-            We believe in the "Allied" part of our name. We publish our technical logs and CAD to elevate the entire FLL community.
+          <p class="text-blue-950 text-lg leading-relaxed font-semibold mb-10 max-w-lg">
+            FIRST® LEGO® League (FLL) is a global STEM program that introduces science, technology, engineering, and math through hands-on learning.
           </p>
+          <div class="grid grid-cols-2 gap-8 border-t border-white/30 pt-10">
+            <div>
+              <span class="block text-white font-semibold text-xl mb-2">Innovation</span>
+              <p class="text-[11px] uppercase tracking-widest text-blue-950 font-extrabold">Project Research</p>
+            </div>
+            <div>
+              <span class="block text-white font-semibold text-xl mb-2">Robotics</span>
+              <p class="text-[11px] uppercase tracking-widest text-blue-950 font-extrabold">Autonomous Systems</p>
+            </div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {[
-            { icon: 'code-branch', tag: 'GitHub Repositories', title: 'Frameworks', desc: 'Reusable code architectures for precision and reliability.' },
-            { icon: 'cube', tag: '3D / CAD Files', title: 'CAD Assets', desc: '3D models shared to assist teams in mastering structural integrity.' },
-            { icon: 'book-open', tag: 'Engineering Notebook', title: 'Public Logs', desc: 'A full archive of our design iterations and breakthroughs.' }
-          ].map((item) => (
-            <div class="p-6 md:p-8 border border-white/5 bg-white/[0.02] rounded-2xl hover:border-blue-500/30 transition-all duration-300">
-              <div class="flex items-center gap-2.5 mb-5">
-                <i class={`fa-solid fa-${item.icon} text-blue-500/70 text-sm`}></i>
-                <span class="font-mono text-[10px] uppercase tracking-widest text-slate-500">{item.tag}</span>
-              </div>
-              <h4 class="text-lg font-semibold text-white mb-2">{item.title}</h4>
-              <p class="font-light text-sm text-slate-400 leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
+        <div class="fade-up relative aspect-square rounded-3xl overflow-hidden bg-blue-600/40 border border-white/20 p-10 md:p-14 flex flex-col justify-end shadow-2xl backdrop-blur-md">
+          <span class="absolute top-5 left-5 w-4 h-4 border-t border-l border-white/50"></span>
+          <span class="absolute bottom-5 right-5 w-4 h-4 border-b border-r border-white/50"></span>
+          <span class="text-xs uppercase tracking-widest text-blue-100 mb-3 block">Seasons Archived</span>
+          <span class="text-6xl md:text-7xl text-white tabular-nums leading-none mb-6 font-bold">07</span>
+          <h3 class="text-2xl font-semibold text-white mb-3">7 Seasons of Excellence</h3>
+          <p class="text-blue-50 font-light">From initial breakthroughs to present day, we've built a strong legacy of technical documentation and innovation.</p>
         </div>
       </div>
     </section>
@@ -187,15 +194,25 @@ const socialLinks = [
 
     const isMobile = window.innerWidth < 768;
     const initialRadius = isMobile ? 32 : 48; // px
-    const targetRadius = 0;
 
     const currentRadius = initialRadius * (1 - progress);
-    const heightPercent = 82 + (18 * progress); // Grows from 82vh to 100vh
-    const widthPercent = 88 + (12 * progress);  // Grows from 88% to 100%
+    const heightPercent = 85 + (15 * progress); // Grows to 100vh
 
+    // Width expansion setup
+    const initialWidth = isMobile ? 92 : 88;
+    const widthPercent = initialWidth + ((100 - initialWidth) * progress);
+
+    // Apply exact dimensions
     heroCard.style.borderRadius = `${currentRadius}px`;
     heroCard.style.height = `${heightPercent}vh`;
-    heroCard.style.maxWidth = `${widthPercent}%`;
+
+    if (progress >= 0.99) {
+      heroCard.style.maxWidth = '100vw';
+      heroCard.style.width = '100vw';
+    } else {
+      heroCard.style.maxWidth = `${widthPercent}%`;
+      heroCard.style.width = `${widthPercent}%`;
+    }
   }
 
   window.addEventListener('scroll', () => requestAnimationFrame(handleHeroExpand), { passive: true });

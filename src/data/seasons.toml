@@ -1,13 +1,38 @@
 [[seasons]]
+year = "2026-2027"
+slug = "2026"
+theme = "Bioglow"
+tagline = "Reaching new heights in robotics and engineering."
+awards = []
+robot_description = "Our newest flagship robot for the 2026-2027 season, featuring cutting-edge sensors and custom high-torque drive systems."
+robot_photo = "/images/robot/mk6/1.jpg"
+cover_photo = "/images/seasons/yr_26-27.jpg"
+is_current = true
+
+[seasons.stats]
+missions_completed = 0
+score = 0
+events_attended = 0
+
+[[seasons.gallery]]
+photo = "/images/seasons/2026/gallery1.jpg"
+caption = "Kickoff meeting"
+
+[[seasons.timeline]]
+date = "Sept 2026"
+event = "Season kickoff"
+description = "Analyzed the new game manual and started brainstorming robot designs."
+
+[[seasons]]
 year = "2025-2026"
-slug = "2025"   
+slug = "2025"
 theme = "Unearthed"
 tagline = "Uncovering the history of innovation."
 awards = ["Champions Award", "Robot Performance Award"]
 robot_description = "Our most advanced robot yet, built for precision and modularity to tackle the complex missions of the Unearthed season."
 robot_photo = "/images/robot/mk5/1.jpg"
 cover_photo = "/images/seasons/yr_25-26.jpg"
-is_current = true
+is_current = false
 
 [seasons.stats]
 missions_completed = 15
@@ -34,7 +59,7 @@ description = "Received the challenge and started strategizing."
 [[seasons.timeline]]
 date = "Oct 2025"
 event = "First build complete"
-description = "Robot chassis finalized an   d initial programming began."
+description = "Robot chassis finalized and initial programming began."
 
 [[seasons.timeline]]
 date = "Nov 2025"
@@ -85,7 +110,7 @@ slug = "2021"
 theme = "CARGO CONNECT"
 tagline = "Connecting communities through smart transport."
 awards = ["Programming Award"]
-robot_description = "2nd year with FLL, starrting to understand the challenges."
+robot_description = "2nd year with FLL, starting to understand the challenges."
 robot_photo = "/images/seasons/2021/robot.jpg"
 cover_photo = "/images/seasons/yr_21-22.jpg"
 is_current = false

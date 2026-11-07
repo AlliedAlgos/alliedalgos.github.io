@@ -1,114 +1,173 @@
 ---
-import Layout from '../layouts/Layout.astro'; // Use the standard name for consistency
+import Layout from '../layouts/Layout.astro';
 import { parse } from 'smol-toml';
 import { readFileSync } from 'fs';
 
-// Data fetching
-const raw = readFileSync('./src/data/members.toml', 'utf-8');
-const { members } = parse(raw);
+const dataRaw = readFileSync('./src/data/members.toml', 'utf-8');
+const { members } = parse(dataRaw);
 
-// SEO Strategy: Focus on the "Brains" behind the algorithms
-const title = "Our Team | Allied Algorithms FLL 600757";
-const description = "Meet the engineers, designers, and strategists of Allied Algorithms. Discover the minds driving our technical excellence in FLL robotics.";
+const title = "About Us | Allied Algorithms FLL Team 600757";
+const description = "Meet the members, coaches, and mentors behind Allied Algorithms FLL Robotics Team 600757.";
+
+// Helper to get initials
+const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
+
+const coaches = members.filter((m: any) => m.role.toLowerCase() === 'coach');
+const mentors = members.filter((m: any) => m.role.toLowerCase() === 'mentor');
+const teamMembers = members.filter((m: any) => m.role.toLowerCase() !== 'coach' && m.role.toLowerCase() !== 'mentor');
 ---
 
 <Layout title={title} description={description}>
+  <div class="w-full text-white font-mono bg-[#60a5fa] min-h-screen pb-32">
 
-    <script type="application/ld+json" slot="head">
-    {
-      "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "mainEntity": {
-        "@type": "ItemList",
-        "itemListElement": [
-          {members.map((member, index) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "item": {
-              "@type": "Person",
-              "name": member.name,
-              "jobTitle": member.role,
-              "image": `https://alliedalgos.org${member.photo}`
-            }
-          }))}
-        ]
-      }
-    }
-    </script>
-
-    <section class="relative pt-32 pb-24 overflow-hidden">
-        <div class="absolute inset-0 bg-blueprint-grid opacity-30" aria-hidden="true"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/0 via-zinc-950/70 to-zinc-950" aria-hidden="true"></div>
-
-        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <p class="font-mono text-xs uppercase tracking-widest text-blue-400 mb-6">Team 600757 &mdash; Wilton, CT</p>
-            <h1 class="text-6xl md:text-8xl font-black tracking-tighter italic text-white leading-none mb-6 uppercase">
-                WE ARE <br /><span class="text-accent">ALLIED.</span>
-            </h1>
-            <p class="text-zinc-500 text-lg max-w-md mx-auto leading-relaxed">
-                The student engineers, coaches, and mentors who design, build, and code our FIRST LEGO League robot &mdash; and publish the CAD and software behind it.
-            </p>
-        </div>
+    <!-- Header Section -->
+    <section class="max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
+      <p class="text-xs md:text-sm uppercase tracking-widest text-blue-100 mb-4">
+        Wilton, CT &middot; Team 600757
+      </p>
+      <h1 class="text-5xl md:text-7xl font-black italic tracking-tighter uppercase mb-6 text-white">
+        About <span class="text-blue-100">Us</span>
+      </h1>
+      <p class="text-blue-50 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+        Meet the talented students, dedicated coaches, and experienced mentors driving Allied Algorithms forward.
+      </p>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 mb-32">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {members.map((member) => (
-                <div class="bg-zinc-900/60 border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/40 transition-colors">
-
-                    <div class="aspect-[4/3] overflow-hidden bg-zinc-900">
-                        <img
-                            src={member.photo}
-                            alt={`Portrait of ${member.name}, ${member.role} at Allied Algorithms`}
-                            loading="lazy"
-                            decoding="async"
-                            class="w-full h-full object-cover"
-                        />
-                    </div>
-
-                    <div class="p-6">
-                        <p class="font-mono text-xs uppercase tracking-wide text-blue-400 mb-1">
-                            {member.role}
-                        </p>
-                        <h2 class="text-2xl font-bold text-white mb-3">
-                            {member.name}
-                        </h2>
-                        <p class="text-sm text-zinc-400 leading-relaxed">
-                            {member.bio}
-                        </p>
-                    </div>
+    <!-- 1. Team Members Section -->
+    {teamMembers.length > 0 && (
+      <section class="max-w-7xl mx-auto px-6 py-12">
+        <div class="mb-10">
+          <span class="text-xs uppercase tracking-widest text-blue-900 font-bold block mb-2">The Roster</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Team Members</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {teamMembers.map((member: any) => (
+            <div class="bg-blue-600/40 border border-white/20 rounded-3xl p-6 shadow-xl backdrop-blur-md flex flex-col items-center text-center transition-all duration-300 hover:border-white/50">
+              <div class="w-28 h-28 rounded-2xl overflow-hidden mb-6 border border-white/20 bg-blue-900/60 flex items-center justify-center relative shadow-lg">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  class="w-full h-full object-cover"
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                />
+                <div class="hidden absolute inset-0 flex items-center justify-center bg-blue-800 text-white font-bold text-2xl tracking-widest">
+                  {getInitials(member.name)}
                 </div>
-            ))}
-        </div>
-    </section>
-
-    <section class="max-w-6xl mx-auto px-6 mb-32">
-        <div class="relative bg-zinc-900 border border-white/10 rounded-3xl p-10 md:p-20 text-center">
-            <span class="absolute -top-px -left-px w-4 h-4 border-t border-l border-blue-500/40" aria-hidden="true"></span>
-            <span class="absolute -bottom-px -right-px w-4 h-4 border-b border-r border-blue-500/40" aria-hidden="true"></span>
-
-            <p class="font-mono text-xs uppercase tracking-widest text-blue-400 mb-4">Get Involved</p>
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Ready to build with us?
-            </h2>
-
-            <p class="text-zinc-500 text-lg mb-10 max-w-xl mx-auto">
-                Whether you're a mentor, a potential sponsor, or a fellow builder&mdash;we'd love to have you join the alliance. Financial support for the team is coordinated through <a href="https://robotics-catalyst.org" target="_blank" rel="noopener" class="text-blue-400 underline underline-offset-2 hover:text-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">Robotics Catalyst</a>, the STEM-education nonprofit that serves as our fiscal sponsor.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://robotics-catalyst.org/donate/allied-algorithms"
-                   target="_blank" rel="noopener"
-                   class="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
-                    Support Our Team
-                </a>
-
-                <a href="/contact-us/"
-                   class="w-full sm:w-auto px-10 py-4 bg-transparent border border-zinc-700 hover:border-zinc-500 text-white font-semibold rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400">
-                    Contact Us
-                </a>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-1">{member.name}</h3>
+              <span class="text-xs font-bold uppercase tracking-widest text-blue-100 bg-blue-700/60 px-3 py-1 rounded-full mb-4 border border-white/10">
+                {member.role}
+              </span>
+              {member.bio && (
+                <p class="text-blue-50 text-sm font-light leading-relaxed">{member.bio}</p>
+              )}
             </div>
+          ))}
         </div>
+      </section>
+    )}
+
+    <!-- 2. Coaches Section -->
+    {coaches.length > 0 && (
+      <section class="max-w-7xl mx-auto px-6 py-12">
+        <div class="mb-10">
+          <span class="text-xs uppercase tracking-widest text-blue-900 font-bold block mb-2">Leadership</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Coaches</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {coaches.map((member: any) => (
+            <div class="bg-blue-600/40 border border-white/20 rounded-3xl p-6 shadow-xl backdrop-blur-md flex flex-col items-center text-center transition-all duration-300 hover:border-white/50">
+              <div class="w-32 h-32 rounded-2xl overflow-hidden mb-6 border border-white/20 bg-blue-900/60 flex items-center justify-center relative shadow-lg">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  class="w-full h-full object-cover"
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                />
+                <div class="hidden absolute inset-0 flex items-center justify-center bg-blue-800 text-white font-bold text-3xl tracking-widest">
+                  {getInitials(member.name)}
+                </div>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-1">{member.name}</h3>
+              <span class="text-xs font-bold uppercase tracking-widest text-blue-100 bg-blue-700/60 px-3 py-1 rounded-full mb-4 border border-white/10">
+                {member.role}
+              </span>
+              {member.bio && (
+                <p class="text-blue-50 text-sm font-light leading-relaxed">{member.bio}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- 3. Mentors Section -->
+    {mentors.length > 0 && (
+      <section class="max-w-7xl mx-auto px-6 py-12">
+        <div class="mb-10">
+          <span class="text-xs uppercase tracking-widest text-blue-900 font-bold block mb-2">Guidance</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Mentors</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {mentors.map((member: any) => (
+            <div class="bg-blue-600/40 border border-white/20 rounded-3xl p-6 shadow-xl backdrop-blur-md flex flex-col items-center text-center transition-all duration-300 hover:border-white/50 relative">
+              <div class="w-32 h-32 rounded-2xl overflow-hidden mb-6 border border-white/20 bg-blue-900/60 flex items-center justify-center relative shadow-lg">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  class="w-full h-full object-cover"
+                  onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                />
+                <div class="hidden absolute inset-0 flex items-center justify-center bg-blue-800 text-white font-bold text-3xl tracking-widest">
+                  {getInitials(member.name)}
+                </div>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-1">
+                {member.link ? (
+                  <a href={member.link} target="_blank" rel="noopener noreferrer" class="hover:underline text-white inline-flex items-center gap-1.5">
+                    {member.name} <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+                  </a>
+                ) : (
+                  member.name
+                )}
+              </h3>
+              <span class="text-xs font-bold uppercase tracking-widest text-blue-100 bg-blue-700/60 px-3 py-1 rounded-full mb-4 border border-white/10">
+                {member.role}
+              </span>
+              {member.bio && (
+                <p class="text-blue-50 text-sm font-light leading-relaxed">{member.bio}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- CTA Section -->
+    <section class="max-w-5xl mx-auto px-6 pt-20 text-center">
+      <div class="bg-blue-600/50 border border-white/20 rounded-3xl p-10 md:p-14 backdrop-blur-md shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-blueprint-grid opacity-20 pointer-events-none"></div>
+        <div class="relative z-10">
+          <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
+            Want to Collaborate or Sponsor Us?
+          </h2>
+          <p class="text-blue-50 text-base md:text-lg max-w-xl mx-auto font-light mb-8">
+            We are always open to connecting with fellow FLL teams, mentors, and community supporters.
+          </p>
+          <a href="mailto:contact@alliedalgorithms.com" class="inline-flex items-center gap-3 px-8 py-4 bg-blue-700 text-white font-semibold text-sm tracking-wide rounded-xl hover:bg-blue-800 transition-all shadow-xl border border-white/20">
+            Get in Touch
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+      </div>
     </section>
 
+  </div>
 </Layout>
