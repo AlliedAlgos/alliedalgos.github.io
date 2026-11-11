@@ -6,7 +6,7 @@ tagline = "Reaching new heights in robotics and engineering."
 awards = []
 robot_description = "Our newest flagship robot for the 2026-2027 season, featuring cutting-edge sensors and custom high-torque drive systems."
 robot_photo = "/images/robot/mk6/1.jpg"
-cover_photo = "/images/seasons/yr_26-27.jpg"
+cover_photo = "/images/seasons/yr_26-27.jpeg"
 is_current = true
 
 [seasons.stats]
